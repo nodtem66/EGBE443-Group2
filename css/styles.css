@@ -21,6 +21,9 @@ h1, h2, h3 {
 .thai h1, h2, h3, h4, h5 {font-weight: bold;}
 .indent {text-indent: 3em;}
 .center {text-align: center;}
+.left {float:left;}
+.right {float:right;}
+.offset-left-1 {margin-left: 1em;}
 .offset-above-1 {margin-top: 1em;}
 .offset-below-1 {margin-bottom: 1em;}
 .offset-above-2 {margin-top: 2em;}
@@ -557,4 +560,51 @@ h1, h2, h3 {
     background-color: #a83c3a;
     border-color: #973634;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, .05), 0 1px 0 rgba(255, 255, 255, .1);
+}
+.flex-video {
+position: relative;
+padding-top: 25px;
+padding-bottom: 67.5%;
+height: 0;
+margin-bottom: 16px;
+overflow: hidden;
+}
+ 
+.flex-video.widescreen { padding-bottom: 57.25%; }
+.flex-video.vimeo { padding-top: 0; }
+ 
+.flex-video iframe,
+.flex-video object,
+.flex-video embed {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+@media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
+.flex-video { padding-top: 0; }
+}
+.blueimp-gallery > .description {
+  position: absolute;
+  top: 30px;
+  left: 15px;
+  color: #fff;
+  display: none;
+}
+.blueimp-gallery-controls > .description {
+  display: block;
+}
+.modal-description {display: block; padding: 15px; border-top: 1px solid #e5e5e5;min-height: 0px}
+#links .thumbnail-col {width:10%;float:left;}
+#links .thumbnail-col:hover {opacity: 0.8;}
+.ratio{
+    position:relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100% ; /* % of width, defines aspect ratio*/
+    
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;  
 }
