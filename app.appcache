@@ -1,14 +1,12 @@
 CACHE MANIFEST
-# 2010-06-18:v3
+# 2014-21-9 11:59
 
 # Explicitly cached entries
-
-# offline.html will be displayed if the user is offline
+img/*
 
 # All other resources (e.g. sites) require the user to be online. 
 NETWORK:
 *
 
 # Additional resources to cache
-CACHE:
-img/*
+# CACHE:

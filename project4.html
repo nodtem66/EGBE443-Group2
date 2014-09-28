@@ -1,0 +1,271 @@
+<!--
+  Date: 14/9/2014
+  bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF
+-->
+<!DOCTYPE html>
+<html lang="en" manifest="app.appcache">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Project Report</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/blueimp-gallery.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-image-gallery.min.css">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="css/styles.css" rel="stylesheet">
+	</head>
+	<body>
+    
+	<header id="mynavbar" class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+            </button> <a href="../" class="navbar-brand">Group 2</a>
+
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="project1.html">Bun Camera</a></li>
+                    <li><a href="project2.html">Camera Selection</a></li>
+                    <li><a href="project3.html">Photography Study</a></li>
+                    <li><a href="project4.html">Image File Reading</a></li>
+                  </ul>
+                </li>
+                <li> <a href="#">About</a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="bs-header" id="content">
+    <div class="container">
+         <h1>Image File Reading<h1><h2>Import Medical Images into MATLAB</h2>
+        <p class="thai">การอ่านไฟล์และการนำเข้ารูปภาพทางการแพทย์เพื่อใช้ในโปรแกรม MATLAB</p>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div class="bs-sidebar hidden-print" role="complementary">
+                <ul class="nav bs-sidenav">
+                  <li class="active">
+                    <a href="#myobjective">Objective</a></li>
+                    <li><a href="#mymethod">Methods</a></li>
+                    <li><a href="#myresult">Results</a></li>              
+                    <li><a href="#mydisscussion">Discussion</a></li>              
+                    <li><a href="#myconclusion">Conclusion and Future Study</a></li>              
+                    <li><a href="#myqaa">Q&amp;A</a></li>
+                </ul>
+            </div>
+            <!-- end bs-sidebar -->
+        </div>
+        <!-- end col-md-3 -->
+        <div class="col-md-9 col-md-pull-3" id="mycontent">
+            <div>
+              <h1 id="myobjective">Objective</h1>
+              <ol class="thai">
+                <li>เพื่อให้สามารถเริ่มต้นทำการศึกษาการทำ Image processing ใน Biomedical field</li>
+                <li>เพื่อศึกษาวิธีการทำ Image processing กับไฟล์ชนิดต่างๆ เช่น DICOM, AVI, LSM</li>
+                <li>เพื่อเปิดโอกาสให้นักศึกษาได้หาความรู้นอกห้องเรียน </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mymethod">Medthods</h1>
+              <ol class="thai">
+                <li><h4>LSM File</h4>
+                <p class="indent">เป็นไฟลท์ภาพที่ได้มาจากกล้องจุลทรรศน์ Confocal Scanning Microscopes โดยภาพถ่ายที่ได้จะเป็นภาพ .lsm </p>
+                    <pre class="code">Keyword
+fucntion : A = imread(filename, fmt)
+</pre>
+                <p class="indent">ภาพนามสกุล LSM จะประกอบ 2 ส่วนคือ header (meta data) และ tiff จึงสามารถเปิดโดย <a href="http://www.mathworks.com/matlabcentral/fileexchange/8412-lsm-file-toolbox">LSM ToolBox</a> และฟังชั่นใน Matlab ที่ชื่อว่า <code>imread</code> ตามลำดับ</p>
+                    
+                </li>
+                <li><h4>DICOM File</h4>
+                <p class="indent">DICOM หรือ Digital Imaging and Communications in Medicine เป็นมาตรฐานของไฟล์รูปภาพทางการแพทย์ เช่น MRI, CT scan, CR และ Ultrasound เป็นต้น โดยอุปกรณ์เครื่องมือแพทย์รุ่นใหม่ๆจะสนับสนุนมาตรฐานนี้ และเมื่อภาพถ่ายทางการแพทย์มีมาตรฐานเดียวกัน จึงทำให้สามารถส่ง แลกเปลี่ยน และใช้ได้ในเครื่องมือแพทย์ และโปรแกรมที่ใช้ในการแพทย์ แม้มาจากต่างบริษัทกัน โดย DICOM จะประกอบด้วย header ของไฟล์ ซึ่งจะบอกถึงข้อมูลของภาพ เช่น ความกว้าง ความยาว ชนิดของภาพ และข้อมูลของผู้ป่วย เช่น ชื่อ นามสกุล หรืออื่นๆ</p>
+                <p class="indent">DICOM file เป็นภาพทางการแพทย์ที่ matlab สนับสนุนในการอ่าน จึงสามารถอ่านไฟล์ประเภทนี้ได้ง่าย โดยจะเพิ่มลูกเล่นได้มากมาย เพราะ matlab มีฟังก์ชั่นสนับสนุนเยอะ รับค่าข้อมูลทั้งหมดของ Dicom</p>
+                    <pre class="code">Keyword
+fucntion : X = dicomread(filename)
+</pre>
+                </li>
+                <li><h4>Video .AVI</h4>
+                <p class="indent">ไฟล์ avi หรือ Audio Video Interleave เป็นฟอร์แมตของไฟล์วิดีโอที่ถูกพัฒนาโดย Microsoft โดย avi จะสามารถเก็บได้ทั้งไฟล์วิดีโอและเสียง โดยจะเล่นพร้อมกัน ไฟล์ avi สามารถสร้างได้โดยไม่มีการบีบอัดไฟล์ จึงทำให้ไฟล์มีขนาดใหญ่แต่ไม่สูญเสียคุณภาพของไฟล์ ทำให้ไม่จำเป็นต้องติดตั้ง codecs</p>
+                <pre class="code">Keyword
+fucntion : obj = VideoReader(filename)
+</pre>
+                <p class="indent">อ่านไฟล์วิดีโอทั้งหมดที่รองรับ รับค่าข้อมูลทั้งหมดของวิดีโอ แล้วสามารถนำไปประยุกต์ใช้ทำงานได้ เพื่อเล่นกับฟังก์ชั่นในimage processingต่างๆได้มากมาย</p>
+                </li>
+                <li><h4>WEBCAM</h4>
+                <p class="indent">กล้อง Webcam เป็นกล้องที่ใช้บันทึกวิดีโอ เชื่อมต่อกับคอมพิวเตอร์ และสามารถบันทึกได้แบบ real-time มีทั้งแบบ มีสายและแบบไร้สาย ราคาก็มีตั้งแต่หลักร้อยขึ้นไป เซ็นเซอร์รับภาพที่ใช้จะมีแบบ CCD และ CMOS</p>
+                <pre class="code">Keyword
+fucntion : obj = videoinput(adaptorname)
+</pre>
+                <p class="indent">ตัวช่วยเพื่อให้เปิดกล้องในคอมพิวเตอร์ เพียงแค่จะมีค่าพารามิเตอน์หลายตัวที่ต้องใช้ประกอบ ต้องตั้งค่าพารามิเตอร์หน้าจอให้ตรงกับคอมพิวเตอร์ จึงจะใช้งานได้ และสามารถปรับความใหญ่ของจอที่แสดง</p>
+                </li>
+              </ol>
+            </div>
+            <hr>
+
+            <div>
+              <h1 id="myresult">Results</h1>
+              <ol>
+                <li>
+                    <h4>LSM File</h4>
+                    <p class="indent thai">
+                        การเปิดภาพที่ใช้จะทำเป็นฟังก์ชั่น ซึ่งผู้ใช้ควร set path ของ lsm.zip ที่ให้ดาวน์โหลดข้างล่างนี้ไปด้วย โดยเมื่อใช้โค้ดจะใช้เหมือนฟังก์ชั่นทั่วไป ฟังก์ชั่นนี้จะนำข้อมูลภาพมาเก็บเป็น array แล้วแสดงผลออกมาเป็นภาพ RGB ที่ทับซ้อนกันให้เห็นเป็นภาพปกติ
+                    <figure>
+                        <img src="img/project4/1.jpg" width="600" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:600px;text-align:center;">ภาพ 1 เปิดภาพนามสกุล lsm ที่เป็นภาพตัวอย่าง</figcaption>
+                    </figure>
+                    </p>
+                </li>  
+                <li>
+                    <h4>DICOM</h4>
+                    <p class="indent thai">
+                        เมื่อนำภาพตัวอย่างมาเปิดใน matlab จะเป็นภาพตัดขวางของสมอง ซึ่งโค้ดจะที่ออกแบบจะทำการเปิดภาพออกมา และใช้ image processing 2 แบบ คือ 1) ปรับความคมชัดของภาพ สามารถปรับความคมชัดของภาพได้ตามต้องการ 2) ปรับด้านกว้างยาวของภาพที่แสดง ตามขนาดภาพที่รับมา
+                    </p>
+                    <figure style="float:left;">
+                        <img src="img/project4/2.jpg" width="309" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:300px;text-align:center;">ภาพ 2 : เปิดภาพ DICOM ที่เป็นภาพตัวอย่าง</figcaption>
+                    </figure>
+                    <figure style="float:left;" class="offset-left-1">
+                        <img src="img/project4/3.jpg" width="310" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:310px;text-align:center;">ภาพ 3 : ภาพจากโค้ดหนึ่ง เป็นภาพที่ปรับแต่งความคมชัดของภาพ DICOM ตัวอย่าง</figcaption>
+                    </figure>
+                    <figure style="float:none;" class="offset-left-1">
+                        <img src="img/project4/4.jpg" width="312" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:312px;text-align:center;">ภาพ 4 : ภาพจากโค้ดสอง เป็นภาพเหมือนตัวอย่าง สามารถปรับขนาดรูปด้านกว้างด้านยาว</figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <h4>AVI, MPG</h4>
+                    <p class="thai indent">matlabมีระบบที่สนับสนุนการเปิดไฟล์วิดีโอ ทำให้สามารถเปิดได้หลายนามสกุล เช่น avi mp4 mov เป็นต้น จึงอยู่ที่ลูกเล่นในเรื่องimage processing ในที่นี้ใส่การกำหนดเฟรมภาพที่ต้องการถ่ายภาพออกมา เพื่อให้ได้ภาพที่ผู้ใช้ต้องการ</p>
+                    <figure style="float:left;" class="">
+                        <img src="img/project4/5.jpg" width="341" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:341px;text-align:center;">ภาพ 5 : เปิดไฟล์วิดีโอนามสกุลmpg เป็นวิดีโอตัวอย่างในmatlab</figcaption>
+                    </figure>
+                    <figure style="float:left;" class="offset-left-1">
+                        <img src="img/project4/8.png" width="225" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:225px;text-align:center;">ภาพ 6 : เปิดไฟล์วิดีโอนามสกุลavi เป็นวิดีโอตัวอย่าง</figcaption>
+                    </figure>
+                    <div style="float:none;clear:both;"></div>
+                </li>
+                <li>
+                    <h4>WEBCAM</h4>
+                    <p class="thai indent">ทำการสั่งเปิดกล้องของคอมพิวเตอร์ โดยจะมี 3 แบบ 1) สั่งเปิดกล้องธรรมดา เหมือนกดโปรแกรมกล้องตามปกติ 2) เมื่อเปิดกล้องจะทำการถ่ายรูปทันที โดยจะแสดงเป็นภาพที่ถ่ายให้เห็น 3) สั่งเปิดกล้อง โดยจะแทรก image processing เป็นการตรวจจับการเคลื่อนไหวทั้งหมด ในขอบเขตที่กล้องเห็น</p>
+                    <figure style="float:none;" class="offset-left-1">
+                        <img src="img/project4/6.jpg" width="338" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:338px;text-align:center;">ภาพ 7 : เปิดกล้อง webcam เพื่ออัดภาพวิดีโอ</figcaption>
+                    </figure>
+                    <figure style="float:none;" class="offset-left-1">
+                        <img src="img/project4/7.jpg" width="508" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:508px;text-align:center;">ภาพ 8 : แสดงผ่าน webcam และตรวจจับตำแหน่งเคลื่อนไหวเป็นสีแดง</figcaption>
+                    </figure>
+                    <figure style="float:none;" class="offset-left-1">
+                        <img src="img/project4/8.jpg" width="505" class="img-thumbnail offset-above-2">
+                        <figcaption style="width:505px;text-align:center;">ภาพ 9 : เมื่อเจอสีโทนแดง จะแสดงสีตรงข้าม(สีน้ำเงิน) </figcaption>
+                    </figure>
+                </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+                <p class="indent thai">ผลจาการศึกษาเกี่ยวกับนำไฟล์ภาพที่ใช้ในด้านวิทยาศาตร์การแพทย์ และสามารถนำไปพัฒนา software ให้มีประสิทธิภาพซึ่ง ในการทำรายงานครั้งนี้จะเป็นวิธีการใช้เบื้องต้นสำหรับการนำภาพและวิดีโอไปใช้ ความรู้ที่ได้จะเป็นประโยชน์สำหรับการอ่านโค้ดเบื้องต้นสำหรับนักพัฒนาด้าน image processing เพื่อให้ภาพและวิดีโอมีความละเอียดสำหรับผู้ใช้งาน สำหรับผู้เขียนได้ใช้ MATLAB ในการใช้งานสำหรับการทดลองนี้ ซึ่งมีทั้งข้อดึและข้อเสียสำหรับการใช้งาน ถ้าเราสามารถนำไปประยุกต์กับโปรแกรมอื่น เช่น Python JAVAเป็นต้น เพื่อให้เหมาะสมและพัฒนา user interface ให้ง่ายต่อการใช้งานในอนาคต</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myconclusion">Conclusion and Future Study</h1>
+                <p class="indent thai offset-above-2">ในหัวข้อที่ได้ทำการศึกษาในครั้งนี้คือ การนำเข้าภาพ DICOM, ไฟล์ .lsm, video และ การบันทึกวิดีโอจาก webcam เพื่อให้ทราบข้อแตกต่างของข้อมูลที่เก็บอยู่ในไฟล์แต่ละประเภท และสามารถทำ image processing กับไฟล์แต่ละประเภท เพื่อให้ได้ข้อมูลภาพทางการแพทย์ที่มีความเหมาะสมต่อการใช้งาน</p>
+                <p class="indent thia">จากหัวข้อที่ได้ศึกษานั้นสามารถนำไปพัฒนาต่อยอดได้ทั้งในทาง Biomedical หรือทางอื่นๆ เช่น การพัฒนาซอฟท์แวร์ทางการแพทย์ โดยนำภาพ CR หรือภาพ CT scan มาทำ image processing เพื่อตรวจหามะเร็งหรือเนื้อร้ายต่างๆ หรือการทำ Real-time motion analysis ให้กับคนไข้ ซึ่งจะเป็นประโยชน์ต่อการทำงานของบุคลากรทางการแพทย์</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myqaa">Q&amp;A</h1>
+                <dl class="dl-horizontal">
+                  <p>
+                    <dt>Question 1:</dt>
+                    <dd>จะสามารถนำการใช้ Webcam มาใช้ในทาง Biomedical อย่างไร</dd>
+                    <dt>Answer:</dt>
+                    <dd>โดยการนำวิดีโอที่บันทึกมาทำการประมวลผล เช่น การทำ Motion tracking ของคนไข้ แบบ real-time</dd>
+                  </p>
+                  <p>
+                    <dt>Question 2:</dt>
+                    <dd>หลักการเลือกใช้ webcam</dd>
+                    <dt>Answer:</dt>
+                    <dd>ควรเลือกใช้ให้เหมาะสมกับประเภทงานที่จะใช้ โดยอาจดูจาก fps(frame per second) หรือราคา โดยทั่วๆไป กล้อง webcam จะมี fps = 30 โดยหากเป็นงานที่จะต้องจับภาพการเคลื่อนไหวที่ไม่เร็วมากนักก็สามารถใช้ได้ แต่หากใช้กับงานที่ต้องจับภาพที่มีการเคลื่อนไหวที่รวดเร็วนั้น อาจจะต้องใช้กล้อง high speed camera</dd>
+                  </p>
+                  <p>
+                    <dt>Question 3:</dt>
+                    <dd>ปรับ contrast ของภาพ DICOM ทำอย่างไร แล้วมีวิธีการอย่างไร?</dd>
+                    <dt>Answer:</dt>
+                    <dd>การปรับ contrast ของภาพ DICOM สามารถทำได้โดยใช้คำสั่ง ‘imcontrast’ ในโปรแกรม matlab จากนั้นโปรแกรมจะแสดงผลดังรูป
+                        <figure>
+                          <img src="img/project4/9.png" class="img-thumbnail offset-above-2">
+                          <figcaption style="width: 560px; text-align: center;">รูปที่ 9 แถบหน้าต่างก่อนการปรับ contrast</figcaption>
+                        </figure>
+                        <figure>
+                          <img src="img/project4/10.png" class="img-thumbnail offset-above-2">
+                          <figcaption style="width: 560px; text-align: center;">รูปที่ 10 แถบหน้าต่างหลังการปรับ contrast</figcaption>
+                        </figure>
+                        <figure style="float:left;" class="offset-above-2">
+                          <img src="img/project4/11.png" class="img-thumbnail">
+                          <figcaption style="width: 200px; text-align: center;">รูปที่ 11 ภาพ DICOM ก่อนการปรับ contrast</figcaption>
+                        </figure>
+                        <figure style="float:left;" class="offset-left-1 offset-above-2">
+                          <img src="img/project4/12.png" class="img-thumbnail">
+                          <figcaption style="width: 200px; text-align: center;">รูปที่ 12 ภาพ DICOM หลังการปรับ contrast</figcaption>
+                        </figure>
+                    </dd>
+                  </p>
+                </dl>
+            </div>
+        </div>
+        <!-- end col-md-9 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="">
+        <h1>Members</h1>
+        <dl><dd>Mr. Thanawin Trakoolwilaiwan 5413085</dd>
+          <dd>Mr. Jongsook Sanguantrakul 5413337</dd>
+          <dd>Mr. Jirawat Iamsamang 5413341</dd>
+          <dd>Mr. Chaiyakorn Thongchanasin 5413346</dd>
+          <dd>Miss Tanyaporn Pungrasmi 5413355</dd>
+          <dd>Miss Pavinee Jaturapisanukul 5413365</dd>
+          <dd>Mr. Rattapong Lordthong 5413367</dd>
+          </dl>
+          <p>Department of Biomedical Engineering</p>
+          <p>Faculty of Engineering, Mahidol University</p>
+      </div>
+    </div>
+  </div>
+</footer>
+	<!-- script references -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.blueimp-gallery.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+		<script src="js/scripts.js?122"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansthai.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,700' rel='stylesheet' type='text/css'>
+	</body>
+</html>
