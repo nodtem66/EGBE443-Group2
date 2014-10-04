@@ -10,6 +10,8 @@ h1, h2, h3 {
     font-family: 'Open Sans', sans-serif;
 }
 /*  My style */
+.dl-horizontal dt {width: 100px;}
+.dl-horizontal dd {margin-left: 116px;}
 #mynavbar {
     background: transparent;
     border: none;

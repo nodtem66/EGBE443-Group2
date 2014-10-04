@@ -1,0 +1,408 @@
+<!--
+  Date: 14/9/2014
+  bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF
+-->
+<!DOCTYPE html>
+<html lang="en" manifest="app.appcache">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Project Report</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/blueimp-gallery.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-image-gallery.min.css">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+  </head>
+  <body>
+    
+  <header id="mynavbar" class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+            </button> <a href="../" class="navbar-brand">Group 2</a>
+
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="project1.html">Bun Camera</a></li>
+                    <li><a href="project2.html">Camera Selection</a></li>
+                    <li><a href="project3.html">Photography Study</a></li>
+                    <li><a href="project4.html">Image File Reading</a></li>
+                    <li><a href="project5.html">Histogram</a></li>
+                  </ul>
+                </li>
+                <li> <a href="#">About</a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="bs-header" id="content">
+    <div class="container">
+         <h1>Histogram<h1><h2>A Study in Image-processing Histogram</h2>
+        <p class="thai">การศึกษาเกี่ยวกับฮิสโตแกรมในงาน Image processing</p>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div class="bs-sidebar hidden-print" role="complementary">
+                <ul class="nav bs-sidenav">
+                  <li class="active"><a href="#myobjective">Objective</a></li>
+                  <li><a href="#mybackground">Histogram</a></li>
+                  <li><a href="#mymethod">Methods and Results</a></li>
+                  <li><a href="#mydisscussion">Discussion</a></li>              
+                  <li><a href="#myconclusion">Conclusion and Future Study</a></li>              
+                  <li><a href="#myqaa">Q&amp;A</a></li>
+                </ul>
+            </div>
+            <!-- end bs-sidebar -->
+        </div>
+        <!-- end col-md-3 -->
+        <div class="col-md-9 col-md-pull-3" id="mycontent">
+            <div>
+              <h1 id="myobjective">Objective</h1>
+              <ol class="thai">
+                <li>เพื่อให้ผู้เรียนได้ศึกษาและทำความเข้าใจเรื่อง Histrogram ของภาพ</li>
+                <li>เพื่อให้ผู้เรียนได้ทราบถึงการอ่านไฟล์ของภาพแต่ละประเภท</li>
+                <li>เพือให้ผู้เรียนสามารถนำความรู้มาประยุกต์ใช้ได้</li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mybackground">Histogram</h1>
+              <ol class="thai">
+                <li>
+                  <b>ความหมายของ Histogram คือ</b>
+                  <br>
+                  <p class="indent">การแสดงข้อมูลโดยใช้แผนภูมิกราฟแบบแท่ง โดยข้อมูลของแกนตั้งจะเป็นค่าความถี่ของข้อมูล และข้อมูลของแกนนอน จะเป็นข้อมูลของคุณสมบัติสิ่งที่เราสนใจ ในที่นี้ คือ จำนวนของ pixel สีนั้นๆ ของภาพที่สนใจ เรียกว่าระดับความสว่าง มักแบ่งเป็น 256 ระดับ (0-255) เรียกว่าระดับสีเทา หรือ gray level ยิ่งระดับ gray level มีค่าน้อย จะทำให้ pixel นั้นๆ จะยิ่งมีสีเข้ม (ความสว่างน้อย) ระดับสีของ pixel ที่นับ จึงจะอยู่ในระดับ ดำ - ขาว ตามการเรียงลำดับข้อมูลนั้นๆ จากค่าน้อยไปค่ามาก ตามรูปแบบของกราฟ Histogram ซึ่งในที่นี้ คือ จะเรียงลำดับจากพื้นที่ ที่มีความสว่าง จากสว่างน้อยไปสว่างมาก
+โดยการเรียงของข้อมูลนั้น จะมีเพื่อใช้ดูความแปรปรวนของกระบวนการของภาพที่สนใจ โดยการสังเกตรูปร่างของ Histogram ที่สร้างขึ้นจากข้อมูลที่ได้มาโดยการสุ่มตัวอย่าง</p>
+                </li>
+                <li>
+                  <b>ประโยชน์ของ Histogram คือ</b>
+                  <br>
+                  <p class="indent">Histogram มีประโยชน์ในการหาค่าของการแจกแจงความถี่ของข้อมูลของสิ่งที่เราต้องการวิเคราะห์ เพื่อวิเคราะห์ว่า ข้อมูลที่เราสนใจจะมีการแจกแจงความถี่หรือการกระจายของข้อมูลแบบใด เพื่อใช้ตรวจสอบคุณสมบัติของข้อมูล ตลอดจนการประมาณการลักษณะคุณภาพที่ได้จากการผลิต
+ข้อมูลที่ได้จาก Histogram นี้ จะแสดงค่าความเบี่ยงเบนของข้อมูล ว่ามีลักษณะการกระจายตัว เป็นแบบระฆังคว่ำ (Normal Distribution) หรือไม่ หรือมีความเบี่ยงเบนไปทางบวกหรือลบ หรือมีลักษณะรูปแบบแบบฟันเลื่อย หรือแบบหน้าผา เป็นต้น ทำให้มองเห็นว่าความเบี่ยงเบนที่เกิดขึ้นจาก Normal Distribution ควรจะแก้ไขอย่างไร</p>
+                  <p class="indent">Histogram จะใช้เพื่อตรวจสอบความผิดปกติ โดยดูการกระจายของกระบวนการทำงาน หรือเมื่อต้องการเปรียบเทียบข้อมูลกับเกณฑ์ที่กำหนด หรือค่าสูงสุด-ต่ำสุด โดยสามารถตรวจสอบสมรรถนะของกระบวนการทำงาน (Process Capability) และจะมีประโยชน์มากยิ่งขึ้นเมื่อข้อมูลมีจำนวนมาก</p>
+                </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mymethod">Medthods</h1>
+              <ol class="thai">
+                <li><h4>Histrogram ของ DICOM file</h4>
+                <p class="indent">เริ่มต้นด้วยการเปิดไฟล์ DICOM เข้าโปรแกรม MATLAB โดยการใช้ <code>dicomread</code> จากนั้น ฟังก์ชั่น <code>myBW()</code> จะคำนวณหา Histrogram ของภาพ DICOM ที่ใส่เข้าไป จากนั้นนำค่าที่ได้มาพลอตกราฟ</p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project5/DICOM/DICOM_hist.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project5/DICOM/myBW.m"></script></p>
+                <p>
+                  <figure>
+                    <img src="img/project5/dicom/dicom - pic.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพ DICOM ที่ใช้</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="img/project5/dicom/dicom - hst.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">กราฟ Histrogram ที่ได้</figcaption>
+                  </figure>
+                </p>
+                </li>
+                <li class="offset-above-2"><h4>Histrogram ของ LSM file</h4>
+                  <p class="indent">โปรแกรมจะทำการ addpath ของฟังก์ชั่นที่ใช้อ่าน .lsm ให้เรียบร้อยแล้ว จากนั้นทำการ Input file.lsm ใส่ฟังก์ชั่น <code>mylsm()</code> เพื่อทำการอ่านภาพที่ต้องการ ฟังก์ชั่น <code>mylsm()</code> จะ return ค่าออกมา 4 ค่า คือ R,G,B และภาพที่รวมกันเรียบร้อยแล้ว ในที่นี้เราสนใจเพียงแค่ R,G และ B เท่านั้น นำตัวแปร pic_1, pic_2 และ pic_3 ซึ่งเก็บค่า R, G และ B ตามลำดับมาใส่ในฟังก์ชั่น <code>myBW()</code> เพื่อทำการคำนวณหาค่า histrogram จากนั้น plot ค่าที่ได้</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project5/LSM/mylsm.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/lsm - pic.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพตัวอย่างที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/lsm - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4>Histrogram ของภาพถ่ายทั่วไป</h4>
+                  <p class="indent">ในที่นี้จะทำการหาค่า Histrogram ของภาพถ่ายทั้งแบบภาพ Black and white และภาพสี RGB โดยขั้นแรกจะเริ่มจากจาก import ไฟล์รูป และใช้คำสั่ง <code>rgb2grey()</code> เพื่อเปลี่ยนภาพสีให้เป็นขาวดำ จากนั้น ใช้ฟังก์ชั่น <code>myBW()</code> เพื่อคำนวณหาค่า Histrogram และ plot</p>
+                  <p class="indent">นอกจากนี้ภาพถ่ายทั่วไปที่เห็นนั้นเป็นภาพสี RGB เราสามารถนำมาหาค่า Histrogram ได้โดยการ import ภาพเข้าสู่โปรแกรมเสียก่อน จากนั้นนำตัวแปรที่เก็บภาพมาแยกเป็น R G B โดยเก็บไ้ว้ในแต่ละตัวแปร จากนั้นใช้ฟังก์ชั่น <code>myRGB()</code> เพื่อทำการคำนวณหาค่า Histrogram ของภาพถ่าย RGB นี้ และนำมา plot</p>
+                  <p class="indent">ในตัวอย่างนี้จะใช้ภาพถ่ายของสมาชิกแต่ละคนภายในกลุ่มเพื่อหา Histrogram ทั้งแบบ grey scle และ RGB โดยภาพที่ใช้หา Histrogram จะมีการเปรียบเทียบกับฟังก์ชั่น <code>imhist</code> ของ MATLAB</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project5/Member%20photo/myRGB.m"></script></p>
+                  <!-- Jong -->
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Jong - BW.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Jong - BW - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Jong - RGB.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Jong - RGB - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ในแต่ละ Layer Red (R), Green (G), และ Blue (B) ที่ได้จากภาพตามลำดับแถว(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                  </p>
+                  <!-- Lhon -->
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Lhon - BW.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Lhon - BW - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Lhon - RGB.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Lhon - RGB - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ในแต่ละ Layer Red (R), Green (G), และ Blue (B) ที่ได้จากภาพตามลำดับแถว(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                  </p>
+                  <!-- Parn -->
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Parn - BW.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Parn - BW - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Parn - RGB.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Parn - RGB - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ในแต่ละ Layer Red (R), Green (G), และ Blue (B) ที่ได้จากภาพตามลำดับแถว(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                  </p>
+
+                  <!-- Ping -->
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Ping - BW.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Ping - BW - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Ping - RGB.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Ping - RGB - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ในแต่ละ Layer Red (R), Green (G), และ Blue (B) ที่ได้จากภาพตามลำดับแถว(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                  </p>
+
+                  <!-- Print -->
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Print - BW.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Print - BW - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Print - RGB.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Print - RGB - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ในแต่ละ Layer Red (R), Green (G), และ Blue (B) ที่ได้จากภาพตามลำดับแถว(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                  </p>
+
+                  <!-- Ting -->
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Ting - BW.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Ting - BW - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Ting - RGB.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Ting - RGB - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ในแต่ละ Layer Red (R), Green (G), และ Blue (B) ที่ได้จากภาพตามลำดับแถว(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                  </p>
+
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Ton - BW.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Ton - BW - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ที่ได้(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                    </figure>
+                  </p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/member/Ton - RGB.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ใช้</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/member/Ton - RGB - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ค่า Histrogram ในแต่ละ Layer Red (R), Green (G), และ Blue (B) ที่ได้จากภาพตามลำดับแถว(ขวา) เปรียบเทียบกับฟังก์ชั่น imhist() (ซ้าย) ของ MATLAB</figcaption>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4>Histrogram โดยจับภาพจาก Webcam camera แบบ real-time</h4>
+                  <p class="indent">เริ่มแรกด้วยการรับค่าจากกล้อง Webcam ก่อนด้วยคำสั่ง <code>videoinput()</code> และ <code>set(input, 'ReturnedColorSpace', 'grayscale');</code>  เพื่อเปลี่ยนภาพที่ได้เป็น grey scale โดยโปรแกรมจะทำงานใน loop ไปเรื่อยๆจนกว่าจะกดปุ่มเพื่อหยุดการทำงาน ในขณะที่โปรแกรมทำงาน จะมีการรับภาพจากกล้องมาใส่ตัวแปร vid และทำการคำนวณ Histrogram ของ frame นั้นด้วยฟังก์ชั่น <code>myBW()</code> และทำการ plot แบบ real-time</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project5/Webcam/Webcam_hist.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project5/Webcam/stop.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/webcam1.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ตัวอย่างภาพจาก video ที่ใช้ (บน) และกราฟด้านล่างเป็นค่า histrogram ของ R,G และ B ตามลำดับ (ล่าง)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/webcam2.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ตัวอย่างภาพจาก video ที่ใช้ (บน) และกราฟด้านล่างเป็นค่า histrogram ของ R,G และ B ตามลำดับ (ล่าง)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/webcam3.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ตัวอย่างภาพจาก video ที่ใช้ (บน) และกราฟด้านล่างเป็นค่า histrogram ของ R,G และ B ตามลำดับ (ล่าง)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/webcam4.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ตัวอย่างภาพจาก video ที่ใช้ (บน) และกราฟด้านล่างเป็นค่า histrogram ของ R,G และ B ตามลำดับ (ล่าง)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/webcam5.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ตัวอย่างภาพจาก video ที่ใช้ (บน) และกราฟด้านล่างเป็นค่า histrogram ของ R,G และ B ตามลำดับ (ล่าง)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project5/webcam6.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ตัวอย่างภาพจาก video ที่ใช้ (บน) และกราฟด้านล่างเป็นค่า histrogram ของ R,G และ B ตามลำดับ (ล่าง)</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4>Histrogram ของไฟล์ Video แบบ real-time</h4>
+                  <p class="indent">ในตัวอย่างนี้เป็นการนำไฟล์ .avi ซึ่งเป็นภาพสี RGB มาทำการหา histrogram แบบ real-time โดยหลักการจะคล้ายกับกับหา histrogram ของภาพสีธรรมดา เริ่มต้นโดยการ import video เข้า MATLAB โดยจะมีตัวแปรที่เก็บภาพที่ frame ต่างๆของ video ไว้ เราจะนำมาแยกเป็นตัวแปรที่เก็บค่า R,G และ B จากนั้นโปรแกรมจะรันใน loop ไปเรื่อยๆเป็นจำนวน n frames โดยภายใน loop จะทำการคำนวณหาค่า Histrogram ด้วยฟังก์ชั่น <code>myRGB()</code> และจะ return ค่า Histrogram ออกมา 3 ค่า คือค่าของ R,G และ B นั่นเอง</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project5/Video%20histrogram/video002.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project5/Video - hist.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ตัวอย่างภาพจากวีดิโอ (บน) และกราฟด้านล่างเป็นค่า histrogram ของ R,G และ B ตามลำดับ (ล่าง)</figcaption>
+                    </figure>
+                  </p>
+                </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+                <p class="indent thai">จากตัวอย่างการหา histrogram ภาพแบบต่างๆนั้น หากภาพที่นำเข้ามามีขนาดที่ใหญ่มาก อาจจะทำให้เกิดปัญหาเวลาประมวลผลจะต้องใช้เวลานานในคอมพิวเตอร์ที่ความสามรถไม่สูงนัก และโดยเฉพาะการหา Histrogram ของ Video และ Webcam แบบ real-time ซึ่งหากมี fps มาก ก็จะส่งผลในเรื่องความช้าของการประมวลผล ทำให้ผลที่ได้นั้นไม่ใกล้เคียงกับ real-time</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myconclusion">Conclusion and Future Study</h1>
+                <p class="indent thai offset-above-2">ผลจากการอ่านภาพแต่ละประเภทเราสามารถรู้ข้อมูลเกี่ยวกับภาพเพื่อนำมาวิเคราะห์ภาพที่เกิดขึ้นโดยสามารถวิเคราะห์ได้ทั้ง grayscale และ RGB โดยใช้วิธีการ histogram พร้อมทั้งเปรียบเทียบกับ histogram ที่เป็นฟังช์ชันใน MATLAB เพื่อวิเคราะห์ความเหมือนและแตกต่างกันในแต่ภาพ</p>
+                <p class="indent thai">ในอนาคตเราสามารถนำ histogram มาจับการเคลื่อนไหวในแบบ real-time system เพื่อสร้างระบบที่สามารถแยกแยะสีที่เกิดขึ้นได้และสามารถนำไปใช้กับอุปกรณ์การแพทย์แบบ telemedicine ได้ในอนาคต นอกจากนี้ ถ้ามีการพัฒนาเทคโนโลยีที่ก้าวหน้ากว่าในปัจจุบัน ก็สามารถนำไปประยุกต์ด้านการทหารเพื่อตรวจจับวัตถุแปลกปลอมได้</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myqaa">Q&amp;A</h1>
+                <dl class="dl-horizontal">
+                  <p>
+                    <dt>Question 1:</dt>
+                    <dd>ชนิดของแสงภายในภาพหนึ่งๆสามารถแบ่งออกได้เป็นกี่ประเภท อะไรบ้างจงอธิบาย</dd>
+                    <dt>Answer:</dt>
+                    <dd><p>สามารถแบ่งออกได้เป็น 3 ประเภทใหญ่ๆ ได้แก่ <b>Shadows, Midtones และ Highlights</b>
+                      <ul>
+                      <li><b>Shadow</b> เป็นส่วนมืดของภาพ ทำให้เห็นรายละเอียดไม่ค่อยชัด มักจะตกอยู่ในเงาของสิ่งต่างๆภายในภาพ</li>
+                      <li><b>Midtone</b> เป็นแสงส่วนที่ตามนุษย์สามารถมองเห็นได้โดยไม่แสบตา ซึ่งแสงโดยมากในชีวิตประจำวัน จะอยู่ในช่วงนี้</li>
+                      <li><b>Highlight</b> เป็นส่วนที่สว่างที่สุดของภาพ หากเพ่งไปที่บริเวณนี้จะรู้สึกแสบตา ทำให้เห็นรายละเอียดไม่ค่อยชัด</li>
+                      <ul></p>
+                      <figure>
+                        <img src="img/project5/histoq.png" height="168" width="422" class="img-thumbnail offset-above-1">
+                      </figure>
+                      </dd>
+                  </p>
+                  <p>
+                    <dt>Question 2:</dt>
+                    <dd>Histogram มีประโยชน์อย่างไรต่อการถ่ายภาพ</dd>
+                    <dt>Answer:</dt>
+                    <dd>ในยุคปัจจุบันกล้องจำพวก DSLR สามารถแสดง histogram ของภาพที่เลนส์กำลังจับอยู่ได้ ดังนั้นก่อนการถ่ายภาพ เพื่อให้ได้ภาพที่สวยงาม จึงควรดูปริมาณแสงให้อยู่ในช่วง midtone นั้นมีมากกว่าช่วง highlight และ shadow</dd>
+                  </p>
+                  <p>
+                    <dt>Question 3:</dt>
+                    <dd>หากภาพมีค่า histogram ไม่เหมาะสม จะก่อให้เกิดผลเสียอย่างไร</dd>
+                    <dt>Answer:</dt>
+                    <dd>กล้องโดยทั่วไปแล้วจะมีจุดด้อยในการจับรายละเอียดของภาพในที่มืดและในที่สว่าง โดยรายละเอียดในที่มืดมักจะถูก noise รบกวน ทำให้สีที่ได้เพี้ยน ทำให้คุณภาพของภาพที่ได้ลดลง ส่วนจุดด้อยในการจับรายละเอียดของภาพในที่สว่างคือ รายละเอียดของภาพจะหายไปในบริเวณที่มีค่า highlight สูง เรียกว่า clipped highlight หรือ overblown highlights</dd>
+                  </p>
+                </dl>
+            </div>
+        </div>
+        <!-- end col-md-9 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="">
+        <h1>Members</h1>
+        <dl><dd>Mr. Thanawin Trakoolwilaiwan 5413085</dd>
+          <dd>Mr. Jongsook Sanguantrakul 5413337</dd>
+          <dd>Mr. Jirawat Iamsamang 5413341</dd>
+          <dd>Mr. Chaiyakorn Thongchanasin 5413346</dd>
+          <dd>Miss Tanyaporn Pungrasmi 5413355</dd>
+          <dd>Miss Pavinee Jaturapisanukul 5413365</dd>
+          <dd>Mr. Rattapong Lordthong 5413367</dd>
+          </dl>
+          <p>Department of Biomedical Engineering</p>
+          <p>Faculty of Engineering, Mahidol University</p>
+      </div>
+    </div>
+  </div>
+</footer>
+  <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.blueimp-gallery.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+    <script src="js/scripts.js?122"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansthai.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,700' rel='stylesheet' type='text/css'>
+  </body>
+</html>

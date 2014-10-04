@@ -41,6 +41,7 @@
                     <li><a href="project2.html">Camera Selection</a></li>
                     <li><a href="project3.html">Photography Study</a></li>
                     <li><a href="project4.html">Image File Reading</a></li>
+                    <li><a href="project5.html">Histogram</a></li>
                   </ul>
                 </li>
                 <li> <a href="#">About</a>
@@ -92,7 +93,7 @@
 fucntion : A = imread(filename, fmt)
 </pre>
                 <p class="indent">ภาพนามสกุล LSM จะประกอบ 2 ส่วนคือ header (meta data) และ tiff จึงสามารถเปิดโดย <a href="http://www.mathworks.com/matlabcentral/fileexchange/8412-lsm-file-toolbox">LSM ToolBox</a> และฟังชั่นใน Matlab ที่ชื่อว่า <code>imread</code> ตามลำดับ</p>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/mylsm.m"></script>     </p>    
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project4/mylsm.m"></script>     </p>    
                 </li>
                 <li><h4>DICOM File</h4>
                 <p class="indent">DICOM หรือ Digital Imaging and Communications in Medicine เป็นมาตรฐานของไฟล์รูปภาพทางการแพทย์ เช่น MRI, CT scan, CR และ Ultrasound เป็นต้น โดยอุปกรณ์เครื่องมือแพทย์รุ่นใหม่ๆจะสนับสนุนมาตรฐานนี้ และเมื่อภาพถ่ายทางการแพทย์มีมาตรฐานเดียวกัน จึงทำให้สามารถส่ง แลกเปลี่ยน และใช้ได้ในเครื่องมือแพทย์ และโปรแกรมที่ใช้ในการแพทย์ แม้มาจากต่างบริษัทกัน โดย DICOM จะประกอบด้วย header ของไฟล์ ซึ่งจะบอกถึงข้อมูลของภาพ เช่น ความกว้าง ความยาว ชนิดของภาพ และข้อมูลของผู้ป่วย เช่น ชื่อ นามสกุล หรืออื่นๆ</p>
@@ -100,7 +101,7 @@ fucntion : A = imread(filename, fmt)
                     <pre class="code">Keyword
 fucntion : X = dicomread(filename)
 </pre>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/dicom001.m">
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project4/dicom001.m">
 </script></p>
                 </li>
                 <li><h4>Video .AVI</h4>
@@ -109,7 +110,7 @@ fucntion : X = dicomread(filename)
 fucntion : obj = VideoReader(filename)
 </pre>
                 <p class="indent">อ่านไฟล์วิดีโอทั้งหมดที่รองรับ รับค่าข้อมูลทั้งหมดของวิดีโอ แล้วสามารถนำไปประยุกต์ใช้ทำงานได้ เพื่อเล่นกับฟังก์ชั่นในimage processingต่างๆได้มากมาย</p>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/video002.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project4/video002.m"></script></p>
                 </li>
                 <li><h4>WEBCAM</h4>
                 <p class="indent">กล้อง Webcam เป็นกล้องที่ใช้บันทึกวิดีโอ เชื่อมต่อกับคอมพิวเตอร์ และสามารถบันทึกได้แบบ real-time มีทั้งแบบ มีสายและแบบไร้สาย ราคาก็มีตั้งแต่หลักร้อยขึ้นไป เซ็นเซอร์รับภาพที่ใช้จะมีแบบ CCD และ CMOS</p>
@@ -117,7 +118,7 @@ fucntion : obj = VideoReader(filename)
 fucntion : obj = videoinput(adaptorname)
 </pre>
                 <p class="indent">ตัวช่วยเพื่อให้เปิดกล้องในคอมพิวเตอร์ เพียงแค่จะมีค่าพารามิเตอน์หลายตัวที่ต้องใช้ประกอบ ต้องตั้งค่าพารามิเตอร์หน้าจอให้ตรงกับคอมพิวเตอร์ จึงจะใช้งานได้ และสามารถปรับความใหญ่ของจอที่แสดง</p>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/webcam.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project4/webcam.m"></script></p>
                 </li>
               </ol>
             </div>
