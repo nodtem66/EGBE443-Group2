@@ -25,6 +25,8 @@ h1, h2, h3 {
 .center {text-align: center;}
 .left {float:left;}
 .right {float:right;}
+.wide {width:100%;}
+.pad-1 {padding: 1em;}
 .offset-left-1 {margin-left: 1em;}
 .offset-above-1 {margin-top: 1em;}
 .offset-below-1 {margin-bottom: 1em;}

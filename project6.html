@@ -1,0 +1,370 @@
+<!--
+  Date: 14/9/2014
+  bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Project Report</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/blueimp-gallery.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-image-gallery.min.css">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//vjs.zencdn.net/4.9/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.9/video.js"></script>
+  </head>
+  <body>
+    
+  <header id="mynavbar" class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+            </button> <a href="../" class="navbar-brand">Group 2</a>
+
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="project1.html">Bun Camera</a></li>
+                    <li><a href="project2.html">Camera Selection</a></li>
+                    <li><a href="project3.html">Photography Study</a></li>
+                    <li><a href="project4.html">Image File Reading</a></li>
+                    <li><a href="project5.html">Histogram</a></li>
+                    <li><a href="project6.html">Point Operation</a></li>
+                  </ul>
+                </li>
+                <li> <a href="#">About</a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="bs-header" id="content">
+    <div class="container">
+         <h1>Point Operation</h1>
+        <p class="thai">การศึกษาการทำ Point operation ใน Image processing</p>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div class="bs-sidebar hidden-print" role="complementary">
+                <ul class="nav bs-sidenav">
+                  <li class="active"><a href="#myobjective">Objective</a></li>
+                  <li class="active"><a href="#mybackground">Background</a></li>
+                  <li><a href="#mymethod">Methods</a>
+                    <ul>
+                      <li><a href="#method1">ปรับค่า Brightness ของภาพ</a></li>
+                      <li><a href="#method2">การทำ Inverting Image</a></li>
+                      <li><a href="#method3">การทำ Thresholding</a></li>
+                      <li><a href="#method4">การทำ Auto Contrast</a></li>
+                      <li><a href="#method5">การทำ Histogram equalization</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#result">Results</a></li>
+                  <li><a href="#mydisscussion">Discussion</a></li>              
+                  <li><a href="#myconclusion">Conclusion and Future Study</a></li>              
+                  <li><a href="#myqaa">Q&amp;A</a></li>
+                </ul>
+            </div>
+            <!-- end bs-sidebar -->
+        </div>
+        <!-- end col-md-3 -->
+        <div class="col-md-9 col-md-pull-3" id="mycontent">
+            <div>
+              <h1 id="myobjective">Objective</h1>
+              <ol class="thai">
+                <li>เพื่อปรับค่า Brightness ของภาพโดยผ่าน histogram</li>
+                <li>เพื่อศึกษาการทำ Inverting image</li>
+                <li>เพื่อศึกษาการทำ Thresholding</li>
+                <li>เพื่อศึกษาการทำ Autocontrast</li>
+                <li>เพื่อศึกษาการทำ Histogram equalization</li>
+              </ol>
+            </div>
+
+            <hr>
+            <div>
+              <h1 id="mybackground">Background</h1>
+              <p class="indent">Point Operation คือการกระทำบน pixel โดยตรงบนภาพ (Spatial domain processing)</p>
+              <p>$$ \begin{equation} \label{ref1} g(x,y) = T [ f(x,y) ] \end{equation} $$</p>
+              <p class="indent">\(f(x,y)\) คือ input image ที่ขึ้นกับตัวแปรต่างๆเช่นตำแหน่ง x,y \(g(x,y)\) คือ output (ที่ process แล้ว) image และ \(T\) เป็นการกระทำ (Operation ต่างๆบน \(f\) ในกรณี neighborhood พิจารณาเฉพาะขนาด 1x1 (1 pixel) \(g(x,y)\)
+              ขึ้นอยู่กับ intensity ของรูปภาพ \(f\) ณตำแหน่ง x,y ดังภาพ เกิดเป็น Point Operation และเรียก \(T\) ว่า intensity transfomation function <a href="#myref">(Gonzalez Woods, 2002)</a></p>
+              <p class="indent">ในกรณีของ Point Operation เพื่อความสะดวกให้ r เป็น intensity ณ ตำแหน่ง x,y ใดๆของรูปภาพต้นฉบับ และ s เป็น intensity ณ ตำแหน่ง x,y ใดๆของรูปภาพผลลัพธ์ Point Operation สามารถลดรูปจาก \eqref{ref1} ได้เป็นสมการดังนี้</p>
+              <p>$$ \begin{equation} s = T(r) \end{equation} $$</p>
+              <p>
+                <figure class="wide center">
+                  <img src="img/project6/bg1.png" height="350" width="380" class="img-thumbnail offset-above-2 pad-1 offset-below-1">
+                  <figcaption style="width:100%;text-align:center;">ภาพแสดงตำแหน่ง f(x,y) บนแกน</figcaption>
+                </figure>
+              </p>
+
+            </div>
+            <hr>
+            <div>
+              <h1 id="mymethod">Medthods</h1>
+              <ol>
+                <li><h4 id="method1">ปรับค่า Brightness ของภาพ</h4>
+                <p class="indent thai">หลักการของการปรับ Brightness ของภาพ คือ การเพิ่มค่าหรือลดค่าของแต่ละจุดของภาพ เช่นการบวก หรือ การคูณค่าคงที่เข้าไปเท่าๆกันที่ทุกจุด โดยค่า maximum ที่รับได้ของภาพก็ขึ้นอยู่กับ bit depth ของภาพ เช่น ถาพขนาด 8 bit จะสามารถเพิ่มค่าได้ไม่เกิน 255 นั่นหมายถึง หากค่าเกินมากกว่านี้ ค่าที่ได้ก็จะหยุดอยู่แค่ 255 นั่นเอง</p>
+                <p>$$ \begin{align} 
+                  s& = r + K\\
+                  s& = rK
+                  \end{align} $$</p>
+                  <p>เมื่อ K เป็นค่าคงที่ใด</p>
+                <p class="indent thai">โค้ดที่นำมาใช้ในตัวอย่างนี้จะแสดงการปรับ Brightness ของภาพโดยการบวกและการคูณค่าคงที่เข้าไปที่ทุกๆ pixel ของภาพ โดยเริ่มจากการ Import ภาพเข้ามาก่อนและปรับภาพ RGB เป็น Gray scale จากนั้นทำการปรับ Brightness โดยใช้ฟังก์ชั่น <code>setContrast()</code> โดยในตัวอย่างนี้จะทำการเปรียบเทียบภาพที่ได้จากการบวกและการคูณค่าคงที่เข้าไป โดยใช้ฟังก์ชั่น <code>myBW()</code> เพื่อเปรียบเทียบค่า Histrogram</p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project6/setContrast.m"></script></p>
+                <p class="indent thai">ภาพด้านล่างนี้เป็นการบวกและคูณทุกๆจุดของภาพด้วย 5 โดยภาพบนซ้ายคือ Original image, ภาพทางซ้ายตรงกลางคือ ภาพที่เกิดจากการบวกค่าคงที่ และภาพล่างซ้ายคือ ภาพที่เกิดจากการคูรค่าคงที่ ส่วนด้านขวามือจะเป็น Histrogram ของแต่ละภาพ จะเห็นว่าภาพที่ได้จากการคูณจะสว่างมากกว่าภาพที่ได้เจากการบวก และ Histrogram ขยับไปทางด้านขวาที่ค่า 255 จำนวนมาก</p>
+                <p>
+                  <figure>
+                    <img src="img/project6/1.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพแสดงการเปลี่ยนแปลงแบบโดยใช้การบวกขึ้นทีละ 100 จากต้นฉบับ (บน) ถึง +200 (ล่าง)</figcaption>
+                  </figure>
+                  <figure>
+                    <img src="img/project6/2.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพแสดงการเปลี่ยนแปลงแบบโดยใช้การคูณขึ้นทีละ 100 จากต้นฉบับ (บน) ถึง *10000 (ล่าง)</figcaption>
+                  </figure>
+                </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method2">การทำ Inverting Image</h4>
+                  <p class="indent thai">อธิบายหลักการทำ inverting ของภาพอย่างง่าย คือ การที่นำค่าที่แต่ละจุดของภาพมาทำกลับจาก 0 เป็น 100 และจาก 100 กลายเป็น 0 ยกตัวอย่างเช่น ภาพภาพหนึ่งขนาด 8 bit และมีค่าแต่ละจุดของภาพที่ 0, 100, 200 และ 255 ภาพนี้มีค่า maximum = 255 เมื่อทำการ Inverting จะได้ค่าใหม่ที่แต่ละจุดเป็น 255, 155, 55 และ 0 ตามลำดับ ดังนั้นภาพใหม่ที่ได้ก็จะกลับสีขาวเป็นสีดำ</p>
+                  <p>$$ \begin{equation} s = L - 1 - r \end{equation} $$ เมื่อรูปภาพมี intensity level ในช่วง \([0, L-1]\)</p>
+                  <p class="indent">โค้ดตัวอย่างนี้ได้ทำการ Inverting ภาพตัวอย่าง โดยการทำงานจะเริ่มจากการ Import รูปภาพเข้ามา และเปลี่ยนภาพ RGB ให้เป็น Gray Scale จากนั้นตรวจสอบว่าภาพนี้มีขนาดมากที่สุดเท่าไร และนำค่านั้นมาลบด้วยค่าที่แต่ละจุดของภาพ และจะได้ค่าของภาพใหม่ จากนั้นนำมา Plot ภาพและ กราฟ Histrogram จะเห็นได้ว่า กราฟ Histrogram สลับค่าจากซ้ายเป็นขวาและขวาเป็นซ้าย นั่นคือการ Invering Image นั่นเอง (ฟังก์ชั่น <codE>myBW()</code> ใช้สำหรับหา Histrogram ของภาพ Gray Scale)</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project6/Inverting.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project6/3.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนซ้ายแสดง Original image และถัดไปด้านขวาเป็น Histrogram ของ Original image ส่วนภาพด้านล่างซ้ายแสดง Inverting Image และล่างขวาเป็น Histrogram ของ Inverting image</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method3">การทำ Thresholding</h4>
+                  <p class="indent thai">อธิบายหลักการทำ inverting ของภาพอย่างง่าย คือ การที่นำค่าที่แต่ละจุดของภาพมาทำกลับจาก 0 เป็น 100 และจาก 100 กลายเป็น 0 ยกตัวอย่างเช่น ภาพภาพหนึ่งขนาด 8 bit และมีค่าแต่ละจุดของภาพที่ 0, 100, 200 และ 255 ภาพนี้มีค่า maximum = 255 เมื่อทำการ Inverting จะได้ค่าใหม่ที่แต่ละจุดเป็น 255, 155, 55 และ 0 ตามลำดับ ดังนั้นภาพใหม่ที่ได้ก็จะกลับสีขาวเป็นสีดำ</p>
+                  <p>$$ \begin{equation} s = \left\{ \begin{array}{1 1}
+                    1 & \quad \text{r $\in{[a,b]}$}\\
+                    0 & \quad \text{otherwise}
+                    \end{array}
+                    \right. \end{equation} $$ 
+                    เมื่อ \(s,r\) อยู่ในช่วง \([0,1]\)</p>
+                    <p class="indent thai">โค้ดตัวอย่างจะรับภาพ RGB ต่อจากนั้นจะคัดลอกภาพRGBแปลงเป็นภาพ GrayScale กระบวนการของการทำThresholdingจะทำโดยกำหนดช่วงภาพRGB ในของเขตค่าที่ต้องการจะตรวจจับ เมื่อpixelที่ตำแหน่งใดๆตรงกับที่ต้องการ จะทำการเปลี่ยนค่าpixelนั้นในภาพGrayScaleเป็น 255 และเมื่อ pixel ที่ตำแหน่งใดๆไม่ตรงกับบริเวณที่ต้องการ จะทำการเปลี่ยนค่า pixel นั้นในภาพ GrayScale เป็น 0</p>
+                    <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project6/Thresholding.m"></script></p>
+                    <figure>
+                      <img src="img/project6/Thresholding_T001.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนแสดง Original image และด้านล่างเป็นภาพจากการทำ Thresholding</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project6/Thresholding_T002.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนแสดง Original image และด้านล่างเป็นภาพจากการทำ Thresholding</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method4">การทำ AutoContrast</h4>
+                  <p class="indent thai">หลักการปรับภาพแบบ Autocontrast คือ การลดสเกลของcontrastมาในจุดที่เห็นแสงสีของภาพชัดเจนที่สุด โดยจะเลือกของที่มีค่าhistogramในปริมาณสูงๆ เนื่องจากที่จุดนั้นจะมีค่าของสีมากกว่าบริเวณอื่นๆของภาพ และขยับขอบซ้าย-ขวาของสเกลมา จึงได้สเกลcontrastที่เล็กลง</p>
+                  <p>$$ \begin{equation} s = \frac{-cos(r\pi) + 1}{2} \end{equation} $$ เมื่อ \(s,r\) อยู่ในช่วง \([0,1]\)</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project6/AutoContrast.m"></script></p>
+                   <p>
+                    <figure>
+                      <img src="img/project6/AutoContrast_ting.jpg" height="420" width="561" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนซ้ายแสดง Original image และถัดไปด้านขวาเป็น Histrogram ของ Original image ส่วนภาพด้านล่างซ้ายแสดง AutoContransting Image และล่างขวาเป็น Histrogram ของ Inverting image</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method5">การทำ Histogram equalization</h4>
+                  <p class="indent thai">หลักการปรับภาพแบบ Histogram equalization คือ การปรับ contrast ของภาพด้วยการเปลี่ยนแปลงค่าของ pixel โดยจะใช้วิธี ฟังช์ชั่นการกระจายสะสม ในการทำให้ภาพเกิดความสมดุลและ ภาพมี dynamic สำหรับภาพ หลังจากการทำ equalization ซึ่งวิธีการนี้มีทั้งข้อดีและข้อเสีย โดยข้อดีของวิธีการนี้คือ การปรับภาพให้ชัดเจนมากขึ้นและทำให้ภาพมีความสมดุลมีนความลึกของภาพ ส่วนข้อเสียนั้น การปรับภาพวิธีการนี้ จะทำให้ pixel ผิดแปลกไปจากเดิมในบางกรณี ยกตัวอย่างเช่นการเกิดภาพขอบดำ</p>
+                  <p>$$ \begin{equation} \begin{split}
+                   s_k& = T(r_k)\\
+                   & = (L-1) \sum^k_{j=0}{p_r(r_k)}\\
+                   & = \frac{(L-1)}{N} \sum^k_{j=0}{n_j} \quad k = 0,1,2,...,L-1
+                   \end{split} \end{equation} $$
+                  เมื่อ \(n_j\) เป็นจำนวน pixel ที่ intentsity level <i>j</i> และ N เป็นจำนวน pixel ทั้งหมด</p>
+                </li>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project6/myhisteq.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project6/myhisteq_demo.m"></script></p>
+                 <p>
+                    <figure>
+                      <img src="img/project6/bbb_EQ.jpg" height="420" width="561" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) ภาพแถวที่ 2 แสดงภาพที่ปรับแล้วโดย <code>myhisteq</code>(ซ้าย) และ Histogram (ขวา) เปรียบเทียบกับภาพที่ได้จาก <code>histeq</code> ของ MATLAB (ล่าง)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project6/tire_EQ.jpg" height="350" width="640" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:640px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) ภาพแถวที่ 2 แสดงภาพที่ปรับแล้วโดย <code>myhisteq</code>(ซ้าย) และ Histogram (ขวา) เปรียบเทียบกับภาพที่ได้จาก <code>histeq</code> ของ MATLAB (ล่าง)</figcaption>
+                    </figure>
+                  </p>
+              </ol>
+            </div>
+            <div>
+              <h1 id="myresult">Results</h1>
+              <ol>
+              <li><b>LSM</b>
+                <p>
+                  <figure>
+                      <img src="img/project6/auto1.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากทำ autocontrast (ล่าง)</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/bright1.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากการปรับเพิ่มความส่วาง (ล่าง)</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/invert1.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังการ Invert</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/threshold.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากทำ Thresholding</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/lsm_eq.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากทำ Histogram Equalization จาก <code>myhisteq</code> (แถวที่สอง) และจาก <code>histeq</code> ของ MATLAB (ล่าง)</figcaption>
+                  </figure> 
+                </p>
+              </li>  
+              <li><b>DICOM</b>
+                <p>
+                  <figure>
+                      <img src="img/project6/autocontrast_dcm.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากทำ autocontrast (ล่าง)</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/bright_dcm.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากการปรับเพิ่มความส่วาง (ล่าง)</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/invert_dcm.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังการ Invert</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/threshold_dcm.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากทำ Thresholding</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project6/eq_dcm.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพบนสุดแสดง Original image (ซ้าย) และ Histrogram (ขวา) เปรียบเทียบกับภาพหลังจากทำ Histogram Equalization จาก <code>myhisteq</code> (แถวที่สอง) และจาก <code>histeq</code> ของ MATLAB (ล่าง)</figcaption>
+                  </figure> 
+                </p>
+              </li>  
+              <li><b>Point Operation บน AVI Video</b>
+                <p class"indent">เรียงจาก
+                  <ul><li>Brightness แบบใช้การบวก</li>
+                  <li>Brightness แบบคูณ</li>
+                  <li>Invert</li>
+                  <li>Threshold</li>
+                  <li>Autocontrast</li>
+                  <li>Histogram Equalization</li>
+                </ul></p>
+                <p class="wide center">
+                  <video controls loop preload="auto" width="406" height="218"
+                 <source src="video/001.mp4" type='video/mp4' />
+                 <source src="video/001.webm" type='video/webm' />
+                </video>
+                </p>
+                
+              </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+              <p class="thai indent">จากการศึกษาเรื่องเทคนิคการปรับ contrast โดยวิธี poiont operation นี้ ในบางเทคนิคอาจจะต้องมีการพัฒนาต่อไปเช่น การทำ Thresholding นั้นอาจต้องมีการปรับปรุงให้สามารถ detect หน้าและกำหนด threshold ของภาพได้อัติโนมัติ เพื่อให้ง่ายต่อการใช้งาน</p>   
+            </div>
+            <hr>
+            <div>
+              <h1 id="myconclusion">Conclusion and Future Study</h1>
+              <p class="indent thai">จากการศึกษาวิธีการปรับภาพให้มีความคมชัดด้วยเทคนิคด้าน point operation ซึ่งแต่ละเทคนิคใช้หลักการของ Histrogram ที่ได้ทำการศึกษามาก่อนหน้านำมาใช้หลักการทางคณิตศาสตร์ในการสร้างภาพใหม่ หลักการนี้สามารถนำไปพัฒนาและต่อยอดได้ในเทคโนโลยีใหม่ที่นำ image processing มาใช้</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myqaa">Q&amp;A</h1>
+                <dl class="dl-horizontal">
+                  <p>
+                    <dt>Question 1:</dt>
+                    <dd>การทำ Image Improvement สามารถแบ่งออกเป็นกี่ประเภท อะไรบ้าง จงอธิบาย</dd>
+                    <dt>Answer:</dt>
+                    <dd>
+                      <ol>
+                      <li><b>Image Enhanncement</b> - เป็นการปรับภาพเพื่อให้เห็นความแตกต่างของรายละเอียดของภาพชัดเจนขึ้น
+                      <li><b>Image Restoration</b> -  การปรับภาพโดยการกู้ภาพเพื่อให้เห็นรายละเอียดในภาพได้ชัดเจนยิ่งขึ้น เช่น การปรับภาพเบลอ และการปรับภาพที่บิดเพี้ยนเชิงเรขาคณิต</li>
+                      <ol>
+                      </dd>
+                  </p>
+                  <p>
+                    <dt>Question 2:</dt>
+                    <dd>การทำ Image Processing ขั้นพื้นฐาน สามารถแบ่งออกได้เป็นกี่ประเภทใหญ่ๆ อะไรบ้าง จงอธิบาย</dd>
+                    <dt>Answer:</dt>
+                    <dd><ol>
+                      <li><b>Spartial-domain technique</b> โดยแบ่งเป็น Point operation และ Local operation</li>
+                      <li><b>Frequency-domain technique</b> โดยแบ่งเป็น Low pass filter และ High pass</li>
+                    </ol></dd>
+                  </p>
+                  <p>
+                    <dt>Question 3:</dt>
+                    <dd>Local operation คืออะไร จงอธิบาย</dd>
+                    <dt>Answer:</dt>
+                    <dd>เป็นการนำข้อมูลข้างเคียงของจุดที่สนใจมาพิจารณา โดยใช้หลักการ convolution mask หรือเป็นการใช้ template, window หรือ filter มา convolute กับภาพ มีประโยชน์ในการทำ blurring, sharpening, embossing, หรือ edge-detection</dd>
+                  </p>
+                  <p>
+                    <dt>Question 4:</dt>
+                    <dd>ถ้าเราต้องการถ่ายภาพลูกสนุกเกอร์ที่อยู่ที่มุมของโต้ะสนุกเกอร์ แต่ติดปัญหาเรื่องแสง หลังจากถ่ายภาพมาแล้ว ทำให้ภาพไม่คมชัด เราจะใช้วิธีไหนในการปรับ contrast ให้ได้ภาพที่คมชัดขึ้น</dd>
+                    <dt>Answer:</dt>
+                    <dd>เราควรใช้ histogram equalization และ Brightness ในการปรับแสงของภาพและทำให้ภาพเกิดความลึกของภาพทำให้ภาพดูสมจิงมากยิ่งขึ้น</dd>
+                  </p>
+                </dl>
+            </div>
+            <div>
+              <h1 id="myref">References</h1>
+              <p>[1] Gonzalez, R.C. and Woods, R.E. [2002]. <b>Digital Image Processing</b>, 2nd ed., Prentice Hall, Upper Saddle River, NJ.</p>
+              <p>[2] Hanselman, D. and Littlefield, B.R. [2001]. <b>Mastering MATLAB 6</b>, Prentice Hall, Upper Saddle River, NJ.</p>
+              <p>[3] <b>Image Processing Toolbox, User Guide, Version 4</b>. [2003], The MathWorks, Inc., Natick, MA.</p>
+              <p>[4] <b>Using MATLAB, Versoin 6.5 [2002]</b>, The MathWorks, Inc., Natick, MA.</p>
+            </div>
+        </div>
+        <!-- end col-md-9 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="">
+        <h1>Members</h1>
+        <dl><dd>Mr. Thanawin Trakoolwilaiwan 5413085</dd>
+          <dd>Mr. Jongsook Sanguantrakul 5413337</dd>
+          <dd>Mr. Jirawat Iamsamang 5413341</dd>
+          <dd>Mr. Chaiyakorn Thongchanasin 5413346</dd>
+          <dd>Miss Tanyaporn Pungrasmi 5413355</dd>
+          <dd>Miss Pavinee Jaturapisanukul 5413365</dd>
+          <dd>Mr. Rattapong Lordthong 5413367</dd>
+          </dl>
+          <p>Department of Biomedical Engineering</p>
+          <p>Faculty of Engineering, Mahidol University</p>
+      </div>
+    </div>
+  </div>
+</footer>
+  <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.blueimp-gallery.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+    <script src="js/scripts.js?122"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansthai.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,700' rel='stylesheet' type='text/css'>
+  </body>
+</html>
