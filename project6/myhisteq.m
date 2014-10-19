@@ -1,7 +1,10 @@
-function img = myhisteq(I)
-    img = double(I);
+function img = myhisteq(I, L)
+    img = I;
     % Generate T(r) from histogram
-    L = 2 ^ nextpow2( max(img(:)) );
+    if nargin == 1
+        L = 2 ^ nextpow2( double(max(img(:))) );
+    end
+    
     [M,N] = size(img);
     T = zeros(1, L);
     for i = 1:M
@@ -20,5 +23,4 @@ function img = myhisteq(I)
             img(i,j) = T(r+1);
         end
     end
-    img = uint8(img);
 end
