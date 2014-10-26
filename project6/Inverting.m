@@ -1,7 +1,7 @@
 clc
 clear all
 
-pic_rgb = imread('Print.jpg');
+pic_rgb = imread('Ton.jpg');
 pic_gray = rgb2gray(pic_rgb);
 pic_test = pic_gray;
 

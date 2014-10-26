@@ -1,9 +1,10 @@
 clear; clc; close all;
 %% rgb file
-pic = imread('aaa.jpg');
-pic_info = imfinfo('aaa.jpg');
-pic_n = rgb2gray(pic);
-maxVal = 2^(pic_info.BitDepth/3);
+%pic = imread('aaa.jpg');
+pic_n = int16(dicomread('PT604001002.dcm'));
+pic_info = dicominfo('PT604001002.dcm');
+
+maxVal = 2^(pic_info.BitDepth);
 
 %% function
 gaussian_f = @(sigma) (@(x,y) ((exp(-(x.^2 + y.^ 2) ./ ( 2 .* (sigma .^ 2))))));
