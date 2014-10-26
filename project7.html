@@ -1,0 +1,342 @@
+<!--
+  Date: 14/9/2014
+  bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Project Report</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/blueimp-gallery.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-image-gallery.min.css">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//vjs.zencdn.net/4.9/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.9/video.js"></script>
+  </head>
+  <body>
+    
+  <header id="mynavbar" class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+            </button> <a href="../" class="navbar-brand">Group 2</a>
+
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="project1.html">Bun Camera</a></li>
+                    <li><a href="project2.html">Camera Selection</a></li>
+                    <li><a href="project3.html">Photography Study</a></li>
+                    <li><a href="project4.html">Image File Reading</a></li>
+                    <li><a href="project5.html">Histogram</a></li>
+                    <li><a href="project6.html">Point Operation</a></li>
+                    <li><a href="project7.html">Linear Filter</a></li>
+                  </ul>
+                </li>
+                <li> <a href="#">About</a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="bs-header" id="content">
+    <div class="container">
+         <h1>Linear Filter</h1>
+        <p class="thai">การศึกษาการทำ Linear Filter ใน Image processing</p>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div class="bs-sidebar hidden-print" role="complementary">
+                <ul class="nav bs-sidenav">
+                  <li class="active"><a href="#myobjective">Objective</a></li>
+                  <li><a href="#mymethod">Methods</a>
+                    <ul>
+                      <li><a href="#method1">Moving Average Filter</a></li>
+                      <li><a href="#method2">Properties of Linear Filter</a></li>
+                      <li><a href="#method3">Offset and Scaling Filter</a></li>
+                      <li><a href="#method4">Gaussain Filter</a></li>
+                      <li><a href="#method5">Mexican Hat Filter</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#result">Results</a>
+                    <ul>
+                      <li><a href="#result1">LSM</a></li>
+                      <li><a href="#result2">DICOM</a></li>
+                      <li><a href="#result3">AVI video</a></li>
+                      <li><a href="#result4">Webcam</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#mydisscussion">Discussion</a></li>              
+                  <li><a href="#myconclusion">Conclusion and Future Study</a></li>              
+                  <li><a href="#myqaa">Q&amp;A</a></li>
+                </ul>
+            </div>
+            <!-- end bs-sidebar -->
+        </div>
+        <!-- end col-md-3 -->
+        <div class="col-md-9 col-md-pull-3" id="mycontent">
+            <div>
+              <h1 id="myobjective">Objective</h1>
+              <ol class="thai">
+                <li>เพื่อศึกษาคุณสมบัติของ Linear filter</li>
+                <li>เพื่อศึกษาความแตกต่างระหว่าง Linear filter</li>
+                <li>ศึกษาการประยุกต์ใช้ filter ในด้านการแพทย์</li>
+              </ol>
+            </div>
+
+            <hr>
+            <div>
+              <h1 id="mymethod">Medthods</h1>
+              <ol>
+                <li><h4 id="method1">Moving Average Filter</h4>
+                <p class="indent thai">Filter ชนิดนี้คือการสร้าง Mask สี่เหลี่ยมจัตุรัสขึ้นมา จากนั้นทำการเฉลี่ยค่าใน Mask เช่น หากสร้าง Mask ขนาด 3x3 ก็จะนำค่าทุกจุดใน Mask ซึ่งมีจำนวน 9 จุด มาเฉลี่ยกันและได้ค่าใหม่ โดยในที่นี้ได้ใช้ฟังก์ชั่น <code>myWindow()</code> ในการสร้าง Mask ซึ่งสามารถกำหนดขนาดได้ โดยฟังก์ชั่นนี้จะทำงานโดยการใส่อินพุดเป็นไฟล์ภาพเข้าไปจากนั้น จะเริ่มทำการสร้าง Mask และวิ่งไปบนภาพ จากนั้นจะ return ค่าเป็น Cell String ของทุกๆจุดที่วิ่งไป เมื่อได้ออกมาแล้วเราก็ทำการเฉลี่ยค่าในแต่ละหน้าต่างที่ได้ และได้ภาพใหม่ที่ผ่านการ Filter</p>
+                <p class="indent">วิธีการสร้าง filter คือสร้าง matrix <i>M</i> ขนาดเท่ากับ mask หรือ window ที่ต้องการโดยมีผลรวมค่าต่างๆใน matrix เป็น 0 \(\sum^{M}_{i=1}{\sum^{N}_{j=1} M_{i,j}} = 1\) เพื่อให้ค่าที่ได้มีค่าน้อยกว่าหรือเท่ากับค่าเดิม (Gain = 1) จากนั้นนำรูปภาพ A ที่ต้องการใส่ filter Convolution กับ M ผลลัพท์ที่ได้จะเป็นภาพที่มี filter ตามที่ต้องการ</p>
+                <p>$$\begin{split}
+                  \psi_{M,N} &= \frac{1}{MN} \begin{pmatrix}1 & 1 & \cdots & 1\\1 & 1 & \cdots & 1\\ \vdots & \vdots & \ddots & \vdots \\ 1 & 1 & \cdots & 1 \end{pmatrix} \\
+                  Output &= A \ast \Psi\end{split}$$ เมื่อ A เป็น matrix 2 มิติของภาพใดๆ \(\Psi_{M,N}\) เป็น window ขนาด \(M \times N \)</p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project7/myWindow.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project7/myFilter_old.m"></script></p>
+                </li>
+                <li class="offset-above-2"><h4 id="method2">Properties of Linear Filter</h4>
+                  <p><ol>
+                    <li><b>2.1 scale preservation</b> คือการปรับเปลี่ยนค่าโดยการนำค่าคงที่ไปกระทำกับ function  หรือ นอก function จะให้ค่าผลลัพธ์เดียวกัน ดังนี้ \(L(\alpha X) = \alpha L(X)\)</li>
+                    <li><b>2.2 Superposition</b> คือ การเปลี่ยนแปลงค่าด้วยคุณสมบัติการกระจาย ซึ่งผลลัพธ์ที่ได้จะมีค่าเท่ากัน ดังคุณสมบัตินี้  \(L(X_{1} + X_{2}) = L(X_{1}) + L(X_{2})\)</li>
+                    <li><b>2.3 Time invariance</b> คือคุณสมบัติในการปรับ scale ซึ่งคุญสมบัตินี้เหมือนกับ scale presevation ดังนั้นผลลัพธ์ที่ได้จะเหมือนกัน ดังสมการนี้ \(L(B^{kX}) = B^{kL(X)}\)</li>
+                  </ol></p>
+                  <p>คุณสมบัติทั้งสามข้อจะทำให้เราสามารถแยกชนิดของ filter ว่าเป็น linear filter  หรือ non-linear filter ซึ่งคุณสมบัติทั้งสามนี้ เราสามารถทำให้เป็นสมการรูปแบบที่ง่าย คือ \(y = mx + c\) ซึ่งเป็นสมการเส้นตรง</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method3">Offset and Scaling Filter</h4>
+                  <p class="indent thai">การทำ Filter ชนิดนี้จะคล้ายกับการทำ Moving Average Filter ต่างกันเพียง Filter ชนิดนี้จะเพิ่มการปรับ contrast ของภาพเข้าไปด้วย โดยการใช้ประโยชน์จากคุณสมบัติ Linear filter ซึ่งทำให้เราสามารถ ปรับค่า brightness และ contrast ก่อนหรือหลังจากการใส่ filter</p>
+                  <p>$$L(aX + b) = aL(X) + b$$เมื่อ L คือ Linear filter X คือภาพที่นำเข้า a และ b เป็นค่าคงที่ใด</p>
+                  <p class="indent thai">ในที่นี่จะใช้ฟังก์ชั่น <code>myFilter()</code> ซึ่งฟังก์ชั่นนี้จะเป็นการทำ Moving Window Average และทำการปรับ contrast ของภาพเรียบร้อย และได้เอาท์พุดออกมาเป็นภาพใหม่ที่ผ่านการ filter และปรับ contrast แล้ว</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project7/offset_demo.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project7/scale_demo.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project7/offset.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 1 : (a)ภาพจริง (b)ภาพจริงที่ผ่าน Offset Sacle Filter โดยใช้ scale=1 offset=-100 (c)ภาพจริงที่ผ่าน Offset Sacle Filter โดยใช้ scale=0 offset=10 (d)ภาพจริงที่ผ่าน Offset Sacle Filter โดยใช้ scale=0 offset=100</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project7/scale.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 2 : (a)ภาพจริง (b)ภาพจริงที่ผ่าน Offset Sacle Filter โดยใช้ scale=-1 offset=0 (c)ภาพจริงที่ผ่าน Offset Sacle Filter โดยใช้ scale=0.5 offset=0 (d)ภาพจริงที่ผ่าน Offset Sacle Filter โดยใช้ scale=2 offset=0</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method4">Gaussian Filter</h4>
+                  <p class="indent thai">Gaussain filter เป็น local operation ในการเปลี่ยนแปลงค่าของ pixel ในภาพโดยเอาค่า pixel จากพื้นที่ใกล้เคียงมาทำการ operation ซึ่ง Gaussian filter จะนำรูปแบบ normal distribution มาประยุกต์ใช้ในการ filter ภาพที่มี Gaussian noise เป็น noise ที่เกิดขึ้นภายในภาพ ซึ่งจะทำหน้าที่ทำให้ภาพ smooth หรือ blur ดังตัวอย่างภาพใน result นอกจากนี้ ยังทำหน้าที่เป็น low pass filter  ซึ่งการปรับเปลี่ยนค่าของ filter ขึ้นอยู่กับขนาดของ mask และ sigma ของ normal distribution</p>
+                  <p>$$\begin{split} 
+                   \psi(x,y) &= e^{-(x^2+y^2) \over 2\sigma^2}
+                   \end{split}$$</p>
+                  <p>$$ \begin{split}
+                  \Psi_{M,N} &= 
+                    \begin{pmatrix}
+                    \psi(-\frac{M}{2},-\frac{N}{2}) & \psi(-\frac{M}{2},-\frac{N}{2}+1) & \cdots & \psi(-\frac{M}{2},\frac{N}{2}) \\
+                    \psi(-\frac{M}{2}+1,-\frac{N}{2}) & \psi(-\frac{M}{2}+1,-\frac{N}{2}+1) & \cdots & \psi(-\frac{M}{2}+1,\psi(-\frac{M}{2},\frac{N}{2})) \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    \psi(\frac{M}{2},-\frac{N}{2}) & \psi(\frac{M}{2},-\frac{N}{2}+1) & \cdots & \psi(\frac{M}{2},\psi(-\frac{M}{2},\frac{N}{2}))\\
+                    \end{pmatrix}\\
+                   Output &= A \ast \Psi \end{split}
+                  $$ เมื่อ A เป็น matrix 2 มิติของภาพใดๆ \(\Psi_{M,N}\) เป็น window ขนาด \(M \times N \)</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project7/window_filter.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project7/gaussian_demo.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project7/gaussian.jpg" height="705" width="1281" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 3 : (a)ภาพจริง (b)ภาพจริงที่ผ่าน Gaussian Filter โดยใช้ sigma=1 window=7x7(c)ภาพจริงที่ผ่าน Gaussian Filter โดยใช้ sigma=3 window=7x7(d)ภาพจริงที่ผ่าน Gaussian Filter โดยใช้ sigma=3 window=17x17</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method5">Mexican Hat Filter</h4>
+                  <p class="indent thai">Mexican Hat filter เป็น local operation รูปแบบหนึ่งที่ใช้ในการ edge detection จะทำหน้าที่เป็น high pass filter และเรียกอีกอย่างหนึ่งว่า laplace filter ช่วยทำให้ภาพคมชัดมากยิ่งขึ้น  หลักการทำงานของ filter ชนิดนี้เหมือนกับ gaussian filter ซึ่งมีพารามิเตอร์ sigma เป็นการปรับความละเอียดของภาพ ยิ่งค่า sigma สูงจะทำให้ภาพเบลอยิ่งขึ้น <a href="#myref">[1]</a></p>
+                  <p>$$\begin{split} \psi(x) &=(1-x^{2})e^{-x^{2}/2} \\
+                   \psi(x,y) &= [1-(x^{2}+y^{2})]e^{-\frac{x^{2}+y^{2}}{2}}\\
+                   \psi(x,y) &= {2 \over {\sqrt {3\sigma}\pi^{1 \over 4}}} \left( 1 - {x^2+y^2 \over \sigma^2} \right) e^{-(x^2+y^2) \over 2\sigma^2}
+                   \end{split}$$</p>
+                  <p>$$ \begin{split}
+                  \Psi_{M,N} &= 
+                    \begin{pmatrix}
+                    \psi(-\frac{M}{2},-\frac{N}{2}) & \psi(-\frac{M}{2},-\frac{N}{2}+1) & \cdots & \psi(-\frac{M}{2},\frac{N}{2}) \\
+                    \psi(-\frac{M}{2}+1,-\frac{N}{2}) & \psi(-\frac{M}{2}+1,-\frac{N}{2}+1) & \cdots & \psi(-\frac{M}{2}+1,\psi(-\frac{M}{2},\frac{N}{2})) \\
+                    \vdots & \vdots & \ddots & \vdots \\
+                    \psi(\frac{M}{2},-\frac{N}{2}) & \psi(\frac{M}{2},-\frac{N}{2}+1) & \cdots & \psi(\frac{M}{2},\psi(-\frac{M}{2},\frac{N}{2}))\\
+                    \end{pmatrix}\\
+                   Output &= A \ast \Psi \end{split}
+                  $$ เมื่อ A เป็น matrix 2 มิติของภาพใดๆ \(\Psi_{M,N}\) เป็น window ขนาด \(M \times N \)</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project7/mexihat_demo.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project7/maxicanhat.jpg" height="705" width="1281" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 4 : (a)ภาพจริง (b)ภาพจริงที่ผ่าน Maxican Hat Filter โดยใช้ sigma=1 window = 3x3 (c)ภาพจริงที่ผ่าน Maxican Hat Filter โดยใช้ sigma=1.8 window=3x3 (d)ภาพจริงที่ผ่าน Maxican Hat Filter โดยใช้ sigma=1.8 window=5x5</figcaption>
+                    </figure>
+                  </p>
+                </li>                
+            </div>
+            <div>
+              <h1 id="myresult">Results</h1>
+              <p class="indent">จากการศึกษา Moving Window AverageFilter และ การปรับ Contrast ทางกลุ่มได้ทำการเขียนฟังก์ชั่นการทำงานบนโปรแกรม MATLAB และได้ผลออกมาเป็นดังภาพด้านล่าง</p>
+              <ol>
+              <li><b id="result1">JPEG Image</b>
+                <p>
+                    <figure>
+                      <img src="img/project7/rgb.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 5 : (a)ภาพจริง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                    </figure>
+                </p>
+              </li>
+              <li><b>LSM</b>
+                <p>
+                  <figure>
+                      <img src="img/project7/lsm.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 6 : (a)ภาพจริงจากlsm fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter
+</figcaption>
+                  </figure>
+                </p>
+              </li>  
+              <li><b id="result2">DICOM</b>
+                <p>
+                  <figure>
+                      <img src="img/project7/dicom.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 7 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+              </li>  
+              <li><b  id="result3">Point Operation บน AVI Video</b>
+                <p class"indent">เรียงจาก
+                  <ul><li>Raw Video</li>
+                  <li>Moving Average filter window=3x3</li>
+                  <li>Gaussian filter sigma และ window เพิ่มขึ้นเรื่อยๆ</li>
+                  <li>Mexican hat filter sigma = 1.1 window = 3x3</li>
+                  <li>Mexican hat filter sigma = 1.8 window = 5x5</li>
+                </ul></p>
+                <p class="wide center">
+                  <video controls loop preload="auto" width="206" height="218"
+                 <source src="video/702.mp4" type='video/mp4' />
+                 <source src="video/702.webm" type='video/webm' />
+                </video>
+                </p>
+                <p>Video แสดง filter แบบต่างๆ</p>
+                <p class="wide center">
+                  <video controls loop preload="auto" width="560" height="420"
+                 <source src="video/703.mp4" type='video/mp4' />
+                 <source src="video/703.webm" type='video/webm' />
+                </video>
+                </p>
+              </li>
+              <li><b  id="result4">Linear Filter บนภาพจาก Webcam</b>
+                <p class="wide center">
+                  <video controls loop preload="auto" width="560" height="420"
+                 <source src="video/701.mp4" type='video/mp4' />
+                 <source src="video/701.webm" type='video/webm' />
+                </video>
+                <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam ประกอบไปด้วยภาพต้นแบบ (บนซ้าย) ภาพจากการทำ moving average filter ขนาด 5x5 (A) ภาพการทำ Gaussian blur \(\sigma = 1\) ขนาด 5x5 (B) ภาพการทำ Mexican hat filter \(\sigma = 1.8\) ขนาด 5x5 (C)</p>
+                </p>
+              </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+              <p class="thai indent">จากการทดลองใช้ filter ทั้งสามชนิดโดยการเซตค่าพารามิเตอร์เพื่อดูการเปลี่ยนแปลงของภาพที่เกิดขึ้นหลังการ filter โดยใช้ convolution mask 5x5 เป็นการเซตค่าmask  เพราะมันมีผลต่อการfilter ยิ่งmask ขนาดเล็กยิ่งมีความละเอียดสูงมากกว่าขนาดใหญ่ ซึ่งขนาดใหญ่จะทำให้ภาพสูญเสียรายละเอียดของภาพไป พารามิเตอร์ที่ใช้ในการปรับภาพ คือ scale การเพิ่มด้วยการคูณ และ การบวกลบของค่า offset การปรับ filter แบบนี้ผลที่ได้คือการปรับค่าความสว่างของ pixel  ค่าบวกความสว่างก็จะเพิ่มขึ้นเป็นต้น การปรับพารามิเตอร์ที่ใช้กับ gaussian และ mexican hat filter คือค่าของ sigmaจะเป็นค่าของการ smooth ที่จะทำให้ภาพเบลอขึ้น ยิ่งปรับค่า sigma เพิ่มขึ้นภาพก็จะเบลมากขึ้นจนรายละเอียดภาพเสียหาย เป็นต้น ดังนั้นสรุปได้ว่า ค่าพารามิเตอร์ที่ใช้ในการทดลองมีผลต่อการ filter ภาพที่เกิดขึ้นในทิศทางเดียวกัน</p>   
+            </div>
+            <hr>
+            <div>
+              <h1 id="myconclusion">Conclusion and Future Study</h1>
+              <p class="indent thai">การประยุกต์ใช้ linear filter มีทั้งข้อดีและข้อเสียในการจัดการกับภาพที่เราต้องการ filter ดังนั้นเราต้องศึกษา filter เพื่อใช้้งานให้เหมาะสมที่สุดและมีความละเอียดที่ดีที่สุดสำหรับการ filterภาพ และควรจะเพิ่มฟังก์ชั่นเสริมที่สามารถตกแต่งภาพหลังจากการถูกfilter เช่น contrast scale</p>
+              <p class="thai indent">จากการศึกษา linear filter  มาประยุกต์ใช้กับภาพทางการแพทย์ ซึ่งการเลือกใช้ filter แต่ละชนิดขึ้นกับความต้องการของผู้ใช้ว่าต้องการให้ภาพออกมาแบบไหนถึงจะชัดเจนที่สุด สำหรับ linear filter มีข้อจำกัดในการคำนวน convolution mask เราต้องการปรับเปลี่ยน mask ให้มีความละเอียดยิ่งขึ้น เช่น  asymetric mask ในการประยุกต์ใช้เพื่อลดการเสียหายของภาพที่เกิดจากการ filter นอกจากนี้ เราต้องการศึกษาเพิ่มเติมเกี่ยวกับ non linear filter มาประยุกต์ใช้กับภาพในอนาคต</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myqaa">Q&amp;A</h1>
+                <dl class="dl-horizontal">
+                  <p>
+                    <dt>Question 1:</dt>
+                    <dd>Noise ในภาพคืออะไร และสามารถเกิดขึ้นได้อย่างไร</dd>
+                    <dt>Answer:</dt>
+                    <dd>
+                      <p>Noise เป็นสัญญานรบกวนที่เกิดขึ้นในภาพ ทำให้เห็นความไม่สม่ำเสอของความสว่างและสี สามารถเกิดขึ้นได้จาก</p>
+                      <ol>
+                      <li>จำนวณ photon ที่ตกลงในแต่ละ pixel ที่ต่างกัน</li>
+                      <li>ความสามารถในการสร้างประจุของ photo diode แตกต่างกัน</li>
+                      <li>สัญญานรบกวนในการส่งผ่านข้อมูลอิเล็กทรอนิกส์</li>
+                      <ol>
+                      </dd>
+                  </p>
+                  <p>
+                    <dt>Question 2:</dt>
+                    <dd>จงบอกข้อดีและข้อเสียของ moving average filter</dd>
+                    <dt>Answer:</dt>
+                    <dd><p>ข้อดีของ moving average filter คือ ช่วยลด random noise ในช่วง sharp step response ซึ่งได้ดีใน spartial domain </p>
+                    <p>ข้อเสียคือ  moving average filter คือเป็น filter ที่สามารถทำงานได้แย่ใน frequency domain เนื่องจากความสามารถในการแยก band of frequency จาก frequency อื่นๆนั่นต่ำมาก</p>
+                    </dd>
+                  </p>
+                  <p>
+                    <dt>Question 3:</dt>
+                    <dd>หากใช้ Multiple-pass moving average filters มากกว่า 4 ครั้ง ผลที่ได้จะเป็นอย่างไร</dd>
+                    <dt>Answer:</dt>
+                    <dd>ผลที่ได้จะเหมือนกับการใช้ Gaussian filter mask</dd>
+                  </p>
+                </dl>
+            </div>
+            <div>
+              <h1 id="myref">References</h1>
+              <p>[1] Guo, H., Q. He, and B. Jiang. <b>The Application of Mexican Hat Wavelet Filtering and Averaging Algorithm in Raman Spectra Denoising</b>. in Image and Signal Processing, 2008. CISP '08. Congress on. 2008.</p>
+              <p>[3] <b>Image Processing Toolbox, User Guide, Version 4</b>. [2003], The MathWorks, Inc., Natick, MA.</p>
+              <p>[4] <b>Using MATLAB, Versoin 6.5 [2002]</b>, The MathWorks, Inc., Natick, MA.</p>
+              <p>All source code available on <a href="https://github.com/nodtem66/EGBE443-Group2/tree/master/project7">Github</a></p>
+            </div>
+        </div>
+        <!-- end col-md-9 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="">
+        <h1>Members</h1>
+        <dl><dd>Mr. Thanawin Trakoolwilaiwan 5413085</dd>
+          <dd>Mr. Jongsook Sanguantrakul 5413337</dd>
+          <dd>Mr. Jirawat Iamsamang 5413341</dd>
+          <dd>Mr. Chaiyakorn Thongchanasin 5413346</dd>
+          <dd>Miss Tanyaporn Pungrasmi 5413355</dd>
+          <dd>Miss Pavinee Jaturapisanukul 5413365</dd>
+          <dd>Mr. Rattapong Lordthong 5413367</dd>
+          </dl>
+          <p>Department of Biomedical Engineering</p>
+          <p>Faculty of Engineering, Mahidol University</p>
+      </div>
+    </div>
+  </div>
+</footer>
+  <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.blueimp-gallery.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+    <script src="js/scripts.js?122"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansthai.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,700' rel='stylesheet' type='text/css'>
+  </body>
+</html>

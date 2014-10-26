@@ -38,7 +38,7 @@ h1, h2, h3 {
 .offset-below-4 {margin-bottom: 5em;}
 .offset-above-5 {margin-top: 9em;}
 .offset-below-5 {margin-bottom: 9em;}
-.thai {font-family: 'Noto Sans Thai', tahoma, sans-serif;}
+/* .thai {font-family: 'Noto Sans Thai', tahoma, sans-serif;}--*/
 .panel-heading {font-weight: bold}
 
 /* bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF */
