@@ -113,6 +113,7 @@
               <ol>
                 <li><h4 id="method1">Unsharp Masking</h4>
                   <p class="indent">คือ กระบวนการเพื่อเพิ่มความคมชัดของภาพโดยการใช้ภาพจริง (Real image, \(f_r\)) และ ภาพที่ผ่านการกรอง (Filtered image, \(f_f\)) ที่จะมีลักษณะเป็นภาพเบลอ  โดยจะเป็น การหักล้างภาพจริงด้วยภาพเบลอ ตามสมการ \(f_s(x,y) = f_r(x,y) - kf_f(x,y)\) โดยที่ k จะเป็นค่าคงที่</p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/umsharp.m"></script></p>
                 </li>
                 <li class="offset-above-2"><h4 id="method2">Noise</h4>
                   <p class="indent">ในการศึกษานี้จะทำการเพิ่มสิ่งรบกวนภาพ(noise) ลงไปในภาพจริง โดยการใช้ noise 3 ชนิด ดังนี้</p>
@@ -147,6 +148,7 @@
                       <p class="indent">การหาค่ามากที่สุดภายใน รูปภาพที่คลุมด้วยmask ที่สร้างขึ้น แล้วแทนที่จุดๆหนึ่งที่สนใจด้วยค่าที่มากที่สุดนั้น</p>
                     </li>
                   </ol>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_filter.m"></script></p>
                 </li>                
             </div>
             <div>
@@ -154,6 +156,7 @@
               <p class="indent">จากการศึกษา Unsharp filter ผลของการใส่ Noise ลงในภาพ และ Nonlinear filter ทั้งสามแบบ ทางกลุ่มได้ทำการเขียนฟังก์ชั่นการทำงานบนโปรแกรม MATLAB และได้ผลออกมาเป็นดังภาพด้านล่าง</p>
               <ol>
               <li><b id="result1">JPEG Image</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_rgb.m"></script></p>
                 <p>
                     <figure>
                       <img src="img/project8/1.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
@@ -184,6 +187,7 @@
                 </p>
               </li>
               <li><b id="result2">DICOM</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_dicom.m"></script></p>
                 <p>
                   <figure>
                       <img src="img/project8/6.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
@@ -203,6 +207,7 @@
                 </p>
               </li>  
               <li><b id="result3">LSM</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_lsm.m"></script></p>
                 <p>
                   <figure>
                       <img src="img/project8/9.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
@@ -223,6 +228,9 @@
                 </p>
               </li>
               <li><b id="result4">Unsharp filter</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/unsharp_rgb.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/unsharp_dicom.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/unsharp_lsm.m"></script></p>
                 <p>
                   <figure>
                       <img src="img/project8/14.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
@@ -243,6 +251,8 @@
                 </p>
               </li>
               <li><b id="result5" class="offset-below-2">Nonlinear Filter บนภาพจาก AVI Video</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/create_VDO_MinMedMax.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/create_VDO_Unsharp.m"></script></p>
                 <ol>
                   <li><b>Gaussian noise with Nonlinear filter</b>
                   <p class="wide center">
@@ -297,6 +307,7 @@
               <li><b id="result6" class="offset-below-2">Nonlinear Filter บนภาพจาก Webcam</b>
                 <ol>    
                   <li><b>Nonlinear filter</b>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/Webcam_MinMedMax.m"></script></p>
                   <p class="wide center">
                     <video controls loop preload="auto" width="600" height="600"
                      <source src="video/MinMedMax_webcam_Gaussian.mp4" type='video/mp4' />
@@ -305,6 +316,7 @@
                     <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Nonlinear filter</p>
                   </p></li>
                   <li><b>Unsharp filter</b>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/Webcam_unsharp.m"></script></p>
                   <p class="wide center">
                     <video controls loop preload="auto" width="600" height="600"
                      <source src="video/Unsharp_webcam.mp4" type='video/mp4' />
