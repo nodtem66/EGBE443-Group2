@@ -1,0 +1,328 @@
+<!--
+  Date: 14/9/2014
+  bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Project Report</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/blueimp-gallery.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-image-gallery.min.css">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//vjs.zencdn.net/4.9/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.9/video.js"></script>
+  </head>
+  <body>
+    
+  <header id="mynavbar" class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+            </button> <a href="../" class="navbar-brand">Group 2</a>
+
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="project1.html">Bun Camera</a></li>
+                    <li><a href="project2.html">Camera Selection</a></li>
+                    <li><a href="project3.html">Photography Study</a></li>
+                    <li><a href="project4.html">Image File Reading</a></li>
+                    <li><a href="project5.html">Histogram</a></li>
+                    <li><a href="project6.html">Point Operation</a></li>
+                    <li><a href="project7.html">Linear Filter</a></li>
+                    <li><a href="project8.html">Nonlinear Filter</a></li>
+                  </ul>
+                </li>
+                <li> <a href="#">About</a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="bs-header" id="content">
+    <div class="container">
+         <h1>Nonlinear Filter</h1>
+        <p class="thai">การศึกษาการทำ Nonlinear Filter ใน Image processing</p>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div class="bs-sidebar hidden-print" role="complementary">
+                <ul class="nav bs-sidenav">
+                  <li class="active"><a href="#myobjective">Objective</a></li>
+                  <li><a href="#mymethod">Methods</a>
+                    <ul>
+                      <li><a href="#method1">Unsharp Filter</a></li>
+                      <li><a href="#method2">Noise</a></li>
+                      <li><a href="#method3">Nonlinear Filter</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#result">Results</a>
+                    <ul>
+                      <li><a href="#result1">JPEG</a></li>
+                      <li><a href="#result2">LSM</a></li>
+                      <li><a href="#result3">DICOM</a></li>
+                      <li><a href="#result4">AVI video</a></li>
+                      <li><a href="#result5">Webcam</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#mydisscussion">Discussion</a></li>              
+                  <li><a href="#myconclusion">Conclusion</a></li>              
+                  <li><a href="#myfuture">Future Study</a></li>              
+                  <li><a href="#myqaa">Q&amp;A</a></li>
+                </ul>
+            </div>
+            <!-- end bs-sidebar -->
+        </div>
+        <!-- end col-md-3 -->
+        <div class="col-md-9 col-md-pull-3" id="mycontent">
+            <div>
+              <h1 id="myobjective">Objective</h1>
+              <ol class="thai">
+                <li>เพื่อศึกษาคุณสมบัติของ Nonlinear Filter</li>
+                <li>เพื่อศึกษาความแตกต่างระหว่าง Nonlinear Filter</li>
+                <li>เพื่อศึกษาคุณสมบัติและความแตกต่างของ Noises</li>
+                <li>ศึกษาการประยุกต์ใช้ Nonlinear Filter ในด้านการแพทย์</li>
+              </ol>
+            </div>
+
+            <hr>
+            <div>
+              <h1 id="mymethod">Medthods</h1>
+              <ol>
+                <li><h4 id="method1">Unsharp Masking</h4>
+                  <p class="indent">คือ กระบวนการเพื่อเพิ่มความคมชัดของภาพโดยการใช้ภาพจริง (Real image, \(f_r\)) และ ภาพที่ผ่านการกรอง (Filtered image, \(f_f\)) ที่จะมีลักษณะเป็นภาพเบลอ  โดยจะเป็น การหักล้างภาพจริงด้วยภาพเบลอ ตามสมการ \(f_s(x,y) = f_r(x,y) - kf_f(x,y)\) โดยที่ k จะเป็นค่าคงที่</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method2">Noise</h4>
+                  <p class="indent">ในการศึกษานี้จะทำการเพิ่มสิ่งรบกวนภาพ(noise) ลงไปในภาพจริง โดยการใช้ noise 3 ชนิด ดังนี้</p>
+                  <ol>
+                    <li>
+                      <h5>Gaussian noise</h5>
+                      <p class="indent">คือ noise ที่มีลักษณะการกระจายตัวแบบ normal distribution ที่เกิดจากแสงไม่ดีหรือ อุณหภูมิขณะถ่ายสูง หรือ การรบกวนจากสัญญาณไฟฟ้า ทำให้ แต่ละจุดบนภาพเกิดสีเพี้ยนไปจากรอบๆ</p>
+                    </li>
+                    <li>
+                      <h5>Poisson noise</h5>
+                      <p class="indent">คือ noise ที่มีลักษณะการกรจายตัวแบบ poisson distribution ที่เกิดจากโฟตอนในเซนเซอร์รับภาพได้รับปริมาณแสงมากกว่าจุดอื่น ทำให้บางจุดบนภาพมีลักษณะต่างจากรอบๆเล็กน้อย</p>
+                    </li>
+                    <li>
+                      <h5>Salt & pepper noise</h5>
+                      <p class="indent">คือ noise ทีมีลักษณะเป็นสีขาวบนพื้นมืด และสีดำบนพื้นสว่าง กระจายตัวอยู่ภายในภาพ เกิดจากความผิดพลาดในการแปลงข้อมูลรูปภาพจาก อะนาล็อกเป็นดิจิตอล</p>
+                    </li>
+                  </ol>
+                </li>
+                <li class="offset-above-2"><h4 id="method3">Nonlinear Filter</h4>
+                  <p class="indent">ในการศึกษานี้จะทำ non-linear filter 3 ชนิด ดังนี้</p>
+                  <ol>
+                    <li>
+                      <h5>Median filter</h5>
+                      <p class="indent">การหาค่ากลางหรือค่ามัธยฐานภายใน รูปภาพที่คลุมด้วยmask ที่สร้างขึ้น แล้วแทนที่จุดๆหนึ่งที่สนใจด้วยค่ากลางนั้น</p>
+                    </li>
+                    <li>
+                      <h5>Min filter</h5>
+                      <p class="indent">การหาค่าน้อยที่สุดภายใน รูปภาพที่คลุมด้วยmask ที่สร้างขึ้น แล้วแทนที่จุดๆหนึ่งที่สนใจด้วยค่าที่น้อยที่สุดนั้น</p>
+                    </li>
+                    <li>
+                      <h5>Max filter</h5>
+                      <p class="indent">การหาค่ามากที่สุดภายใน รูปภาพที่คลุมด้วยmask ที่สร้างขึ้น แล้วแทนที่จุดๆหนึ่งที่สนใจด้วยค่าที่มากที่สุดนั้น</p>
+                    </li>
+                  </ol>
+                </li>                
+            </div>
+            <div>
+              <h1 id="myresult">Results</h1>
+              <p class="indent">จากการศึกษา Unsharp filter ผลของการใส่ Noise ลงในภาพ และ Nonlinear filter ทั้งสามแบบ ทางกลุ่มได้ทำการเขียนฟังก์ชั่นการทำงานบนโปรแกรม MATLAB และได้ผลออกมาเป็นดังภาพด้านล่าง</p>
+              <ol>
+              <li><b id="result1">JPEG Image</b>
+                <p>
+                    <figure>
+                      <img src="img/project8/1.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 1 : (a)ภาพจริง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project8/2.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 2 : (a)ภาพจริง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                    </figure>
+                </p>
+                <p>
+                  <figure>
+                      <img src="img/project8/3.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 3 : (a)ภาพจริงจากlsm fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+                <p>
+                  <figure>
+                      <img src="img/project8/5.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 4 : </figcaption>
+                  </figure>
+                </p>
+              </li>
+              <li><b id="result2">DICOM</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/6.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 5 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                  <p>
+                  <figure>
+                      <img src="img/project8/7.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 6 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+                <p>
+                  <figure>
+                      <img src="img/project8/8.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 7 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+              </li>  
+              <li><b id="result3">LSM</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/9.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 8 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+                <p>
+                  <figure>
+                      <img src="img/project8/10.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 9 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+                <p>
+                  <figure>
+                      <img src="img/project8/11.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 10 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+              </li>
+              <li><b id="result4">Unsharp filter</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/14.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 11 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+                <p>
+                  <figure>
+                      <img src="img/project8/12.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 12 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+                <p>
+                  <figure>
+                      <img src="img/project8/13.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 13 : (a)ภาพจริงของDICOM fileตัวอย่าง (b)ภาพจริงที่ถูกใส่noise (c)ภาพจริงผสมnoiseที่ผ่านกระบวนการ Moving Average (d)ภาพจริงผสมnoiseที่ผ่าน Offset Sacle Filter (e)ภาพจริงผสมnoiseที่ผ่าน Gaussian Filter (f)ภาพจริงผสมnoiseที่ผ่าน Maxican Hat Filter</figcaption>
+                  </figure>
+                </p>
+              </li>
+              <li><b id="result3">Nonlinear Filter บนภาพจาก AVI Video</b>
+                
+              </li>
+              <li><b id="result4">Nonlinear Filter บนภาพจาก Webcam</b>
+                
+              </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+              <p class="thai indent">จากผลที่ได้นั้น Minimum filter และ Maximum filter เกิดการทำให้ภาพผิดเพี้ยนเกินไปเนื่องจากเป็นการดูค่าที่จุดนั้น และจุดรอบๆ โดยเปลี่ยนเป็นค่าที่น้อยที่สุด หรือมากที่สุด จึงทำให้ contrast ของภาพผิดเพี้ยนไป และ Median filter ที่ดูค่าที่จุดนั้นและจุดรอบๆจุดที่สนใจ โดยเปลียนค่าเป็นค่ากลาง หรือค่ามัธยฐาน ทำให้ได้ภาพที่ filter ได้ดีที่สุด</p
+              <p class="indent">ส่วนผลที่ได้จาก Unsharp filter นั้นทำให้ได้ภาพที่ filter แล้วนั้นมีความคมชัดมากขึ้น แต่จะมีการคำนวณที่ซับซ้อนมากกว่า Non linear filter ทั้งสามแบบนั้น เนื่องจากต้องมีการ filter ภาพที่ได้ก่อนและนำมาหักลบกับภาพเดิม</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myconclusion">Conclusion and Future Study</h1>
+              <p class="indent thai">จากการศึกษา Unsharp filter  จะเห็นว่าภาพที่ได้จะมีลักษณะของภาพที่คมชัดดูมีมิติมากขึ้นส่วน Linear filter ที่ใช้นั้น Median filter ให้ค่าของภาพที่ดีกว่า Minimum และ Maximum filter เนื่องจาก filter สองชนิดหลัง บางครั้งยังทำให้ภาพที่ได้มีลักษณะผิดเพี้ยนไป</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myrfuture">Future Studies</h1>
+              <p class="indent">จากการที่ทางกลุ่มได้ทำการศึกษาเกี่ยวกับ Non linear filter ที่ใช้ใน image procrssing ครั้งนี้ สามารถนำไปประยุกต์ใช้ได้ทั้งในทางชีวการแพทย์ หรือในด้านต่างๆ เพราะในการทำ image ทางการแพทย์นั้น ต้องการภาพที่มีรายละเอียดครบถ้วน หากภาพที่ได้มี noise รับกวนตัวภาพอาจทำให้การวินิจฉัยของแพทย์ผิดพลาดได้ จึงสามารถนำความรู้ที่ได้มาประยุกต์ใช้ได้</p>
+            </div>
+            <div>
+              <h1 id="myqaa">Q&amp;A</h1>
+                <dl class="dl-horizontal">
+                  <p>
+                    <dt>Question 1:</dt>
+                    <dd>วิธีการทำ unsharp masking มีเทคนิกพิเศษในการจัดการภาพอย่างไร</dd>
+                    <dt>Answer:</dt>
+                    <dd>การทำ unsharp masking เป็นการเพิ่ม Contrast ระหว่าง Pixel  ซึ่งเป็นการตัดขอบเส้นของภาพให้ดูคมขึ้น หากเป็นภาพที่มีรายละเอียดมากเกินไปเช่นภาพต้นไม้ที่มีใบละเอียด หากเพิ่ม contrast ให้กับภาพมากเกินไป จะทำให้ภาพแตก จึงต้องปรับให้มีความเหมาะสม</dd>
+                  </p>
+                  <p>
+                    <dt>Question 2:</dt>
+                    <dd>รูปภาพที่นำมาทำimage processing จะพบ noise แบบใดได้มากที่สุด</dd>
+                    <dt>Answer:</dt>
+                    <dd>Poisson noise</p>
+                    </dd>
+                  </p>
+                  <p>
+                    <dt>Question 3:</dt>
+                    <dd>หากทำ median filter จะมีข้อดีอย่างไร</dd>
+                    <dt>Answer:</dt>
+                    <dd><ol>
+                      <li>จะไม่เกิดปรากฎการณ์ shift boundary ซึ่งมักเกิดกับ smoothing filter เนื่องจากปัญหาของ contrast</li>
+                      <li>จะไม่เกิดค่าที่มากเกินไปเนื่องจากการคำนวณนั้นมีความ sensitive มากกว่า mean filter หากเป็น mean filter จะเกิดปัญหานี้ขึ้นได้</li>
+                      <li>ไม่มีการลดลงของ contrast เนื่องจากค่าของ output ที่ได้มาจากค่ารอบๆ ไม่ใช่ค่าที่คำนวณใหม่</li>
+                    </ol></dd>
+                  </p>
+                </dl>
+            </div>
+            <div>
+              <p>Source code is available on <a href="https://github.com/nodtem66/EGBE443-Group2/tree/master/project8">Github</a></p>
+            </div>
+        </div>
+        <!-- end col-md-9 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="">
+        <h1>Members</h1>
+        <dl><dd>Mr. Thanawin Trakoolwilaiwan 5413085</dd>
+          <dd>Mr. Jongsook Sanguantrakul 5413337</dd>
+          <dd>Mr. Jirawat Iamsamang 5413341</dd>
+          <dd>Mr. Chaiyakorn Thongchanasin 5413346</dd>
+          <dd>Miss Tanyaporn Pungrasmi 5413355</dd>
+          <dd>Miss Pavinee Jaturapisanukul 5413365</dd>
+          <dd>Mr. Rattapong Lordthong 5413367</dd>
+          </dl>
+          <p>Department of Biomedical Engineering</p>
+          <p>Faculty of Engineering, Mahidol University</p>
+      </div>
+    </div>
+  </div>
+</footer>
+  <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.blueimp-gallery.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+    <script src="js/scripts.js?122"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansthai.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,700' rel='stylesheet' type='text/css'>
+  </body>
+</html>
