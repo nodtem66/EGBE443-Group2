@@ -24,7 +24,7 @@ gaussian_f = @(sigma) (@(x,y) ((exp(-(x.^2 + y.^ 2) ./ ( 2 .* (sigma .^ 2))))));
     sobel_g = [1 2 1; 0 0 0; -1 -2 -1];
     sobel_v = sobel_g';
     window_1 = window_filter(gaussian_f(1), [5 5]);
-    window_2 = window_filter(maxican_hat_f(1.8), [5 5]);
+    window_2 = window_filter(maxican_hat_f(0.7), [7 7]);
 
 for k = 1 : nFrames
     t = read(vid, k);
