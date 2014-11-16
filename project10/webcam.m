@@ -32,9 +32,7 @@ try
     while(vid.FramesAcquired >= 0 && running)
         I = getdata(vid, 1);
         f0 = I(:,:,1,1);
-        f = modified_sobel(f0);
-        f(f > 35) = 255;
-        f(f <= 35) = 0;
+        f = myCanny2(f0, 0.035, 30, true);
         %
         subplot('Position', [0 0 .5 1]), imshow(f0);
         subplot('Position', [0.5 0 .5 1]), imshow(f);
@@ -51,4 +49,4 @@ flushdata(vid, 'all');
 stop(vid);
 fprintf('End\n');
 close(vout);
-close all;
+close all; clear;
