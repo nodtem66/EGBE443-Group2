@@ -13,5 +13,4 @@ function mdata = mylsm(filename)
     end
     mdata = lsminfo(filename);
     mdata.tiff_rawdata = data;
-    imshow(data);
 end
