@@ -61,8 +61,8 @@
 </header>
 <div class="bs-header" id="content">
     <div class="container">
-         <h1>Nonlinear Filter</h1>
-        <p class="thai">การศึกษาการทำ Nonlinear Filter ใน Image processing</p>
+         <h1>Edge Detection</h1>
+        <p class="thai">การศึกษาการทำ Edge Detection ใน Image processing</p>
     </div>
 </div>
 <div class="container bs-docs-container">
@@ -71,23 +71,8 @@
             <div class="bs-sidebar hidden-print" role="complementary">
                 <ul class="nav bs-sidenav">
                   <li class="active"><a href="#myobjective">Objective</a></li>
-                  <li><a href="#mymethod">Methods</a>
-                    <ul>
-                      <li><a href="#method1">Unsharp Filter</a></li>
-                      <li><a href="#method2">Noise</a></li>
-                      <li><a href="#method3">Nonlinear Filter</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="#result">Results</a>
-                    <ul>
-                      <li><a href="#result1">JPEG</a></li>
-                      <li><a href="#result2">LSM</a></li>
-                      <li><a href="#result3">DICOM</a></li>
-                      <li><a href="#result4">Unsharp filter</a></li>
-                      <li><a href="#result5">AVI video</a></li>
-                      <li><a href="#result6">Webcam</a></li>
-                    </ul>
-                  </li>
+                  <li><a href="#mymethod">Methods</a></li>
+                  <li><a href="#result">Results</a></li>
                   <li><a href="#mydisscussion">Discussion</a></li>              
                   <li><a href="#myconclusion">Conclusion</a></li>              
                   <li><a href="#myfuture">Future Study</a></li>              
@@ -101,10 +86,13 @@
             <div>
               <h1 id="myobjective">Objective</h1>
               <ol class="thai">
-                <li>เพื่อศึกษาคุณสมบัติของ Nonlinear Filter</li>
-                <li>เพื่อศึกษาความแตกต่างระหว่าง Nonlinear Filter</li>
-                <li>เพื่อศึกษาคุณสมบัติและความแตกต่างของ Noises</li>
-                <li>ศึกษาการประยุกต์ใช้ Nonlinear Filter ในด้านการแพทย์</li>
+                <li>เพื่อศึกษาการทำ Edge detection แบบ  Modified Sobel และ Canny Filter</li>
+                <li>ศึกษาการประยุกต์ใช้ Edge detection แบบ  Modified Sobel และ Canny Filter</li>
+                <li>ศึกษาการทำ Function ของ Edge detection บน MATLAB</li>
+                <li>เพื่อศึกษาความแตกต่างของแต่ละรูปแบบในการใช้ Edge detection</li>
+                <li>เพื่อเปรียบเทียบประสิทธิภาพระหว่าง Function กับ Function ใน MATLAB Toolbox</li>
+                <li>เพื่อศึกษาการประยุกต์ใช้ Edge detection แบบ  Modified Sobel และ Canny Filter ในด้านการแพทย์</li>
+                <li>เพื่อศึกษาการทำ Edge Sharpening โดยใช้ Laplace filter</li>
               </ol>
             </div>
 
@@ -112,119 +100,96 @@
             <div>
               <h1 id="mymethod">Medthods</h1>
               <ol>
-                <li><h4 id="method1">Unsharp Masking</h4>
-                  <p class="indent">คือ กระบวนการเพื่อเพิ่มความคมชัดของภาพโดยการใช้ภาพจริง (Real image, \(f_r\)) และ ภาพที่ผ่านการกรอง (Filtered image, \(f_f\)) ที่จะมีลักษณะเป็นภาพเบลอ  โดยจะเป็น การหักล้างภาพจริงด้วยภาพเบลอ ตามสมการ \(f_s(x,y) = f_r(x,y) - kf_f(x,y)\) โดยที่ k จะเป็นค่าคงที่</p>
-                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/umsharp.m"></script></p>
+                <li><h4 id="method1">Modified Sobel Operators</h4>
+                  <p class="indent">Modified Sobel เป็นการปรับปรุงให้ sobel operator ทำงานได้ทั้ง8ทิศทาง ภายในภาพ โดยการหมุนคู่ของค่าคงที่ใน operator matrix ของ sobel operator ไปทีละ45องศา จะทำให้เกิดรูปที่ผ่าน sobel operator ทั้งหมด 8 รูป จาก 8ทิศทาง แล้วจึงหาภาพที่เหมาะสมที่สุดหลังผ่านการใช้ modified sobel operator</p>
                 </li>
-                <li class="offset-above-2"><h4 id="method2">Noise</h4>
-                  <p class="indent">ในการศึกษานี้จะทำการเพิ่มสิ่งรบกวนภาพ(noise) ลงไปในภาพจริง โดยการใช้ noise 3 ชนิด ดังนี้</p>
+                <li class="offset-above-2"><h4 id="method2">Canny Filter</h4>
+                  <p class="indent">การทำ Canny filter เป็นการทำ Edge detection แบบหนึ่ง โดยจะใช้ multi-stage algorithm ในการตรวจจับขอบภาพ โดยวิธีการนี้จะได้ผลลัพท์ที่ค่อนข้างมีประสิทธิภาพสูง</p>
+                  <h5>หลักการทำ Canny filter</h5>
+                  <p class="indent">การทำ Canny Filter จะมี 4 ขั้นตอนการทำงาน คือ</p>
                   <ol>
-                    <li>
-                      <h5>Gaussian noise</h5>
-                      <p class="indent">คือ noise ที่มีลักษณะการกระจายตัวแบบ normal distribution ที่เกิดจากแสงไม่ดีหรือ อุณหภูมิขณะถ่ายสูง หรือ การรบกวนจากสัญญาณไฟฟ้า ทำให้ แต่ละจุดบนภาพเกิดสีเพี้ยนไปจากรอบๆ</p>
-                    </li>
-                    <li>
-                      <h5>Poisson noise</h5>
-                      <p class="indent">คือ noise ที่มีลักษณะการกรจายตัวแบบ poisson distribution ที่เกิดจากโฟตอนในเซนเซอร์รับภาพได้รับปริมาณแสงมากกว่าจุดอื่น ทำให้บางจุดบนภาพมีลักษณะต่างจากรอบๆเล็กน้อย</p>
-                    </li>
-                    <li>
-                      <h5>Salt & pepper noise</h5>
-                      <p class="indent">คือ noise ทีมีลักษณะเป็นสีขาวบนพื้นมืด และสีดำบนพื้นสว่าง กระจายตัวอยู่ภายในภาพ เกิดจากความผิดพลาดในการแปลงข้อมูลรูปภาพจาก อะนาล็อกเป็นดิจิตอล</p>
-                    </li>
-                  </ol>
+                  <li>Gaussian blur : Noise Reduction สร้าง filter ในภาพ เพื่อลบรอยและ Noise ในภาพ</li>
+                  <li>Gradient operator : หาค่า Intensity Gradients ของรูปภาพ</li>
+                  <li>Non-maximum suppression : สร้าง Edge ที่แท้จริง</li>
+                  <li>Hysteresis thresholding : หาจุดเริ่มต้น และจุดสุดท้ายของขอบภาพ</li>
+                  </ol>                  
                 </li>
-                <li class="offset-above-2"><h4 id="method3">Nonlinear Filter</h4>
-                  <p class="indent">ในการศึกษานี้จะทำ non-linear filter 3 ชนิด ดังนี้</p>
-                  <ol>
-                    <li>
-                      <h5>Median filter</h5>
-                      <p class="indent">การหาค่ากลางหรือค่ามัธยฐานภายใน รูปภาพที่คลุมด้วยmask ที่สร้างขึ้น แล้วแทนที่จุดๆหนึ่งที่สนใจด้วยค่ากลางนั้น</p>
-                    </li>
-                    <li>
-                      <h5>Min filter</h5>
-                      <p class="indent">การหาค่าน้อยที่สุดภายใน รูปภาพที่คลุมด้วยmask ที่สร้างขึ้น แล้วแทนที่จุดๆหนึ่งที่สนใจด้วยค่าที่น้อยที่สุดนั้น</p>
-                    </li>
-                    <li>
-                      <h5>Max filter</h5>
-                      <p class="indent">การหาค่ามากที่สุดภายใน รูปภาพที่คลุมด้วยmask ที่สร้างขึ้น แล้วแทนที่จุดๆหนึ่งที่สนใจด้วยค่าที่มากที่สุดนั้น</p>
-                    </li>
-                  </ol>
-                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_filter.m"></script></p>
+                <li class="offset-above-2"><h4 id="method3">Gaussian Blur Filter</h4>
+                  <p class="indent">ใช้ Filter แบบ Gaussian blur เพื่อลบรอยและ Noise ในภาพ โดยหลักการของการทำ Gaussian blur จะอ้างอิงจากกราฟโดย Gaussian ซึ่งมีลักษณะเป็นรูประฆังคว่ำ เพื่อสร้างความ Smooth ให้กับรูปภาพ แต่สามารถอาจเลือกใช้การ Reduce Noise วิธีอื่นได้ด้วยเช่นกัน</p>
                 </li>                
+                <li class="offset-above-2"><h4 id="method4">Gradient operator</h4>
+                <p class="indent">เพื่อให้เกิด Gradients Intensity และ Direction ใช้สำหรับต้องการหาขอบของภาพโดยใช้ sober operation มาช่วยในการหาขอบซึ่งในวิธีการนี้สามารถใช้ operation อื่นมาใช้ในการหาขอบได้อีกเช่นกันจะเห็นได้ว่าวิธีการ canny เปิดกว้างในการการทำ edge detection </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method5">Non-maximum suppression</h4>
+                <p class="indent">เพื่อสร้าง Edge ที่แท้จริง เมื่อค่า Pixel นั้นๆ มีความเหมาะสมกับการเป็นขอบมากกว่า Pixel ข้างเคียง หรือสามารถใช้ Modified Sobel ในการหาค่า Max ได้เช่นกัน โดยเลือกจุดภาพที่มีขนาดสูงสุดและมีทิศทางเดียวกับเกรเดียนเท่านั้น </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method6">Hysteresis thresholding</h4>
+                <p class="indent">เพื่อหาจุดเริ่มต้น และจุดสุดท้ายของขอบภาพปรับค่าเป็น 0 กับ 1ลบเส้นที่ไม่เชื่อมกันออก (อันที่ไม่ใช่เส้นที่แท้จริง) อิง Positive feedback จากแนวคิดที่ว่า เราจะกำหนดค่า threshold แล้วถ้า pixel ไหนมีค่ามากกว่า threshold ให้มัน = 255 (hi) แล้วถ้า pixel ไหนมีค่าน้อยกว่า threshold ให้มัน = 0 (low) โดยค่า threshold ถ้าคิดแบบ hyst' จริงๆ ค่า low กับ hi จะเป็นคนละค่า คือ T1 กะ T2 (ตามหลัก Double threshold T2 = 2T1) เพื่อให้มีความสเถียร</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method7">Edge sharpening by Laplace Filter</h4>
+                <p class="indent">Laplace Filter เป็นวิธีการทำให้ขอบของภาพมีความคมชัดมากขึ้นโดยการ localizing การเปลี่ยนแปลงอย่างกระทันหันของค่า intensity โดยใช้ second derivatives ของ image function</p>
+                <p class="indent">โดยใช้ สมการ second derivative คือ $$ (\bigtriangledown ^2f)(x,y) = \frac{\partial^2 f}{\partial^2 x}(x,y) + \frac{\partial^2 f}{\partial^2 y}(x,y) \\ เมื่อ \frac{\partial^2 f}{\partial^2 x}(x,y) \equiv H_x^L = \begin{bmatrix}1 &-2  &1 \end{bmatrix} \\ และ \frac{\partial^2 f}{\partial^2 y}(x,y) \equiv H_x^L = \begin{bmatrix}1\\ -2\\ 1\end{bmatrix} \\ หรือ H^L = H_x^L + H_y^L = \begin{bmatrix}0 &1  &0 \\  1&-4  &1 \\  0& 1 &0 \end{bmatrix} $$ โดยนำ Operator mask ของ \(H^L\)  ไป convolution กับภาพ และนำไปหักลบกับภาพต้นแบบ จากนั้นนำกลับไปบวกกับภาพต้นแบบอีกที ก็จะได้ ภาพที่คมชัดมากขั้น โดยเป็นไปตามสมการ \( New Image = Original Pic + (Original Pic - L_{xy}) ; L_{xy} \) คือ ภาพที่ได้จากการ convolution ด้วย Lapace Operator</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method8">Modified Sobel Operator</h4>
+                <p class="indent">ในการทำ edge detection โดยวิธีการอื่นๆจะมีข้อเสียคือ สามารถตรวจจับขอบภาพได้ดีในแนวของ Vertical และ Horizontal ดังนั้นหาภาพที่ต้องการหานั้นมีขอบตามแนวแทยงก็จะย่อมตรวจจับได้ลำบาก ดังนั้นวิธีการ Modified Sobel Operator ถูกพัฒนาขึ้นมาเพื่อช่วยให้ง่ายในการตรวจจับขอบภาพทั้งในแนว Vertical, Horizontal และ Diagonal โดยใช้ Opertaor matrix จาก Sobel Operator ซึ่งจะแตกต่างกันที่ Sobel Opertor จะหาขอบใน 4 ทิศทางทุกๆ 90 องศา หรือตามแนวแกน x และแนวแกน y แต่วิธีนี้จะเป็นการหาขอบในทุกๆ 45 องศา โดยจะมี Operator mask ทั้งหมด 8 อัน คือ</p>                
+                <p>$$ \begin{split} H_0^S &= \begin{bmatrix}-1 &0  &1 \\ -2 &0  &1 \\ -1 &0  &1 \end{bmatrix} \\
+H_1^S &= \begin{bmatrix}-2 &-1  &0 \\ -1 &0  &1 \\ 0 &1  &2 \end{bmatrix} \\ 
+H_2^S &= \begin{bmatrix}-1 &-2  &-1 \\ 0 &0  &0 \\ 1 &2  &1 \end{bmatrix} \\
+H_3^S &= \begin{bmatrix}0 &-1  &-2 \\ 1 &0  &-1 \\ 2 &1  &0 \end{bmatrix} \\
+H_4^S &= \begin{bmatrix}1 &0  &-1 \\ 2 &0  &-2 \\ 1 &0  &-1 \end{bmatrix} \\ 
+H_5^S &= \begin{bmatrix}2 &1  &0 \\ 1 &0  &-1 \\ 0 &-1  &-2 \end{bmatrix} \\ 
+H_6^S &= \begin{bmatrix}1 &2  &1 \\ 0 &0  &0 \\ -1 &-2  &-1 \end{bmatrix} \\
+H_7^S &= \begin{bmatrix}0 &1  &2 \\ -1 &0  &1 \\ -2 &-1  &0 \end{bmatrix} \end{split}$$</p>
+                <p class="indent">โดยในการคำนวณจริงเราจะใช้เพียง 4 ค่าจากทั้งหมด 8 ค่ามา Convolution กับภาพ เช่น \(H_4^S = -H_0^S\) จะเชียนเป็นสมการ Convolution ได้ว่า \(I*H_4^S = I*-H_0^S\) โดยเมื่อดู Opertor ทั้งแปดของ Modified Sobel จะได้ความสัมพันธ์ดังนี้</p>
+                <p>$$ \begin{split} I*H_4^S &= -(I*H_0^S) \\
+                    I*H_5^S &= -(I*H_1^S) \\
+                    I*H_6^S &= -(I*H_2^S) \\
+                    I*H_7^S &= -(I*H_3^S) \end{split} $$
+                    </p>
+                <p class="indent">และเมื่อหาค่าทั้ง 4 แล้วจะทำการหา Magnitude ของภาพได้โดยนำค่าทั้ง 4 มาหาค่าที่มากที่สุด ซึ่งหมายถึงว่าค่านั้นจะเป็นขอบของภาพ</p>
+                </li>
             </div>
             <div>
               <h1 id="myresult">Results</h1>
-              <p class="indent">จากการศึกษา Unsharp filter ผลของการใส่ Noise ลงในภาพ และ Nonlinear filter ทั้งสามแบบ ทางกลุ่มได้ทำการเขียนฟังก์ชั่นการทำงานบนโปรแกรม MATLAB และได้ผลออกมาเป็นดังภาพด้านล่าง</p>
               <ol>
-              <li><b id="result1">JPEG Image</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_rgb.m"></script></p>
+              <li><b id="result1">Modified Sobel Operators</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/modified_sobel.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/modified_sobel_dicom_demo.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/video_demo.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/webcam.m"></script></p>
                 <p>
                     <figure>
-                      <img src="img/project8/1.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 1 : แสดงผลจากการใส่ noise ทั้งสามแบบในภาพ RGB</figcaption>
+                      <img src="img/project10/1.png" height="309" width="626" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:626px;text-align:center;">ภาพที่ 1 : แสดงผลจากการใส่ Modified Sobel Operators ทั้งสามแบบในภาพ RGB</figcaption>
                     </figure>
                     <figure>
-                      <img src="img/project8/2.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 2 : แสดงผลจากการใส่ noise ทั้งสามแบบในภาพ Grayscale</figcaption>
+                      <img src="img/project10/2.png" height="340" width="534" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:534px;text-align:center;">ภาพที่ 2 : แสดงผลจากการใส่ Modified Sobel Operators ทั้งสามแบบในภาพ DICOM</figcaption>
                     </figure>
-                </p>
-                <p>
-                  <figure>
-                      <img src="img/project8/3.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 3 : แสดงภาพต้นฉบับที่มี Gaussian noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
-                  </figure>
-                </p>
-                <p>
-                  <figure>
-                      <img src="img/project8/15.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 4 : แสดงภาพต้นฉบับที่มี Poisson noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
-                  </figure>
-                </p>
-                <p>
-                  <figure>
-                      <img src="img/project8/5.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 5 : แสดงภาพต้นฉบับที่มี Salt and Pepper noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
-                  </figure>
                 </p>
               </li>
-              <li><b id="result2">DICOM</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_dicom.m"></script></p>
+              <li><b id="result2">Canny Filter</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/canny.m"></script></p>
                 <p>
                   <figure>
-                      <img src="img/project8/6.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 6 : แสดงภาพต้นฉบับจาก DICOM file ที่มี Gaussian noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
-                  </figure>
-                  <p>
-                  <figure>
-                      <img src="img/project8/7.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 7 : แสดงภาพต้นฉบับจาก DICOM file ที่มี Poisson noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
-                  </figure>
-                </p>
-                <p>
-                  <figure>
-                      <img src="img/project8/8.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 8 : แสดงภาพต้นฉบับจาก DICOM file ที่มี Salt and Pepper noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
+                      <img src="img/project10/3.png" height="309" width="979" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 3 : แสดงภาพต้นฉบับและผลจากการใส่ Canny filter</figcaption>
                   </figure>
                 </p>
               </li>  
-              <li><b id="result3">LSM</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/nonlinear_lsm.m"></script></p>
+              <li><b id="result3">Edge sharpening by Laplace Filter</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/myLaplaceSharping.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/EdgeSharpeningLaplace.m"></script></p>
                 <p>
                   <figure>
-                      <img src="img/project8/9.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 9 : แสดงภาพต้นฉบับจาก LSM file ที่มี Gaussian noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
+                      <img src="img/project10/4.png" height="316" width="623" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:623px;text-align:center;">ภาพที่ 4 : แสดงภาพต้นฉบับและผลจากการใช้ Edge sharpening แบบ Laplace Filter</figcaption>
                   </figure>
                 </p>
                 <p>
                   <figure>
-                      <img src="img/project8/10.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 10 : แสดงภาพต้นฉบับจาก LSM file ที่มี Poisson noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
-                  </figure>
-                </p>
-                <p>
-                  <figure>
-                      <img src="img/project8/11.jpg" height="420" width="560" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 11 : แสดงภาพต้นฉบับจาก LSM file ที่มี Salt and Pepper noise และผลจากการใส่ Nonlinear filter ทั้งสามแบบ</figcaption>
+                      <img src="img/project10/5.png" height="341" width="581" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:581px;text-align:center;">ภาพที่ 5 : แสดงภาพต้นฉบับและผลจากการใช้ Edge sharpening แบบ Laplace Filter</figcaption>
                   </figure>
                 </p>
               </li>
@@ -350,26 +315,33 @@
                 <dl class="dl-horizontal">
                   <p>
                     <dt>Question 1:</dt>
-                    <dd>วิธีการทำ unsharp masking มีเทคนิกพิเศษในการจัดการภาพอย่างไร</dd>
+                    <dd>จงบอกข้อดีและข้อเสียของ canny filter</dd>
                     <dt>Answer:</dt>
-                    <dd>การทำ unsharp masking เป็นการเพิ่ม Contrast ระหว่าง Pixel  ซึ่งเป็นการตัดขอบเส้นของภาพให้ดูคมขึ้น หากเป็นภาพที่มีรายละเอียดมากเกินไปเช่นภาพต้นไม้ที่มีใบละเอียด หากเพิ่ม contrast ให้กับภาพมากเกินไป จะทำให้ภาพแตก จึงต้องปรับให้มีความเหมาะสม</dd>
+                    <dd><p>ข้อดีคือ 
+                      <ul>
+                        <li>เป็นการปรับปรุงสัญญาณโดยคำนึงถึงสัดส่วนของ noise โดยใช้  Nonmaxima suppression</li>
+                        <li>ทำให้การ detect ขอบของภาพดีขึ้นแม่จะมี noise โดยใช้ thresholding</li>
+                        <li>การ smooth โดยการใช้ Gaussian operation ทำให้การหาข้อผิดพลาดนั้นดียิ่งขึ้นเนื่องจากเป็นการใช้เรื่องของความน่าจะเป็น</li>
+                      </ul>
+                    </p><p>ข้อเสียคือ ใช้เวลาในการคำนวณนานเนื่องจากการคำนวณที่ซับซ้อน</p></dd>
                   </p>
                   <p>
                     <dt>Question 2:</dt>
-                    <dd>รูปภาพที่นำมาทำimage processing จะพบ noise แบบใดได้มากที่สุด</dd>
+                    <dd>จงบอกข้อดีและข้อเสียของ Laplacian filter ซึ่งเป็นวิธีการหา Edge อีกรูปแบบหนึ่ง</dd>
                     <dt>Answer:</dt>
-                    <dd>Poisson noise</p>
+                    <dd><p>ข้อดีคือ<ul>
+<li>zero crossing operators สามารถ detect ขอบและ orientation ได้ ซึ่งหลักการนั้นไม่ยากเนื่องจากเป็นการประมาณค่าของ gradient magnitude</li>
+<li>สามารถปรับปรุง characteristic ได้ในทุกทิศทาง</li></ul></p>
+    <p>ข้อเสียคือ <ul>
+<li>sensitive ต่อ noise เนื่องจากการ detect ขอบและ orientation จะทำให้ noise ในภาพเพิ่มขึ้น ส่งผลให้ไปลดค่า magnitude ของขอบภาพ</li>
+<li>operator ในภาพเกิดการแตกโดยขอบของภาพในภาพที่มี noise</li></ul></p>
                     </dd>
                   </p>
                   <p>
                     <dt>Question 3:</dt>
-                    <dd>หากทำ median filter จะมีข้อดีอย่างไร</dd>
+                    <dd>อะไรคือข้อดีของการทำ Hysteresis Thresholding</dd>
                     <dt>Answer:</dt>
-                    <dd><ol>
-                      <li>จะไม่เกิดปรากฎการณ์ shift boundary ซึ่งมักเกิดกับ smoothing filter เนื่องจากปัญหาของ contrast</li>
-                      <li>จะไม่เกิดค่าที่มากเกินไปเนื่องจากการคำนวณนั้นมีความ sensitive มากกว่า mean filter หากเป็น mean filter จะเกิดปัญหานี้ขึ้นได้</li>
-                      <li>ไม่มีการลดลงของ contrast เนื่องจากค่าของ output ที่ได้มาจากค่ารอบๆ ไม่ใช่ค่าที่คำนวณใหม่</li>
-                    </ol></dd>
+                    <dd>ขอบเชื่อมต่อกันมากขึ้น จึงทำให้ขอบของภาพส่วนที่ไม่ต่อเนื่องกันนั้นต่อเนื่องกัน</dd>
                   </p>
                 </dl>
             </div>
