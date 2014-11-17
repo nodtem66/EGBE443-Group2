@@ -71,11 +71,20 @@
             <div class="bs-sidebar hidden-print" role="complementary">
                 <ul class="nav bs-sidenav">
                   <li class="active"><a href="#myobjective">Objective</a></li>
-                  <li><a href="#mymethod">Methods</a></li>
+                  <li><a href="#mymethod">Methods</a>
+                  <ul>
+                    <li><a href="#method1">Modified Sobel Operators</a></li>
+                    <li><a href="#method2">Canny Filter</a></li>
+                    <li><a href="#method3">Gaussian Blur Filter</a></li>
+                    <li><a href="#method4">Gradient operator</a></li>
+                    <li><a href="#method5">Non-maximum suppression</a></li>
+                    <li><a href="#method6">Hysteresis thresholding</a></li>
+                    <li><a href="#method7">Edge sharpening by Laplace Filter</a></li>
+                  </ul>
+                  </li>
                   <li><a href="#result">Results</a></li>
-                  <li><a href="#mydisscussion">Discussion</a></li>              
-                  <li><a href="#myconclusion">Conclusion</a></li>              
-                  <li><a href="#myfuture">Future Study</a></li>              
+                  <li><a href="#myconclusion">Conclusion</a></li>                           
+                  <li><a href="#mydisscussion">Discussion</a></li>             
                   <li><a href="#myqaa">Q&amp;A</a></li>
                 </ul>
             </div>
@@ -102,36 +111,7 @@
               <ol>
                 <li><h4 id="method1">Modified Sobel Operators</h4>
                   <p class="indent">Modified Sobel เป็นการปรับปรุงให้ sobel operator ทำงานได้ทั้ง8ทิศทาง ภายในภาพ โดยการหมุนคู่ของค่าคงที่ใน operator matrix ของ sobel operator ไปทีละ45องศา จะทำให้เกิดรูปที่ผ่าน sobel operator ทั้งหมด 8 รูป จาก 8ทิศทาง แล้วจึงหาภาพที่เหมาะสมที่สุดหลังผ่านการใช้ modified sobel operator</p>
-                </li>
-                <li class="offset-above-2"><h4 id="method2">Canny Filter</h4>
-                  <p class="indent">การทำ Canny filter เป็นการทำ Edge detection แบบหนึ่ง โดยจะใช้ multi-stage algorithm ในการตรวจจับขอบภาพ โดยวิธีการนี้จะได้ผลลัพท์ที่ค่อนข้างมีประสิทธิภาพสูง</p>
-                  <h5>หลักการทำ Canny filter</h5>
-                  <p class="indent">การทำ Canny Filter จะมี 4 ขั้นตอนการทำงาน คือ</p>
-                  <ol>
-                  <li>Gaussian blur : Noise Reduction สร้าง filter ในภาพ เพื่อลบรอยและ Noise ในภาพ</li>
-                  <li>Gradient operator : หาค่า Intensity Gradients ของรูปภาพ</li>
-                  <li>Non-maximum suppression : สร้าง Edge ที่แท้จริง</li>
-                  <li>Hysteresis thresholding : หาจุดเริ่มต้น และจุดสุดท้ายของขอบภาพ</li>
-                  </ol>                  
-                </li>
-                <li class="offset-above-2"><h4 id="method3">Gaussian Blur Filter</h4>
-                  <p class="indent">ใช้ Filter แบบ Gaussian blur เพื่อลบรอยและ Noise ในภาพ โดยหลักการของการทำ Gaussian blur จะอ้างอิงจากกราฟโดย Gaussian ซึ่งมีลักษณะเป็นรูประฆังคว่ำ เพื่อสร้างความ Smooth ให้กับรูปภาพ แต่สามารถอาจเลือกใช้การ Reduce Noise วิธีอื่นได้ด้วยเช่นกัน</p>
-                </li>                
-                <li class="offset-above-2"><h4 id="method4">Gradient operator</h4>
-                <p class="indent">เพื่อให้เกิด Gradients Intensity และ Direction ใช้สำหรับต้องการหาขอบของภาพโดยใช้ sober operation มาช่วยในการหาขอบซึ่งในวิธีการนี้สามารถใช้ operation อื่นมาใช้ในการหาขอบได้อีกเช่นกันจะเห็นได้ว่าวิธีการ canny เปิดกว้างในการการทำ edge detection </p>
-                </li>
-                <li class="offset-above-2"><h4 id="method5">Non-maximum suppression</h4>
-                <p class="indent">เพื่อสร้าง Edge ที่แท้จริง เมื่อค่า Pixel นั้นๆ มีความเหมาะสมกับการเป็นขอบมากกว่า Pixel ข้างเคียง หรือสามารถใช้ Modified Sobel ในการหาค่า Max ได้เช่นกัน โดยเลือกจุดภาพที่มีขนาดสูงสุดและมีทิศทางเดียวกับเกรเดียนเท่านั้น </p>
-                </li>
-                <li class="offset-above-2"><h4 id="method6">Hysteresis thresholding</h4>
-                <p class="indent">เพื่อหาจุดเริ่มต้น และจุดสุดท้ายของขอบภาพปรับค่าเป็น 0 กับ 1ลบเส้นที่ไม่เชื่อมกันออก (อันที่ไม่ใช่เส้นที่แท้จริง) อิง Positive feedback จากแนวคิดที่ว่า เราจะกำหนดค่า threshold แล้วถ้า pixel ไหนมีค่ามากกว่า threshold ให้มัน = 255 (hi) แล้วถ้า pixel ไหนมีค่าน้อยกว่า threshold ให้มัน = 0 (low) โดยค่า threshold ถ้าคิดแบบ hyst' จริงๆ ค่า low กับ hi จะเป็นคนละค่า คือ T1 กะ T2 (ตามหลัก Double threshold T2 = 2T1) เพื่อให้มีความสเถียร</p>
-                </li>
-                <li class="offset-above-2"><h4 id="method7">Edge sharpening by Laplace Filter</h4>
-                <p class="indent">Laplace Filter เป็นวิธีการทำให้ขอบของภาพมีความคมชัดมากขึ้นโดยการ localizing การเปลี่ยนแปลงอย่างกระทันหันของค่า intensity โดยใช้ second derivatives ของ image function</p>
-                <p class="indent">โดยใช้ สมการ second derivative คือ $$ (\bigtriangledown ^2f)(x,y) = \frac{\partial^2 f}{\partial^2 x}(x,y) + \frac{\partial^2 f}{\partial^2 y}(x,y) \\ เมื่อ \frac{\partial^2 f}{\partial^2 x}(x,y) \equiv H_x^L = \begin{bmatrix}1 &-2  &1 \end{bmatrix} \\ และ \frac{\partial^2 f}{\partial^2 y}(x,y) \equiv H_x^L = \begin{bmatrix}1\\ -2\\ 1\end{bmatrix} \\ หรือ H^L = H_x^L + H_y^L = \begin{bmatrix}0 &1  &0 \\  1&-4  &1 \\  0& 1 &0 \end{bmatrix} $$ โดยนำ Operator mask ของ \(H^L\)  ไป convolution กับภาพ และนำไปหักลบกับภาพต้นแบบ จากนั้นนำกลับไปบวกกับภาพต้นแบบอีกที ก็จะได้ ภาพที่คมชัดมากขั้น โดยเป็นไปตามสมการ \( New Image = Original Pic + (Original Pic - L_{xy}) ; L_{xy} \) คือ ภาพที่ได้จากการ convolution ด้วย Lapace Operator</p>
-                </li>
-                <li class="offset-above-2"><h4 id="method8">Modified Sobel Operator</h4>
-                <p class="indent">ในการทำ edge detection โดยวิธีการอื่นๆจะมีข้อเสียคือ สามารถตรวจจับขอบภาพได้ดีในแนวของ Vertical และ Horizontal ดังนั้นหาภาพที่ต้องการหานั้นมีขอบตามแนวแทยงก็จะย่อมตรวจจับได้ลำบาก ดังนั้นวิธีการ Modified Sobel Operator ถูกพัฒนาขึ้นมาเพื่อช่วยให้ง่ายในการตรวจจับขอบภาพทั้งในแนว Vertical, Horizontal และ Diagonal โดยใช้ Opertaor matrix จาก Sobel Operator ซึ่งจะแตกต่างกันที่ Sobel Opertor จะหาขอบใน 4 ทิศทางทุกๆ 90 องศา หรือตามแนวแกน x และแนวแกน y แต่วิธีนี้จะเป็นการหาขอบในทุกๆ 45 องศา โดยจะมี Operator mask ทั้งหมด 8 อัน คือ</p>                
+                  <p class="indent">ในการทำ edge detection โดยวิธีการอื่นๆจะมีข้อเสียคือ สามารถตรวจจับขอบภาพได้ดีในแนวของ Vertical และ Horizontal ดังนั้นหาภาพที่ต้องการหานั้นมีขอบตามแนวแทยงก็จะย่อมตรวจจับได้ลำบาก ดังนั้นวิธีการ Modified Sobel Operator ถูกพัฒนาขึ้นมาเพื่อช่วยให้ง่ายในการตรวจจับขอบภาพทั้งในแนว Vertical, Horizontal และ Diagonal โดยใช้ Opertaor matrix จาก Sobel Operator ซึ่งจะแตกต่างกันที่ Sobel Opertor จะหาขอบใน 4 ทิศทางทุกๆ 90 องศา หรือตามแนวแกน x และแนวแกน y แต่วิธีนี้จะเป็นการหาขอบในทุกๆ 45 องศา โดยจะมี Operator mask ทั้งหมด 8 อัน คือ</p>                
                 <p>$$ \begin{split} H_0^S &= \begin{bmatrix}-1 &0  &1 \\ -2 &0  &1 \\ -1 &0  &1 \end{bmatrix} \\
 H_1^S &= \begin{bmatrix}-2 &-1  &0 \\ -1 &0  &1 \\ 0 &1  &2 \end{bmatrix} \\ 
 H_2^S &= \begin{bmatrix}-1 &-2  &-1 \\ 0 &0  &0 \\ 1 &2  &1 \end{bmatrix} \\
@@ -147,6 +127,41 @@ H_7^S &= \begin{bmatrix}0 &1  &2 \\ -1 &0  &1 \\ -2 &-1  &0 \end{bmatrix} \end{s
                     I*H_7^S &= -(I*H_3^S) \end{split} $$
                     </p>
                 <p class="indent">และเมื่อหาค่าทั้ง 4 แล้วจะทำการหา Magnitude ของภาพได้โดยนำค่าทั้ง 4 มาหาค่าที่มากที่สุด ซึ่งหมายถึงว่าค่านั้นจะเป็นขอบของภาพ</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method2">Canny Filter</h4>
+                  <p class="indent">การทำ Canny filter เป็นการทำ Edge detection แบบหนึ่ง โดยจะใช้ multi-stage algorithm ในการตรวจจับขอบภาพ โดยวิธีการนี้จะได้ผลลัพท์ที่ค่อนข้างมีประสิทธิภาพสูง</p>
+                  <h5>หลักการทำ Canny filter</h5>
+                  <p class="indent">การทำ Canny Filter จะมี 4 ขั้นตอนการทำงาน คือ</p>
+                  <ol>
+                  <li>Gaussian blur : Noise Reduction สร้าง filter ในภาพ เพื่อลบรอยและ Noise ในภาพ</li>
+                  <li>Gradient operator : หาค่า Intensity Gradients ของรูปภาพ</li>
+                  <li>Non-maximum suppression : สร้าง Edge ที่แท้จริง</li>
+                  <li>Hysteresis thresholding : หาจุดเริ่มต้น และจุดสุดท้ายของขอบภาพ</li>
+                  </ol>                  
+                </li>
+                <li class="offset-above-2"><h4 id="method3">Gaussian Blur Filter</h4>
+                  <p class="indent">ใช้ Filter แบบ <a href="project7.html#method4">Gaussian blur</a> เพื่อลบรอยและ Noise ในภาพ โดยหลักการของการทำ Gaussian blur จะอ้างอิงจากกราฟโดย Gaussian ซึ่งมีลักษณะเป็นรูประฆังคว่ำ เพื่อสร้างความ Smooth ให้กับรูปภาพ แต่สามารถอาจเลือกใช้การ Reduce Noise วิธีอื่นได้ด้วยเช่นกัน</p>
+                </li>                
+                <li class="offset-above-2"><h4 id="method4">Gradient operator</h4>
+                <p class="indent">เพื่อให้เกิด Gradients Intensity และ Direction ใช้สำหรับต้องการหาขอบของภาพโดยใช้ <a href="project9.html">Sobel operation</a> มาช่วยในการหาขอบซึ่งในวิธีการนี้สามารถใช้ operation อื่นมาใช้ในการหาขอบได้อีกเช่นกันจะเห็นได้ว่าวิธีการ canny เปิดกว้างในการการทำ edge detection </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method5">Non-maximum suppression</h4>
+                <p class="indent">เพื่อสร้าง Edge ที่แท้จริง เมื่อค่า Pixel นั้นๆ มีความเหมาะสมกับการเป็นขอบมากกว่า Pixel ข้างเคียง หรือสามารถใช้ Modified Sobel ในการหาค่า Max ได้เช่นกัน โดยเลือกจุดภาพที่มีขนาดสูงสุดและมีทิศทางเดียวกับเกรเดียนเท่านั้น </p>
+                <p class="indent">วิธีการทำงานคือปรับ Gradient Direction/Orientation ให้ไปยังทิศที่ใกล้กับทิศหลักที่ต้องการเช่น 0 45 90 และ 135 องศา จากนั้นทำการตรวจสอบ Gradient Magnitude ของบริเวณรอบๆในแนวที่ไม่ตรงกับ Gradient Direction ดังตัวอย่างดังนี้
+                <ul>
+                  <li>0 องศา (ทิศทาง Gradient ในแนวเหนือ-ใต้) หาก pixel นั้นๆมีค่าน้อยกว่า pixel ทางซ้ายและทางขวา (แนวตะวันออก-ตะวันตก) pixel นั้นจะถูก suppress ซึ่งโดยปกติจะกำหนด gradient magnitude เป็น 0</li>
+                  <li>90 องศา (ทิศทาง Gradient ในแนวตะวันออก-ตะวันตก) หาก pixel นั้นๆมีค่าน้อยกว่า pixel ข้างบนและข้างล่าง (แนวเหนือ-ใต้) pixel นั้นจะถูก suppress</li>
+                  <li>135 (ทิศทาง Gradient ในแนวอีสาน-หรดี) หาก pixel นั้นๆมีค่าน้อยกว่า pixel ทางล่างซ้ายและทางบนขวา (แนวอาตเนย์-พายัพ) pixel นั้นจะถูก suppress</li>
+                  <li>45 (ทิศทาง Gradient ในแนวอาตเนย์-พายัพ) หาก pixel นั้นๆมีค่าน้อยกว่า pixel ทางบนซ้ายและทางล่างขวา (แนวอีสาน-หรดี) pixel นั้นจะถูก suppress</li>
+                </ul>
+                </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method6">Hysteresis thresholding</h4>
+                <p class="indent">เพื่อหาจุดเริ่มต้น และจุดสุดท้ายของขอบภาพ โดยการลบเส้นที่ไม่เชื่อมกันออก (อันที่ไม่ใช่เส้นที่แท้จริง) โดยการพิจารณา connected component หรือ neighborhood บริเวณรอบ หากไม่มี neighborhood ที่เป็น edge เลย (มีค่าไม่เป็น 1) pixel นั้นจะถูก suppress ไว้ วิธีการทำจะตั้ง threshold สองค่าคือ Low และ High หาก pixel นั้นต่ำกว่า Low ค่าจะเป็น 0 ถ้ามากกว่า High จะเป็น 1 หรืออยู่ระหว่างนั้นจะพิจารณาให้เป็น 1 เมื่อมี neighbor เป็น edge (พิจารณาตามแต่ connected component ที่ตั้งค่าไว้)</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method7">Edge sharpening by Laplace Filter</h4>
+                <p class="indent">Laplace Filter เป็นวิธีการทำให้ขอบของภาพมีความคมชัดมากขึ้นโดยการ localizing การเปลี่ยนแปลงอย่างกระทันหันของค่า intensity โดยใช้ second derivatives ของ image function</p>
+                <p class="indent">โดยใช้ สมการ second derivative คือ $$ (\bigtriangledown ^2f)(x,y) = \frac{\partial^2 f}{\partial^2 x}(x,y) + \frac{\partial^2 f}{\partial^2 y}(x,y) \\ เมื่อ \frac{\partial^2 f}{\partial^2 x}(x,y) \equiv H_x^L = \begin{bmatrix}1 &-2  &1 \end{bmatrix} \\ และ \frac{\partial^2 f}{\partial^2 y}(x,y) \equiv H_x^L = \begin{bmatrix}1\\ -2\\ 1\end{bmatrix} \\ หรือ H^L = H_x^L + H_y^L = \begin{bmatrix}0 &1  &0 \\  1&-4  &1 \\  0& 1 &0 \end{bmatrix} $$ โดยนำ Operator mask ของ \(H^L\)  ไป convolution กับภาพ และนำไปหักลบกับภาพต้นแบบ จากนั้นนำกลับไปบวกกับภาพต้นแบบอีกที ก็จะได้ ภาพที่คมชัดมากขั้น โดยเป็นไปตามสมการ \( New Image = Original Pic + (Original Pic - L_{xy}) ; L_{xy} \) คือ ภาพที่ได้จากการ convolution ด้วย Lapace Operator</p>
                 </li>
             </div>
             <div>
@@ -166,15 +181,67 @@ H_7^S &= \begin{bmatrix}0 &1  &2 \\ -1 &0  &1 \\ -2 &-1  &0 \end{bmatrix} \end{s
                       <img src="img/project10/2.png" height="340" width="534" class="img-thumbnail offset-above-2">
                       <figcaption style="width:534px;text-align:center;">ภาพที่ 2 : แสดงผลจากการใส่ Modified Sobel Operators ทั้งสามแบบในภาพ DICOM</figcaption>
                     </figure>
+                    <figure>
+                      <img src="img/project10/1.jpg" height="420" width="561" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:561px;text-align:center;">ภาพที่ 3 : แสดงผลจากการใส่ Modified Sobel Operators ทั้งสามแบบในภาพ LSM</figcaption>
+                    </figure>
+                </p>
+                <p class="wide center">
+                    <video controls loop preload="auto" width="206" height="218"
+                     <source src="video/MSobel.mp4" type='video/mp4' />
+                     <source src="video/MSobel.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Modified Sobel Operation</p>
+                </p>
+                <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/MSobel_Webcam.mp4" type='video/mp4' />
+                     <source src="video/MSobel_Webcam.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video แสดงผลการประมวลผลภาพจาก Webcam แสดงผลการทำ Modified Sobel Operation</p>
                 </p>
               </li>
               <li><b id="result2">Canny Filter</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/canny.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/myCanny.m"></script></p>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project10/myCanny2.m"></script></p>
                 <p>
                   <figure>
                       <img src="img/project10/3.png" height="309" width="979" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:100%;text-align:center;">ภาพที่ 3 : แสดงภาพต้นฉบับและผลจากการใส่ Canny filter</figcaption>
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 4 : แสดงภาพต้นฉบับและผลจากการใส่ Canny filter</figcaption>
                   </figure>
+                  <figure>
+                      <img src="img/project10/canny1.png" height="321" width="1087" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 5 : แสดงภาพต้นฉบับและผลจากการใส่ Canny filter</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project10/canny2.png" height="305" width="1011" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 6 : แสดงภาพต้นฉบับและผลจากการใส่ Canny filter</figcaption>
+                  </figure>
+                  <figure>
+                      <img src="img/project10/canny3.png" height="296" width="1081" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 7 : แสดงภาพต้นฉบับและผลจากการใส่ Canny filter</figcaption>
+                  </figure>
+                </p>
+                <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/Canny.mp4" type='video/mp4' />
+                     <source src="video/Canny.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Canny filter</p>
+                </p>
+                <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/Canny_Webcam1.mp4" type='video/mp4' />
+                     <source src="video/Canny_Webcam1.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video แสดงผลการประมวลผลภาพจาก Webcam แสดงผลการทำ Canny filter</p>
+                </p>
+                <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/Canny_Webcam2.mp4" type='video/mp4' />
+                     <source src="video/Canny_Webcam2.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video แสดงผลการประมวลผลภาพจาก Webcam แสดงผลการทำ Canny filter</p>
                 </p>
               </li>  
               <li><b id="result3">Edge sharpening by Laplace Filter</b>
@@ -183,133 +250,38 @@ H_7^S &= \begin{bmatrix}0 &1  &2 \\ -1 &0  &1 \\ -2 &-1  &0 \end{bmatrix} \end{s
                 <p>
                   <figure>
                       <img src="img/project10/4.png" height="316" width="623" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:623px;text-align:center;">ภาพที่ 4 : แสดงภาพต้นฉบับและผลจากการใช้ Edge sharpening แบบ Laplace Filter</figcaption>
+                      <figcaption style="width:623px;text-align:center;">ภาพที่ 8 : แสดงภาพต้นฉบับและผลจากการใช้ Edge sharpening แบบ Laplace Filter</figcaption>
                   </figure>
-                </p>
-                <p>
                   <figure>
                       <img src="img/project10/5.png" height="341" width="581" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:581px;text-align:center;">ภาพที่ 5 : แสดงภาพต้นฉบับและผลจากการใช้ Edge sharpening แบบ Laplace Filter</figcaption>
+                      <figcaption style="width:581px;text-align:center;">ภาพที่ 9 : แสดงภาพต้นฉบับและผลจากการใช้ Edge sharpening แบบ Laplace Filter</figcaption>
                   </figure>
-                </p>
-              </li>
-              <li><b id="result4">Unsharp filter</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/unsharp_rgb.m"></script></p>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/unsharp_dicom.m"></script></p>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/unsharp_lsm.m"></script></p>
-                <p>
                   <figure>
-                      <img src="img/project8/14.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:100%;text-align:center;">ภาพที่ 12 : แสดงภาพต้นฉบับ ภาพที่ใส่ Gaussian noise ภาพที่ผ่านการทำ smoothing filter และผลจากการทำ unsharp filter</figcaption>
+                      <img src="img/project10/6.png" height="527" width="1125" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพที่ 10 : แสดงภาพต้นฉบับและผลจากการใช้ Edge sharpening แบบ Laplace Filter</figcaption>
                   </figure>
                 </p>
-                <p>
-                  <figure>
-                      <img src="img/project8/12.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:100%;text-align:center;">ภาพที่ 13 : แสดงภาพต้นฉบับ ภาพที่ใส่ Poisson noise ภาพที่ผ่านการทำ smoothing filter และผลจากการทำ unsharp filter</figcaption>
-                  </figure>
+                <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/Laplace.mp4" type='video/mp4' />
+                     <source src="video/Laplace.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Edge sharpening แบบ Laplace Filter</p>
                 </p>
-                <p>
-                  <figure>
-                      <img src="img/project8/13.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:100%;text-align:center;">ภาพที่ 14 : แสดงภาพต้นฉบับ ภาพที่ใส่ Salt and Pepper noise ภาพที่ผ่านการทำ smoothing filter และผลจากการทำ unsharp filter</figcaption>
-                  </figure>
-                </p>
-              </li>
-              <li><b id="result5" class="offset-below-2">Nonlinear Filter บนภาพจาก AVI Video</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/create_VDO_MinMedMax.m"></script></p>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/create_VDO_Unsharp.m"></script></p>
-                <ol>
-                  <li><b>Gaussian noise with Nonlinear filter</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/Gaussian.mp4" type='video/mp4' />
-                     <source src="video/Gaussian.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Nonlinear filter ใน Video ที่มี Gaussian noise</p>
-                  </p></li>
-                  <li><b>Poisson noise with Nonlinear filter</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/Poisson.mp4" type='video/mp4' />
-                     <source src="video/Poisson.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Nonlinear filter ใน Video ที่มี Poisson noise</p>
-                  </p></li>
-                  <li><b>Salt and Pepper noise with Nonlinear filter</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/SaltAndPepper.mp4" type='video/mp4' />
-                     <source src="video/SaltAndPepper.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Nonlinear filter ใน Video ที่มี Salt and Pepper noise</p>
-                  </p></li>
-                  <li><b>Unsharp filter with Gaussian noise</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/Gaussian_unsharp.mp4" type='video/mp4' />
-                     <source src="video/Gaussian_unsharp.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ unsharp filter ใน Video ที่มี Gaussian noise</p>
-                  </p></li>
-                  <li><b>Unsharp filter with Poisson noise</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/Poisson_unsharp.mp4" type='video/mp4' />
-                     <source src="video/Poisson_unsharp.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ unsharp filter ใน Video ที่มี Poisson noise</p>
-                  </p></li>
-                  <li><b>Unsharp filter with Salt and Pepper noise</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/SaltAndPepper_unsharp.mp4" type='video/mp4' />
-                     <source src="video/SaltAndPepper_unsharp.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ unsharp filter ใน Video ที่มี Salt and Pepper noise</p>
-                  </p></li>
-                </ol>
-              </li>
-              <li><b id="result6" class="offset-below-2">Nonlinear Filter บนภาพจาก Webcam</b>
-                <ol>    
-                  <li><b>Nonlinear filter</b>
-                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/Webcam_MinMedMax.m"></script></p>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="600" height="600"
-                     <source src="video/MinMedMax_webcam_Gaussian.mp4" type='video/mp4' />
-                     <source src="video/MinMedMax_webcam_Gaussian.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Nonlinear filter</p>
-                  </p></li>
-                  <li><b>Unsharp filter</b>
-                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project8/Webcam_unsharp.m"></script></p>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="600" height="600"
-                     <source src="video/Unsharp_webcam.mp4" type='video/mp4' />
-                     <source src="video/Unsharp_webcam.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ unsharp filter</p>
-                  </p></li>
-                </ol>
               </li>
               </ol>
             </div>
             <hr>
             <div>
+              <h1 id="myconclusion" class="offset-below-1">Conclusion</h1>
+              <p class="indent">จากการศึกษาการหา Edge detection ทั้งสามแบบคือ Modified Sobel, Laplace sharpening และ Canny จากผลที่ได้จะเห็นว่าการใช้ Modified Sobel จะทำให้ได้ภาพที่มีขอบทั้งแนวตั้ง แนวนอน และแนวแทยงมุม ส่วนการใช้ Lapace Sharpening จะช่วยให้ได้ภาพที่ขอบคมชัดเจนนเื่องจากได้การทำ Edge detection โดยใช้ Lapace operator เข้ามาช่วย จึงทำให้ขอบดูคมชัด และการใช้ Canny Opertor จะช่วยให้ได้ Edge detection ที่ได้ขอบจริงๆขอบภาพซึ่งแตกต่างจากวิธีอื่นเนื่องจากมีการกำหนด Threshold สองค่าเพื่อแยกแยะรายละเอียดต่างๆของภาพ และมีกระบวนการทำหรือวิธีที่ซับซ้อนกว่า</p>
+            </div>
+            <hr>
+            <div>
               <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
-              <p class="thai indent">จากผลที่ได้นั้น Minimum filter และ Maximum filter เกิดการทำให้ภาพผิดเพี้ยนเกินไปเนื่องจากเป็นการดูค่าที่จุดนั้น และจุดรอบๆ โดยเปลี่ยนเป็นค่าที่น้อยที่สุด หรือมากที่สุด จึงทำให้ contrast ของภาพผิดเพี้ยนไป และ Median filter ที่ดูค่าที่จุดนั้นและจุดรอบๆจุดที่สนใจ โดยเปลียนค่าเป็นค่ากลาง หรือค่ามัธยฐาน ทำให้ได้ภาพที่ filter ได้ดีที่สุด</p
-              <p class="indent">ส่วนผลที่ได้จาก Unsharp filter นั้นทำให้ได้ภาพที่ filter แล้วนั้นมีความคมชัดมากขึ้น แต่จะมีการคำนวณที่ซับซ้อนมากกว่า Non linear filter ทั้งสามแบบนั้น เนื่องจากต้องมีการ filter ภาพที่ได้ก่อนและนำมาหักลบกับภาพเดิม</p>
+              <p class="indent">ในการใช้ Modified Sobel จะเห็นว่าค่อนข้างจะได้ Edge detection ที่ดีกว่าวิธีการก่อนๆคือ Sobel และ Prewitt เพราะมีการหาขอบของภาพในทุกๆ 45 องศา แต่ก็มีการทำที่ซับซ้อนกว่า และการทำ Sharpening โดยใช้ Lapace นั้นเป็นการใช้ second derivative มาช่วยหา edge ของภาพและนำกลับไปบวกเข้ากับภาพจริงจึงทำให้ได้ภาพที่ได้ขอบคมชัดมากขึ้น แต่ก็มีการคำนวณหลายขึ้นตอนจึงอาจจะต้องมีการพัฒนาให้สะดวกในการใช้แบบ real-time ส่วนวิธีการของ Canny นั้นช่วยให้ได้ขอบที่มีความถูกต้องมากกว่าวิธีที่กล่าวมาแต่ว่ามีขั้นตอนการคำนวณที่ซับซ้อนและยุ่งยากมากที่สุด ดังนั้นในการทำ Edge detection ก็ควรเลือกวิธีการให้เหมาะสมกับรูปภาพ</p>
             </div>
             <hr>
-            <div>
-              <h1 id="myconclusion">Conclusion and Future Study</h1>
-              <p class="indent thai">จากการศึกษา Unsharp filter  จะเห็นว่าภาพที่ได้จะมีลักษณะของภาพที่คมชัดดูมีมิติมากขึ้นส่วน Linear filter ที่ใช้นั้น Median filter ให้ค่าของภาพที่ดีกว่า Minimum และ Maximum filter เนื่องจาก filter สองชนิดหลัง บางครั้งยังทำให้ภาพที่ได้มีลักษณะผิดเพี้ยนไป</p>
-            </div>
-            <hr>
-            <div>
-              <h1 id="myrfuture">Future Studies</h1>
-              <p class="indent">จากการที่ทางกลุ่มได้ทำการศึกษาเกี่ยวกับ Non linear filter ที่ใช้ใน image procrssing ครั้งนี้ สามารถนำไปประยุกต์ใช้ได้ทั้งในทางชีวการแพทย์ หรือในด้านต่างๆ เพราะในการทำ image ทางการแพทย์นั้น ต้องการภาพที่มีรายละเอียดครบถ้วน หากภาพที่ได้มี noise รับกวนตัวภาพอาจทำให้การวินิจฉัยของแพทย์ผิดพลาดได้ จึงสามารถนำความรู้ที่ได้มาประยุกต์ใช้ได้</p>
-            </div>
             <div>
               <h1 id="myqaa">Q&amp;A</h1>
                 <dl class="dl-horizontal">
@@ -346,7 +318,7 @@ H_7^S &= \begin{bmatrix}0 &1  &2 \\ -1 &0  &1 \\ -2 &-1  &0 \end{bmatrix} \end{s
                 </dl>
             </div>
             <div>
-              <p>Source code is available on <a href="https://github.com/nodtem66/EGBE443-Group2/tree/master/project8">Github</a></p>
+              <p>Source code is available on <a href="https://github.com/nodtem66/EGBE443-Group2/tree/master/project10">Github</a></p>
             </div>
         </div>
         <!-- end col-md-9 -->
