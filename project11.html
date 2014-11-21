@@ -1,0 +1,375 @@
+<!--
+  Date: 14/9/2014
+  bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Project Report</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/blueimp-gallery.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-image-gallery.min.css">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//vjs.zencdn.net/4.9/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.9/video.js"></script>
+  </head>
+  <body>
+    
+  <header id="mynavbar" class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+            </button> <a href="../" class="navbar-brand">Group 2</a>
+
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="project1.html">Bun Camera</a></li>
+                    <li><a href="project2.html">Camera Selection</a></li>
+                    <li><a href="project3.html">Photography Study</a></li>
+                    <li><a href="project4.html">Image File Reading</a></li>
+                    <li><a href="project5.html">Histogram</a></li>
+                    <li><a href="project6.html">Point Operation</a></li>
+                    <li><a href="project7.html">Linear Filter</a></li>
+                    <li><a href="project8.html">Nonlinear Filter</a></li>
+                    <li><a href="project9.html">Edge Detection : Part 1</a></li>
+                    <li><a href="project10.html">Edge Detection : Part 2</a></li>
+                  </ul>
+                </li>
+                <li> <a href="#">About</a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="bs-header" id="content">
+    <div class="container">
+         <h1>Edge Detection</h1>
+        <p class="thai">การศึกษาการทำ Morphological Filter ใน Image processing</p>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div class="bs-sidebar hidden-print" role="complementary">
+                <ul class="nav bs-sidenav">
+                  <li class="active"><a href="#myobjective">Objective</a></li>
+                  <li><a href="#mymethod">Methods</a>
+                    <ul>
+                      <li><a href="#method1">Erosion</a></li>
+                      <li><a href="#method2">Dilation</a></li>
+                      <li><a href="#method3">Opening</a></li>
+                      <li><a href="#method4">Closing</li>
+                    </ul>
+                  </li>
+                  <li><a href="#result">Results</a>
+                    <ul>
+                      <li><a href="#result1">JPEG</a></li>
+                      <li><a href="#result2">LSM</a></li>
+                      <li><a href="#result3">DICOM</a></li>
+                      <li><a href="#result4">AVI video</a></li>
+                      <li><a href="#result5">Webcam</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#mydisscussion">Discussion</a></li>              
+                  <li><a href="#myconclusion">Conclusion</a></li>              
+                  <li><a href="#myfuture">Future Study</a></li>              
+                  <li><a href="#myqaa">Q&amp;A</a></li>
+                </ul>
+            </div>
+            <!-- end bs-sidebar -->
+        </div>
+        <!-- end col-md-3 -->
+        <div class="col-md-9 col-md-pull-3" id="mycontent">
+            <div>
+              <h1 id="myobjective">Objective</h1>
+              <ol class="thai">
+                <li>เพื่อศึกษาความหมายของ hit, fit และ miss ใน Morphological Filter</li>
+                <li>เพื่อศึกษาความแตกต่างของ mask แต่ละรูปแบบ</li>
+                <li>เพื่อศึกษาการทำงานและความแตกต่างของ Erosion และ Dilation</li>
+                <li>เพื่อเปรียบเทียบประสิทธิภาพระหว่าง Function ที่สร้างขึ้นเองกับ Function ใน MATLAB Toolbox</li>
+                <li>เพื่อศึกษาการประยุกต์ใช้ Morphological Filter ในด้านการแพทย์</li>
+              </ol>
+            </div>
+
+            <hr>
+            <div>
+              <h1 id="mymethod">Medthods</h1>
+              <ol>
+                <li><h4 id="method1">Edge detection</h4>
+                  <p class="indent">หลักการทำ Edge detection คือ การดูค่า Intensity ของภาพที่จะมีการเปลี่ยนแปลงไป ที่ตรงนั้นก็คือ Edge ของภาพ โดยทำการนำภาพมาทำ first derivative ตามสูตร f'(x) = \frac{df}{dx}(x) หรือก็คือ \frac{df}{du}(x)\approx \frac{f(u+1)-f(u-1)}{(u+1)-(u-1)} = \frac{f(u+1)-f(u-1)}{2} เนื่อจากหากว่าภาพถ่ายที่ได้มีความต่างระหว่างตัวรูปและขอบภาพด้านข้าง เมื่อทำการ derivative จะเห็นค่าความแตกต่างเมื่อค่า Intensity เกิดความต่าง ดังภาพข้างล่าง</p>
+                  <figure>
+                      <img src="img/project9/img001.jpg" height="269" width="442" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 1 : แสดงกราฟอนุพันธ์อันดับหนึ่งในมิติที่หนึ่ง</figcaption>
+                  </figure>
+                  <p class="indent">โดยการทำ Edge detection มีวิธีการหาหลายแบบ เช่น Derivative, Perwitt และ Sobel</p>
+                  <ol>
+                    <li>
+                      <h5>Derivative filter</h5>
+                      <p class="indent">เป็นการหา Derivative ในแนวแกน x และแนวแกน y ซึ่งก็คือการหา  \frac{df}{du}(x) หรืออาจจะทำการสร้าง metrix ขึ้นมา คือ H^D_x = \begin{bmatrix}-0.5&0 &0.5 \end{bmatrix} และ H^D_y = \begin{bmatrix}-0.5\\ 0\\ 0.5\\\end{bmatrix} จากนั้นทำการ convolution กับภาพ</p>
+                      <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/myGradient.m"></script></p>
+                    </li>
+                    <li>
+                      <h5>Prewitt operator</h5>
+                      <p class="indent">จะมีวิธีการทำที่เหมือนกับ Derivative แต่จะเปลี่ยน Metrix ที่จะใช้ convolution เป็น H^P_x = \begin{bmatrix}-1 &0  &1 \\ -1 &0  &1 \\ -1 &0  &1 \end{bmatrix} และ H^P_y = \begin{bmatrix}-1 &-1  &-1 \\ 0 &0  &0 \\ 1 &1  &1 \end{bmatrix}</p>
+                      <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/myPrewitt.m"></script></p>
+                    </li>
+                    <li>
+                      <h5>Sobel operator</h5>
+                      <p class="indent">มีวิธีการเหมือนกับทั้ง Derivative และ Prewitt โดยจะเปลี่ยน Metrix เป็น H^S_x = \begin{bmatrix}-1 &0  &1 \\ -2 &0  &2 \\ -1 &0  &1 \end{bmatrix} และ H^S_y = \begin{bmatrix}-1 &-2  &-1 \\ 0 &0  &0 \\ 1 &2  &1 \end{bmatrix}</p>
+                      <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/mySobel.m"></script></p>
+                    </li>
+                  </ol>
+                  <p class="indent">หลังจากที่ทำ first derivative แล้วก็สามารถหาค่า Magnitude และ Direction ของภาพได้ จากขั้นตอนต่อไป</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method2">Magnitude</h4>
+                  <p class="indent">เป็นการหาขนาดโดยใช้ค่า D_x และ D_y</p>
+                  <p class="indent">E(u,v) = \sqrt{(D_x(u,v))^2 + (D_y(u,v))^2}</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method3">Local Edge Orientation</h4>
+                  <p class="indent">\Phi (u,v) = arctan(\frac{D_y(u,v)}{D_x(u,v)})</p>
+                  <p class="indent">ตัวอย่างการคำนวณ เช่น หากกำหนดให้ภาพขนาด 3x3 มีค่า Intensity ดังนี้</p>
+                  <p class="indent">\begin{vmatrix}5&1&7\\4&3&2\\1&4&6\end{vmatrix} จากนั้นทำการ zero padding จะได้เป็น \begin{vmatrix}0&0&0&0&0\\0&5&1&7&0\\0&4&3&2&0\\0&1&4&6&0\\0&0&0&0&0\end{vmatrix}</p>
+                  <p class="indent">การหา Gradient derivative จะเริ่มจากการหา D_x และ D_y ก่อน เช่นจุด (2,2) ในภาพที่เติม zero แล้วจะมีค่า D_x=\frac{f(u+1)-f(u-1)}{(u+1)-(u-1)}=\frac{1-0}{3-1}=0.5 และ D_y=\frac{f(u+1)-f(u-1)}{(u+1)-(u-1)}=\frac{4-0}{3-1}=2  เมื่อทำการหาค่าของทุกจุดในภาพจะได้ D_x=\begin{bmatrix} 0.5&1  &-0.5 \\  1.5&-1  &-1.5 \\  2&2.5  &-2 \end{bmatrix} และ D_y=\begin{bmatrix} 2&1.5  &1 \\  -2&1.5  &-0.5 \\  -2&-1.5  &-1 \end{bmatrix}  ขั้นตอนต่อไปทำการหา Magnitude ของแต่ละจุด เช่นจุด (1,1) ของ D_x และ D_y ที่ได้ จะคำนวณจากสูตรข้างต้น คือ E(u,v) = E(1,1) = \sqrt{0.5^2 + 2^2} = 2.0616 เมื่อทำการคำนวณค่าของทั้งภาพก็จะได้เป็น E = \begin{bmatrix}2.0616 &1.8028  &1.1180 \\ 2.5 &1.8028  &1.5811 \\ 2.8284 &2.9155  &2.2361 \end{bmatrix} สุดท้ายทำการหา Local Edge Orientation ของภาพ เช่น จุด (1,1) ของ D_x, D_y จะคำนวณได้ว่า \Phi (1,1) = arctan(\frac{2}{0.5}) = 1.3258 เมื่อคำนวณที่จุดอื่นจะได้ค่าใหม่ทั้งหมดเป็น \Phi = \begin{bmatrix}1.3258 &0.9828  &2.0344 \\  -0.9273&2.1588  &-2.8198 \\ 0.7854 &-0.5404  &-2.6779 \end{bmatrix}</p>
+                  <p class="indent">การหา Gradient ด้วย Prewitt operator โดยใช้ภาพเดิมและทำ zero padding เข้าไป เริ่มจากการหา Px และ Py เช่น ที่จุด (3, 3) จะได้ P_x(3,3) = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &0  &1 \\ -1 &0  &1 \\ -1 &0  &1 \end{bmatrix} = 5 ส่วน P_y(3,3) จะได้เป็น P_y = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &-1  &-1 \\ 0 &0  &0 \\ 1 &1  &1 \end{bmatrix} = -2 เมื่อทำการคำนวณภาพจะได้เป็น P_x = \begin{bmatrix}4 &0  &-4 \\ 8 &5  &-8 \\ 7 &3  &-7 \end{bmatrix} และ P_y = \begin{bmatrix}7 &9  &5 \\ -1 &-2  &2 \\ -7 &-9  &-5 \end{bmatrix} จากนั้นทำการคำนวณค่า Magnitude เช่น ที่จุด (1,1) จะได้ว่า E(1,1) = \sqrt{(-4)^2+(-7)^2} = 8.0623 เมื่อคำนวณทั้งภาพก็จะได้ E = \begin{bmatrix}8.0623 &9  &6.4031 \\ 8.0623 &5.3852  &8.2462 \\ 9.8995 &9.4868  &8.6023 \end{bmatrix}  จากนั้นจะทำการหา หา Local Edge Orientation ของภาพ เช่น จุด (1,1) จะคำนวณได้ว่า  \Phi (1,1) = arctan(\frac{7}{4}) = 1.0517  เมื่อคำนวณที่จุดอื่นจะได้ค่าใหม่ทั้งหมดเป็น  \Phi (1,1) = begin{bmatrix}1.0517 &1.5708  &2.2455 \\  -0.1244&-0.3805  &2.8966 \\ -0.7854 &-1.2490  &-2.5213 \end{bmatrix}</p>
+                  <p class="indent">การหา Gradient ด้วย Sobel จะคล้ายกับ  Prewitt แต่จะใช้ Metrix ในการ convolution ต่างกัน เช่นการคำนวณหาค่าที่จุด (3,3) จะได้ S_x = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &0  &1 \\ -2 &0  &2 \\ -1 &0  &1 \end{bmatrix} = 3 และ S_y = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &-2  &-1 \\ 0 &0  &0 \\ 1 &2  &1 \end{bmatrix} = 1 และสุดท้ายจะได้ออกมาเป็น S_x = \begin{bmatrix}5 &2  &-5 \\ 11 &3  &-11 \\ 11 &8  &-11 \end{bmatrix} และ S_y = \begin{bmatrix}11 &12  &7 \\ -5 &1  &1 \\ -11 &-12  &-7 \end{bmatrix} จากนั้นลองทำการหา Magnitude ที่จุด (1,1)จะได้เป็น E(1,1) = \sqrt{5^2+11^2} = 12.083 เมื่อคำนวณทั้งภาพจะได้ E = \begin{bmatrix}12.083 &12.1655  &8.6023 \\ 12.083 &3.1623  &11.0454 \\ 15.5563 &14.4222  &13.0384 \end{bmatrix} จากนั้นคำนวณหา Local Edge Orientation ของภาพ เช่น จุด (1,1) จะคำนวณได้ว่า  \Phi (1,1) = arctan(\frac{11}{5}) = 1.1442  เมื่อคำนวณที่จุดอื่นจะได้ค่าใหม่ทั้งหมดเป็น \Phi = \begin{bmatrix}1.1442 &1.4056  &2.1910 \\ -0.4266 &0.3218  &3.0509 \\ -0.7854 &-0.9828  &-2.5749 \end{bmatrix}</p>
+                  <p class="indent">หลักการทำงานของ code ของ Derivative filter, Perwitt operator และ Sobel operator จะเริ่มจากการนำภาพมาทำ zero padding และเริ่มทำการหา Hx, Hy, Magnitude และ Local edge orientation โดยใช้ฟังก์ชั่นที่เขียนขึ้นมา myEdgeDetection() โดยใส่ input function สำหรับเลือกชนิดของ operator เป็น “g” (Derivative filter), “p” (Perwitt operator) หรือ “s”(Sobel operator) จากนั้นนำภาพที่ได้มาเปรียบเทียบกับ imgradient() และ imgradientxy() ของ MATLAB</p>
+                </li>                
+            </div>
+            <div>
+              <h1 id="myresult">Results</h1>
+              <ol>
+              <li><b id="result1">JPEG Image</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/EdgeDetection.m"></script></p>
+                <li><b>Gradient Magnitude</b>
+                <p>
+                    <figure>
+                      <img src="img/project8/img002.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 2 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Gradient Magnitude</figcaption>
+                    </figure>
+                </p></li>
+                <li><b>Perwitt operator</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/img007.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 3 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Perwitt operator</figcaption>
+                  </figure>
+                </p></li>
+                <li><b>Sobel operator</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/img0012.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 4 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Sobel operator</figcaption>
+                  </figure>
+                </p></li>
+              </li>
+              <li><b id="result2">DICOM</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/DicomEdge.m"></script></p>
+                <li><b>Gradient Magnitude</b>
+                <p>
+                    <figure>
+                      <img src="img/project8/img006.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 5 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Gradient Magnitude</figcaption>
+                    </figure>
+                </p></li>
+                <li><b>Perwitt operator</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/img011.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 6 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Perwitt operator</figcaption>
+                  </figure>
+                </p></li>
+                <li><b>Sobel operator</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/img0016.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 7 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Sobel operator</figcaption>
+                  </figure>
+                </p></li>
+              </li>  
+              <li><b id="result3">LSM</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/LSMedge.m"></script></p>
+                <li><b>Gradient Magnitude</b>
+                <p>
+                    <figure>
+                      <img src="img/project8/img004.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 8 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Perwitt operator</figcaption>
+                    </figure>
+                </p></li>
+                <li><b>Perwitt operator</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/img009.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 9 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Gradient Magnitude</figcaption>
+                  </figure>
+                </p></li>
+                <li><b>Sobel operator</b>
+                <p>
+                  <figure>
+                      <img src="img/project8/img0014.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:560px;text-align:center;">ภาพที่ 10 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Sobel operator</figcaption>
+                  </figure>
+                </p></li>
+              </li>
+              <li><b id="result4" class="offset-below-2">AVI Video</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/createVDO.m"></script></p>
+                <ol>
+                  <li><b>Gradient Magnitude</b>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/EdgeGradient.mp4" type='video/mp4' />
+                     <source src="video/EdgeGradient.webm" type='video/webm' />
+                    </video>
+                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Gradient Magnitude</p>
+                  </p></li>
+                  <li><b>Perwitt operator</b>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/EdgePerwitt.mp4" type='video/mp4' />
+                     <source src="video/EdgePerwitt.webm" type='video/webm' />
+                    </video>
+                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Perwitt operator</p>
+                  </p></li>
+                  <li><b>Sobel operator</b>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/EdgeSobel.mp4" type='video/mp4' />
+                     <source src="video/EdgeSobel.webm" type='video/webm' />
+                    </video>
+                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Sobel operator</p>
+                  </p></li>
+                </ol>
+              </li>
+              <li><b id="result5" class="offset-below-2">Webcam</b>
+                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/EdgeWebcam.m"></script></p>
+                <ol>
+                  <li><b>Gradient Magnitude</b>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/Webcam_Gradient.mp4" type='video/mp4' />
+                     <source src="video/Webcam_Gradient.webm" type='video/webm' />
+                    </video>
+                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Gradient Magnitude</p>
+                  </p></li>
+                  <li><b>Perwitt operator</b>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/Webcam_Perwitt.mp4" type='video/mp4' />
+                     <source src="video/Webcam_Perwitt.webm" type='video/webm' />
+                    </video>
+                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Perwitt operator</p>
+                  </p></li>
+                  <li><b>Sobel operator</b>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/Webcam_Sobel.mp4" type='video/mp4' />
+                     <source src="video/Webcam_Sobel.webm" type='video/webm' />
+                    </video>
+                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Sobel operator</p>
+                  </p></li>
+                </ol>
+              </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+              <p class="thai indent">ผลที่ได้รับจากการทำEdge Detection สามารถทำให้แยกแยะบริเวณที่เป็นขอบผิวของวัตถุใดๆได้ เพียงแต่จะมีข้อจำกัดในเรื่องที่ถ้าบริเวณข้างๆกันนั้น ค่าของpixelใกล้เคียงกัน จะทำให้ผลสุดท้ายของกระบวนการไม่สามารถแยกขอบได้ชัดเจน จึงเป็นข้อจำกัดที่จะใช้ในภาพที่มีวัตถุโทนสีใกล้เคียงกันมากๆ หรือจะเห็นได้ชัดในภาพ.lsm ที่ผลสุดท้ายของกระบวนการได้เพียงขอบจางๆ</p>
+              <p class="indent">การใช้ Prewitt และ Sobel จะมีความต่างกันตั้งแต่ค่า matrix ที่นำมาใช้และผลที่ได้ โดยภาพที่ได้จากการใช้ Sobel จะมีความต่างในการเน้นขอบมากกว่าแบบ Prewitt เนื่องจากมีการ weight ที่จุดแต่ละจุดต่างกัน</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myconclusion">Conclusion</h1>
+              <p class="indent thai">การทำ Edge Detectionในรายงานจะมีอยู่ 3 วิธี คือ Derivative filter, Prewitt operator และ Sobel operator ซึ่งแตกต่างกันโดยการเลือกใช้ค่า mask โดยผลลัพท์จากการหาของขอบจะทำให้ใช้ในการแยกแยะหรือการตรวจหาวัตถุ เพราะจะสามารถแยกบริเวณที่มีค่าpixelต่างกันมากๆ</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myrfuture">Future Studies</h1>
+                <p class="indent">การหา Edge Detection คือ การระบุตำแหน่งขอบของวัตถุในรูปภาพ โดยเปรียบเทียบจากค่า Intensity ของวัตถุแลพื้นด้านหลัง ซึ่งการระบุตำแหน่งของขอบภาพนั้นสามารถนำมาประยุกต์ใช้ในการคำนวณพื้นที่ หรือขนาด ของวัตถุบนรูปภาพ ดังนั้น จึงมักนำเทคนิคนี้มาประยุกต์ใช้ในงานวิศวกรรมชีวการแพทย์ ด้านการวิเคราะห์ภาพถ่ายทางการแพทย์ เช่น ภาพถ่ายจากรังสีเทคนิค เพื่อระบุพื้นที่ของภาพถ่ายตัดอวัยวะผู้ป่วยแล้วนำมาคำนวณหาปริมาตรเพื่อวินิจฉัยโรค</p>
+              <p class="indent">การหา Edge Detection จะทำได้ยากเมื่อภาพต้นฉบับที่มีคุณภาพต่ำ ดังนั้นจึงมีการพัฒนาวิธีการปรับปรุงคุณภาพของภาพ และการคำนวณหาค่าตำแหน่งขอบ โดย Edge Detection ต่อไป</p>
+            </div>
+            <div>
+              <h1 id="myqaa">Q&amp;A</h1>
+                <dl class="dl-horizontal">
+                  <p>
+                    <dt>Question 1:</dt>
+                    <dd>จงบอกข้อแตกต่างระหว่าง Sobel Operator กับ Prewitt Operator</dd>
+                    <dt>Answer:</dt>
+                    <dd>coefficient ของ mask ใน sobel operator จะไม่ถูกจำกัด เราจึงสามารถปรับได้ตามต้องการโดยที่ไม่เป็นการทำลายคุณสมบัติของ derivative mask</dd>
+                  </p>
+                  <p>
+                    <dt>Question 2:</dt>
+                    <dd>Edge มีกี่ประเภท อะไรบ้าง</dd>
+                    <dt>Answer:</dt>
+                    <dd>3 ประเภท ได้แก่ Horizontal edges, Vertical Edges, Diagonal Edges</p>
+                    </dd>
+                  </p>
+                  <p>
+                    <dt>Question 3:</dt>
+                    <dd>นอกเหนือจาก mask แบบ Sobel Operator กับ Prewitt Operator แล้ว ยังมี mask แบบใดอีกบ้าง จงยกตัวอย่างพร้อมอธิบาย</dd>
+                    <dt>Answer:</dt>
+                    <dd><ol>
+                      <li>Robinson Compass Masks - เป็น direction mask โดนจะใช้เพียง 1 mask และหมุน 8 ทิศทางเพื่อคำนวณหาขอบของแต่ละทิศทาง</li>
+                      <li>Krisch Compass Masks -  เป็น derivative mask โดยใช้สำหรับคำนวณหาขอบในทุกทิศทาง</li>
+                      <li>Laplacian Operator - เป็น derivative mask โดยใช้สำหรับคำนวณหาขอบโดยใช้ second order derivative mask</li>
+                    </ol></dd>
+                  </p>
+                </dl>
+            </div>
+            <div>
+              <p>Source code is available on <a href="https://github.com/nodtem66/EGBE443-Group2/tree/master/project11">Github</a></p>
+            </div>
+        </div>
+        <!-- end col-md-9 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="">
+        <h1>Members</h1>
+        <dl><dd>Mr. Thanawin Trakoolwilaiwan 5413085</dd>
+          <dd>Mr. Jongsook Sanguantrakul 5413337</dd>
+          <dd>Mr. Jirawat Iamsamang 5413341</dd>
+          <dd>Mr. Chaiyakorn Thongchanasin 5413346</dd>
+          <dd>Miss Tanyaporn Pungrasmi 5413355</dd>
+          <dd>Miss Pavinee Jaturapisanukul 5413365</dd>
+          <dd>Mr. Rattapong Lordthong 5413367</dd>
+          </dl>
+          <p>Department of Biomedical Engineering</p>
+          <p>Faculty of Engineering, Mahidol University</p>
+      </div>
+    </div>
+  </div>
+</footer>
+  <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.blueimp-gallery.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+    <script src="js/scripts.js?122"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansthai.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,700' rel='stylesheet' type='text/css'>
+  </body>
+</html>
