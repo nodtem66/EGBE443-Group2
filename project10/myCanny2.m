@@ -127,7 +127,7 @@ for i = 1:M
                         nextLabel = nextLabel + 1;
                     else
                         label(i,j) = myUFfind(label(i,j-1));
-                        myUFunion(label(i,j));
+                        myUFunion(label(i,j), label(i,j-1));
                     end
                 end
             elseif j==1
