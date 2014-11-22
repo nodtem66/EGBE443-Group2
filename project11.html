@@ -51,6 +51,7 @@
                     <li><a href="project8.html">Nonlinear Filter</a></li>
                     <li><a href="project9.html">Edge Detection : Part 1</a></li>
                     <li><a href="project10.html">Edge Detection : Part 2</a></li>
+                    <li><a href="project11.html">Morphological Filter</a></li>
                   </ul>
                 </li>
                 <li> <a href="#">About</a>
@@ -62,7 +63,7 @@
 </header>
 <div class="bs-header" id="content">
     <div class="container">
-         <h1>Edge Detection</h1>
+         <h1>Morphological Filter</h1>
         <p class="thai">การศึกษาการทำ Morphological Filter ใน Image processing</p>
     </div>
 </div>
@@ -74,17 +75,17 @@
                   <li class="active"><a href="#myobjective">Objective</a></li>
                   <li><a href="#mymethod">Methods</a>
                     <ul>
-                      <li><a href="#method1">Erosion</a></li>
-                      <li><a href="#method2">Dilation</a></li>
-                      <li><a href="#method3">Opening</a></li>
-                      <li><a href="#method4">Closing</li>
+                      <li><a href="#method1">Hit, Fit, and Miss</a></li>
+                      <li><a href="#method2">Structuring Elements</a></li>
+                      <li><a href="#method3">Dilation</a></li>
+                      <li><a href="#method4">Erosion</a></li>
                     </ul>
                   </li>
                   <li><a href="#result">Results</a>
                     <ul>
                       <li><a href="#result1">JPEG</a></li>
-                      <li><a href="#result2">LSM</a></li>
-                      <li><a href="#result3">DICOM</a></li>
+                      <li><a href="#result2">DICOM</a></li>
+                      <li><a href="#result3">LSM</a></li>
                       <li><a href="#result4">AVI video</a></li>
                       <li><a href="#result5">Webcam</a></li>
                     </ul>
@@ -92,6 +93,7 @@
                   <li><a href="#mydisscussion">Discussion</a></li>              
                   <li><a href="#myconclusion">Conclusion</a></li>              
                   <li><a href="#myfuture">Future Study</a></li>              
+                  <li><a href="#myref">References</a></li>              
                   <li><a href="#myqaa">Q&amp;A</a></li>
                 </ul>
             </div>
@@ -114,197 +116,167 @@
             <div>
               <h1 id="mymethod">Medthods</h1>
               <ol>
-                <li><h4 id="method1">Edge detection</h4>
-                  <p class="indent">หลักการทำ Edge detection คือ การดูค่า Intensity ของภาพที่จะมีการเปลี่ยนแปลงไป ที่ตรงนั้นก็คือ Edge ของภาพ โดยทำการนำภาพมาทำ first derivative ตามสูตร f'(x) = \frac{df}{dx}(x) หรือก็คือ \frac{df}{du}(x)\approx \frac{f(u+1)-f(u-1)}{(u+1)-(u-1)} = \frac{f(u+1)-f(u-1)}{2} เนื่อจากหากว่าภาพถ่ายที่ได้มีความต่างระหว่างตัวรูปและขอบภาพด้านข้าง เมื่อทำการ derivative จะเห็นค่าความแตกต่างเมื่อค่า Intensity เกิดความต่าง ดังภาพข้างล่าง</p>
+                <li><h4 id="method1">Hit, Fit, and Miss</h4>
+                  <p class="indent">Hit - บริเวณที่ structuring elementตัดกับส่วนใดส่วนหนึ่งของpixel บนรูปภาพ โดยจะเป็นไปตามสัญลักษณ์ \(\left \{ y:y=x+s,s\in S \right \}\subset I \)โดยหมายถึง S hits I ที่ x</p>
+                  <p class="indent">Fit - บริเวณที่ structuring elementครอบทับทุกส่วนของpixel บนรูปภาพ โดยจะเป็นไปตามสัญลักษณ์ \(\left \{ y:y=x-s,s\in S \right \}\cap I\neq \oslash \) โดยหมายถึง S fits I ที่ x</p>
+                  <p class="indent">Miss - บริเวณที่ structuring elementไม่ตัดกับส่วนใดส่วนหนึ่งของpixel บนรูปภาพ  โดยจะเป็นไปตามสัญลักษณ์ \(\left \{ y:y=x-s,s\in S \right \}\cap I= \oslash\) โดยหมายถึง S misses I ที่ x โดยภาพด้านล่างจะแสดง hit, miss และ fit ของภาพที่ได้จาก structuring element ที่กำหนด</p>
                   <figure>
-                      <img src="img/project9/img001.jpg" height="269" width="442" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 1 : แสดงกราฟอนุพันธ์อันดับหนึ่งในมิติที่หนึ่ง</figcaption>
+                    <img src="img/project11/hit.jpg" height="454" width="850" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:850px;text-align:center;">ภาพแสดงตัวอย่าง Fit Hit และ Miss</figcaption>
                   </figure>
-                  <p class="indent">โดยการทำ Edge detection มีวิธีการหาหลายแบบ เช่น Derivative, Perwitt และ Sobel</p>
-                  <ol>
-                    <li>
-                      <h5>Derivative filter</h5>
-                      <p class="indent">เป็นการหา Derivative ในแนวแกน x และแนวแกน y ซึ่งก็คือการหา  \frac{df}{du}(x) หรืออาจจะทำการสร้าง metrix ขึ้นมา คือ H^D_x = \begin{bmatrix}-0.5&0 &0.5 \end{bmatrix} และ H^D_y = \begin{bmatrix}-0.5\\ 0\\ 0.5\\\end{bmatrix} จากนั้นทำการ convolution กับภาพ</p>
-                      <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/myGradient.m"></script></p>
-                    </li>
-                    <li>
-                      <h5>Prewitt operator</h5>
-                      <p class="indent">จะมีวิธีการทำที่เหมือนกับ Derivative แต่จะเปลี่ยน Metrix ที่จะใช้ convolution เป็น H^P_x = \begin{bmatrix}-1 &0  &1 \\ -1 &0  &1 \\ -1 &0  &1 \end{bmatrix} และ H^P_y = \begin{bmatrix}-1 &-1  &-1 \\ 0 &0  &0 \\ 1 &1  &1 \end{bmatrix}</p>
-                      <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/myPrewitt.m"></script></p>
-                    </li>
-                    <li>
-                      <h5>Sobel operator</h5>
-                      <p class="indent">มีวิธีการเหมือนกับทั้ง Derivative และ Prewitt โดยจะเปลี่ยน Metrix เป็น H^S_x = \begin{bmatrix}-1 &0  &1 \\ -2 &0  &2 \\ -1 &0  &1 \end{bmatrix} และ H^S_y = \begin{bmatrix}-1 &-2  &-1 \\ 0 &0  &0 \\ 1 &2  &1 \end{bmatrix}</p>
-                      <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/mySobel.m"></script></p>
-                    </li>
-                  </ol>
-                  <p class="indent">หลังจากที่ทำ first derivative แล้วก็สามารถหาค่า Magnitude และ Direction ของภาพได้ จากขั้นตอนต่อไป</p>
+                  <div style="text-align:center;margin:24px auto;"><iframe width="640" height="480" src="//www.youtube.com/embed/vWWpZtQxlzA" frameborder="0" allowfullscreen></iframe></div>
                 </li>
-                <li class="offset-above-2"><h4 id="method2">Magnitude</h4>
-                  <p class="indent">เป็นการหาขนาดโดยใช้ค่า D_x และ D_y</p>
-                  <p class="indent">E(u,v) = \sqrt{(D_x(u,v))^2 + (D_y(u,v))^2}</p>
+                <li class="offset-above-2"><h4 id="method2">Structuring Elements</h4>
+                  <p class="indent">ในบทนี้เราได้สร้าง structuring element เป็น 4 แบบ คือ circle, diamond, donut และ square</p>
+                  <ul>
+                    <li><b>square</b> มีการสร้างเป็นสี่เหลี่ยมจัตุรัสโดยรับ input เป็นค่าความยาวหรือความกว้างของสี่เหลี่ยม</li>
+                    <li><b>diamond</b> เป็นการสร้างสี่เหลี่ยมจัตุรัสที่มีลักษณะคล้ายเพชรขึ้นมา โดยรับ input เป็นระยะห่างระหว่างจุดศูนย์กลางถึงมุม (\(r\)) โดย matrix ของ structuring element นี้จะเป็นไปตามสมการ \(x + y <= r\)</li>
+                    <li><b>circle</b> เป็นการส้รางวงกลมขึ้นมาโดยฟังก์ชั่นจะรับค่าเป็นรัศมีของวงกลม จากนั้นจะสร้างวงกลมด้วยสมการวงกลม คือ \( (x-x_2)^2+(y-y_2)^2 <= r^2 \) โดยที่ \(x_2\) และ \(y_2\) เป็นพิกัดของ origin ของวงกลม</li>
+                    <li><b>donut</b> ป็นการสร้างวงกลมที่มีรูเป็นวงกลมตรงกลาง โดยจะ input ค่าเข้าไปเป็นรัศมีของวงกลมวงใหญ่และวงเล็ก โดยใช้ฟังก์ชั่นของ circle ด้านบนในการสร้าง structuring element นี้</li>
+                  </ul>
                 </li>
-                <li class="offset-above-2"><h4 id="method3">Local Edge Orientation</h4>
-                  <p class="indent">\Phi (u,v) = arctan(\frac{D_y(u,v)}{D_x(u,v)})</p>
-                  <p class="indent">ตัวอย่างการคำนวณ เช่น หากกำหนดให้ภาพขนาด 3x3 มีค่า Intensity ดังนี้</p>
-                  <p class="indent">\begin{vmatrix}5&1&7\\4&3&2\\1&4&6\end{vmatrix} จากนั้นทำการ zero padding จะได้เป็น \begin{vmatrix}0&0&0&0&0\\0&5&1&7&0\\0&4&3&2&0\\0&1&4&6&0\\0&0&0&0&0\end{vmatrix}</p>
-                  <p class="indent">การหา Gradient derivative จะเริ่มจากการหา D_x และ D_y ก่อน เช่นจุด (2,2) ในภาพที่เติม zero แล้วจะมีค่า D_x=\frac{f(u+1)-f(u-1)}{(u+1)-(u-1)}=\frac{1-0}{3-1}=0.5 และ D_y=\frac{f(u+1)-f(u-1)}{(u+1)-(u-1)}=\frac{4-0}{3-1}=2  เมื่อทำการหาค่าของทุกจุดในภาพจะได้ D_x=\begin{bmatrix} 0.5&1  &-0.5 \\  1.5&-1  &-1.5 \\  2&2.5  &-2 \end{bmatrix} และ D_y=\begin{bmatrix} 2&1.5  &1 \\  -2&1.5  &-0.5 \\  -2&-1.5  &-1 \end{bmatrix}  ขั้นตอนต่อไปทำการหา Magnitude ของแต่ละจุด เช่นจุด (1,1) ของ D_x และ D_y ที่ได้ จะคำนวณจากสูตรข้างต้น คือ E(u,v) = E(1,1) = \sqrt{0.5^2 + 2^2} = 2.0616 เมื่อทำการคำนวณค่าของทั้งภาพก็จะได้เป็น E = \begin{bmatrix}2.0616 &1.8028  &1.1180 \\ 2.5 &1.8028  &1.5811 \\ 2.8284 &2.9155  &2.2361 \end{bmatrix} สุดท้ายทำการหา Local Edge Orientation ของภาพ เช่น จุด (1,1) ของ D_x, D_y จะคำนวณได้ว่า \Phi (1,1) = arctan(\frac{2}{0.5}) = 1.3258 เมื่อคำนวณที่จุดอื่นจะได้ค่าใหม่ทั้งหมดเป็น \Phi = \begin{bmatrix}1.3258 &0.9828  &2.0344 \\  -0.9273&2.1588  &-2.8198 \\ 0.7854 &-0.5404  &-2.6779 \end{bmatrix}</p>
-                  <p class="indent">การหา Gradient ด้วย Prewitt operator โดยใช้ภาพเดิมและทำ zero padding เข้าไป เริ่มจากการหา Px และ Py เช่น ที่จุด (3, 3) จะได้ P_x(3,3) = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &0  &1 \\ -1 &0  &1 \\ -1 &0  &1 \end{bmatrix} = 5 ส่วน P_y(3,3) จะได้เป็น P_y = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &-1  &-1 \\ 0 &0  &0 \\ 1 &1  &1 \end{bmatrix} = -2 เมื่อทำการคำนวณภาพจะได้เป็น P_x = \begin{bmatrix}4 &0  &-4 \\ 8 &5  &-8 \\ 7 &3  &-7 \end{bmatrix} และ P_y = \begin{bmatrix}7 &9  &5 \\ -1 &-2  &2 \\ -7 &-9  &-5 \end{bmatrix} จากนั้นทำการคำนวณค่า Magnitude เช่น ที่จุด (1,1) จะได้ว่า E(1,1) = \sqrt{(-4)^2+(-7)^2} = 8.0623 เมื่อคำนวณทั้งภาพก็จะได้ E = \begin{bmatrix}8.0623 &9  &6.4031 \\ 8.0623 &5.3852  &8.2462 \\ 9.8995 &9.4868  &8.6023 \end{bmatrix}  จากนั้นจะทำการหา หา Local Edge Orientation ของภาพ เช่น จุด (1,1) จะคำนวณได้ว่า  \Phi (1,1) = arctan(\frac{7}{4}) = 1.0517  เมื่อคำนวณที่จุดอื่นจะได้ค่าใหม่ทั้งหมดเป็น  \Phi (1,1) = begin{bmatrix}1.0517 &1.5708  &2.2455 \\  -0.1244&-0.3805  &2.8966 \\ -0.7854 &-1.2490  &-2.5213 \end{bmatrix}</p>
-                  <p class="indent">การหา Gradient ด้วย Sobel จะคล้ายกับ  Prewitt แต่จะใช้ Metrix ในการ convolution ต่างกัน เช่นการคำนวณหาค่าที่จุด (3,3) จะได้ S_x = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &0  &1 \\ -2 &0  &2 \\ -1 &0  &1 \end{bmatrix} = 3 และ S_y = \begin{bmatrix}5 &1  &7 \\ 4 &3  &2 \\ 1 &4  &6 \end{bmatrix}\cdot \begin{bmatrix}-1 &-2  &-1 \\ 0 &0  &0 \\ 1 &2  &1 \end{bmatrix} = 1 และสุดท้ายจะได้ออกมาเป็น S_x = \begin{bmatrix}5 &2  &-5 \\ 11 &3  &-11 \\ 11 &8  &-11 \end{bmatrix} และ S_y = \begin{bmatrix}11 &12  &7 \\ -5 &1  &1 \\ -11 &-12  &-7 \end{bmatrix} จากนั้นลองทำการหา Magnitude ที่จุด (1,1)จะได้เป็น E(1,1) = \sqrt{5^2+11^2} = 12.083 เมื่อคำนวณทั้งภาพจะได้ E = \begin{bmatrix}12.083 &12.1655  &8.6023 \\ 12.083 &3.1623  &11.0454 \\ 15.5563 &14.4222  &13.0384 \end{bmatrix} จากนั้นคำนวณหา Local Edge Orientation ของภาพ เช่น จุด (1,1) จะคำนวณได้ว่า  \Phi (1,1) = arctan(\frac{11}{5}) = 1.1442  เมื่อคำนวณที่จุดอื่นจะได้ค่าใหม่ทั้งหมดเป็น \Phi = \begin{bmatrix}1.1442 &1.4056  &2.1910 \\ -0.4266 &0.3218  &3.0509 \\ -0.7854 &-0.9828  &-2.5749 \end{bmatrix}</p>
-                  <p class="indent">หลักการทำงานของ code ของ Derivative filter, Perwitt operator และ Sobel operator จะเริ่มจากการนำภาพมาทำ zero padding และเริ่มทำการหา Hx, Hy, Magnitude และ Local edge orientation โดยใช้ฟังก์ชั่นที่เขียนขึ้นมา myEdgeDetection() โดยใส่ input function สำหรับเลือกชนิดของ operator เป็น “g” (Derivative filter), “p” (Perwitt operator) หรือ “s”(Sobel operator) จากนั้นนำภาพที่ได้มาเปรียบเทียบกับ imgradient() และ imgradientxy() ของ MATLAB</p>
-                </li>                
+                <li class="offset-above-2"><h4 id="method3">Dilation</h4>
+                  <p class="indent">
+                    Dilation เป็นวิธีการขยายภาพโดยจะเป็นการเพิ่มจำนวน pixel บนภาพโดยจะเป็นไปตามสัญลักษณ์ $$ A\oplus B = \left \{  x|(B)_x\cap A\neq \oslash \right \} $$ โดยที่ B เป็น structuring element หากจะอธิบาอย่างง่ายก็คือ การดู pixel แต่ละ pixel ของภาพ หากมีค่าเป็น 0 ก็จะไม่เกิดอะไรขึ้น แต่หากจุดนั้นมีค่าเป็น 1 ก็จะนำ origin ของ structurin element ไปวางบน pixel นั้น เช่น ให้ $$ A = \begin{bmatrix}1 &0  &0  &0  &1 \\ 0 &1  &0  &0  &1 \\ 0 &0  &0  &0  &0 \\ 0 &0  &1  &0  &1 \\ 0 &0  &0  &0  &0 \end{bmatrix} $$ และให้ $$ B = \begin{bmatrix}0 &1  &0 \\ 1 &1  &1 \\ 0 &1  &0 \end{bmatrix} $$ จะได้ภาพใหม่เป็น $$ \begin{bmatrix}1 &1  &0  &1  &1 \\ 1 &1  &1  &1  &1 \\ 0 &1  &1  &0  &1 \\ 0 &1  &1  &1  &1 \\0 &0  &1  &0  &1 \end{bmatrix} $$
+                  </p>
+                  <div style="text-align:center;margin:24px auto;"><iframe width="640" height="480" src="//www.youtube.com/embed/xO3ED27rMHs" frameborder="0" allowfullscreen></iframe></div>
+                </li>
+                <li class="offset-above-2"><h4 id="method4">Erosion</h4>
+                  <p class="indent">Erosion เป็นวิธีการย่อภาพโดยจะทำการลบ pixel ที่ขอบของภาพออก โดยจะเป็นไปตามสัญลักษณ์ $$ A\ominus B = {x|(B)_x\subseteq A} $$ โดยที่ A เป็นภาพ และ B เป็น structuring element หากจะอธิบายอย่างง่ายก็คือ การนำจุด origin ของ structuring element ไปวางที่ pixel ภาพที่สนใจ และหากทุกจุดที่เป็น 1 บน structuring element เหมือนกับบนภาพ เราจะให้ pixel นั้นบนภพมีค่าเป็น 1 แต่หากไม่ใช่ จะให้จุดนั้นมีค่าเป็น 0 เช่น หากให้ภาพ $$A = \begin{bmatrix}1 &0  &0  &0  &1 \\ 0 &1  &1  &0  &1 \\ 1 &1  &1  &1  &0 \\ 1 &1  &1  &0  &1 \\ 1 &1  &1  &1  &1 \end{bmatrix} $$ และ structuring element $$B = \begin{bmatrix}0 &1  &0 \\ 1 &1  &1 \\ 0 &1  &0 \end{bmatrix}$$ เมื่อทำการ erosion จะได้ภาพใหม่คือ $$\begin{bmatrix}0 &0  &0  &0  &0 \\ 0 &0  &0  &0  &0 \\ 0 &1  &1  &0  &0 \\ 0 &1  &0  &0  &0 \\ 0 &0  &0  &0  &0 \end{bmatrix}$$</p>
+                  <div style="text-align:center;margin:24px auto;"><iframe width="640" height="480" src="//www.youtube.com/embed/fmyE7DiaIYQ" frameborder="0" allowfullscreen></iframe></div>
+                </li>
+                                
             </div>
             <div>
               <h1 id="myresult">Results</h1>
               <ol>
-              <li><b id="result1">JPEG Image</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/EdgeDetection.m"></script></p>
-                <li><b>Gradient Magnitude</b>
-                <p>
-                    <figure>
-                      <img src="img/project8/img002.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 2 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Gradient Magnitude</figcaption>
-                    </figure>
-                </p></li>
-                <li><b>Perwitt operator</b>
-                <p>
-                  <figure>
-                      <img src="img/project8/img007.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 3 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Perwitt operator</figcaption>
-                  </figure>
-                </p></li>
-                <li><b>Sobel operator</b>
-                <p>
-                  <figure>
-                      <img src="img/project8/img0012.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 4 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Sobel operator</figcaption>
-                  </figure>
-                </p></li>
-              </li>
-              <li><b id="result2">DICOM</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/DicomEdge.m"></script></p>
-                <li><b>Gradient Magnitude</b>
-                <p>
-                    <figure>
-                      <img src="img/project8/img006.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 5 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Gradient Magnitude</figcaption>
-                    </figure>
-                </p></li>
-                <li><b>Perwitt operator</b>
-                <p>
-                  <figure>
-                      <img src="img/project8/img011.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 6 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Perwitt operator</figcaption>
-                  </figure>
-                </p></li>
-                <li><b>Sobel operator</b>
-                <p>
-                  <figure>
-                      <img src="img/project8/img0016.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 7 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Sobel operator</figcaption>
-                  </figure>
-                </p></li>
-              </li>  
-              <li><b id="result3">LSM</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/LSMedge.m"></script></p>
-                <li><b>Gradient Magnitude</b>
-                <p>
-                    <figure>
-                      <img src="img/project8/img004.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 8 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Perwitt operator</figcaption>
-                    </figure>
-                </p></li>
-                <li><b>Perwitt operator</b>
-                <p>
-                  <figure>
-                      <img src="img/project8/img009.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 9 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Gradient Magnitude</figcaption>
-                  </figure>
-                </p></li>
-                <li><b>Sobel operator</b>
-                <p>
-                  <figure>
-                      <img src="img/project8/img0014.jpg" height="692" width="1366" class="img-thumbnail offset-above-2">
-                      <figcaption style="width:560px;text-align:center;">ภาพที่ 10 : แสดงผลของภาพที่ผ่านขั้นตอนต่างๆของวิธี Sobel operator</figcaption>
-                  </figure>
-                </p></li>
-              </li>
-              <li><b id="result4" class="offset-below-2">AVI Video</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/createVDO.m"></script></p>
-                <ol>
-                  <li><b>Gradient Magnitude</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/EdgeGradient.mp4" type='video/mp4' />
-                     <source src="video/EdgeGradient.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Gradient Magnitude</p>
-                  </p></li>
-                  <li><b>Perwitt operator</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/EdgePerwitt.mp4" type='video/mp4' />
-                     <source src="video/EdgePerwitt.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Perwitt operator</p>
-                  </p></li>
-                  <li><b>Sobel operator</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/EdgeSobel.mp4" type='video/mp4' />
-                     <source src="video/EdgeSobel.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Sobel operator</p>
-                  </p></li>
-                </ol>
-              </li>
-              <li><b id="result5" class="offset-below-2">Webcam</b>
-                <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project9/EdgeWebcam.m"></script></p>
-                <ol>
-                  <li><b>Gradient Magnitude</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/Webcam_Gradient.mp4" type='video/mp4' />
-                     <source src="video/Webcam_Gradient.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Gradient Magnitude</p>
-                  </p></li>
-                  <li><b>Perwitt operator</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/Webcam_Perwitt.mp4" type='video/mp4' />
-                     <source src="video/Webcam_Perwitt.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Perwitt operator</p>
-                  </p></li>
-                  <li><b>Sobel operator</b>
-                  <p class="wide center">
-                    <video controls loop preload="auto" width="560" height="420"
-                     <source src="video/Webcam_Sobel.mp4" type='video/mp4' />
-                     <source src="video/Webcam_Sobel.webm" type='video/webm' />
-                    </video>
-                    <p style="style="width:560px;text-align:center;"">Video แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Sobel operator</p>
-                  </p></li>
-                </ol>
-              </li>
+                <li>
+                  <h4 id="result1">JPEG (Coin.jpg)</h4>
+                  <p><figure>
+                    <img src="img/project11/1.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 1 : แสดงผลของภาพที่ผ่าน  Dilation Function โดยใช้ circle mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/2.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 2 : แสดงผลของภาพที่ผ่าน  Dilation Function โดยใช้ diamond mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/3.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 3 : แสดงผลของภาพที่ผ่าน  Dilation Function โดยใช้ donut mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/4.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 4 : แสดงผลของภาพที่ผ่าน  Dilation Function โดยใช้ squre mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/5.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 5 : แสดงผลของภาพที่ผ่าน  Erosion Function โดยใช้ circle mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/6.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 6 : แสดงผลของภาพที่ผ่าน  Erosion Function โดยใช้ diamond mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/7.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 7 : แสดงผลของภาพที่ผ่าน  Erosion Function โดยใช้ donut mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/8.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 8 : แสดงผลของภาพที่ผ่าน  Erosion Function โดยใช้ squre mask</figcaption>
+                  </figure></p>
+                </li>
+                <li>
+                  <h4 id="result2">DICOM</h4>
+                  <p><figure>
+                    <img src="img/project11/9.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 9 : แสดงผลของภาพ DICOM ที่ผ่าน Dilation Function โดยใช้ circle mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/10.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 10 : แสดงผลของภาพ DICOM ที่ผ่าน Dilation Function โดยใช้ diamond mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/11.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 11 : แสดงผลของภาพ DICOM ที่ผ่าน Dilation Function โดยใช้ donut mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/12.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 12 : แสดงผลของภาพ DICOM ที่ผ่าน Dilation Function โดยใช้ squre mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/13.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 13 : แสดงผลของภาพ DICOM ที่ผ่าน Erosion Function โดยใช้ circle mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/14.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 14 : แสดงผลของภาพ DICOM ที่ผ่าน Erosion Function โดยใช้ diamond mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/15.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 15 : แสดงผลของภาพ DICOM ที่ผ่าน Erosion Function โดยใช้ donut mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/16.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 16 : แสดงผลของภาพ DICOM ที่ผ่าน Erosion Function โดยใช้ squre mask</figcaption>
+                  </figure></p>
+                </li>
+                <li>
+                  <h4 id="result3">LSM</h4>
+                  <p><figure>
+                    <img src="img/project11/17.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 17 : แสดงผลของภาพ lsm ที่ผ่าน Dilation Function โดยใช้ circle mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/18.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 18 : แสดงผลของภาพ lsm ที่ผ่าน Dilation Function โดยใช้ diamond mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/19.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 19 : แสดงผลของภาพ lsm ที่ผ่าน Dilation Function โดยใช้ donut mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/20.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 20 : แสดงผลของภาพ lsm ที่ผ่าน Dilation Function โดยใช้ squre mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/21.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 21 : แสดงผลของภาพ lsm ที่ผ่าน Erosion Function โดยใช้ circle mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/22.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 22 : แสดงผลของภาพ lsm ที่ผ่าน Erosion Function โดยใช้ diamond mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/23.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 23 : แสดงผลของภาพ lsm ที่ผ่าน Erosion Function โดยใช้ donut mask</figcaption>
+                  </figure></p>
+                  <p><figure>
+                    <img src="img/project11/24.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                    <figcaption style="width:100%;text-align:center;">ภาพที่ 24 : แสดงผลของภาพ lsm ที่ผ่าน Erosion Function โดยใช้ squre mask</figcaption>
+                  </figure></p>
+                </li>
+                <li>
+                  <h4 id="result4">AVI video</h4>
+                </li>
+                <li>
+                  <h4 id="result5">Webcam</h4>
+                </li>
               </ol>
             </div>
             <hr>
             <div>
-              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
-              <p class="thai indent">ผลที่ได้รับจากการทำEdge Detection สามารถทำให้แยกแยะบริเวณที่เป็นขอบผิวของวัตถุใดๆได้ เพียงแต่จะมีข้อจำกัดในเรื่องที่ถ้าบริเวณข้างๆกันนั้น ค่าของpixelใกล้เคียงกัน จะทำให้ผลสุดท้ายของกระบวนการไม่สามารถแยกขอบได้ชัดเจน จึงเป็นข้อจำกัดที่จะใช้ในภาพที่มีวัตถุโทนสีใกล้เคียงกันมากๆ หรือจะเห็นได้ชัดในภาพ.lsm ที่ผลสุดท้ายของกระบวนการได้เพียงขอบจางๆ</p>
-              <p class="indent">การใช้ Prewitt และ Sobel จะมีความต่างกันตั้งแต่ค่า matrix ที่นำมาใช้และผลที่ได้ โดยภาพที่ได้จากการใช้ Sobel จะมีความต่างในการเน้นขอบมากกว่าแบบ Prewitt เนื่องจากมีการ weight ที่จุดแต่ละจุดต่างกัน</p>
+              <h1 id="myconclusion" class="offset-below-1">Conclusion</h1>
+              
+              <p class="indent">วิธีการ Morphogical เป็นการปรับปรุงภาพที่เป็นแบบขาวดำ หรือ BWโดยวิธีการ Dilation และ Erosion จะทำให้ภาพมีความแตกต่างกัน โดย Dilation จะเป็นการขยายภาพให้มีขนาดใหญ่ขึ้นและอาจมีการอุดรูหรือลดขนาดรูที่เกินขึ้นในภาพ แต่ Erosion นั้นจะเป็นการลดขนาดภาพจากขอบของภาพหรืออาจจะลบ pixel ที่อาจะเป็น noise ในภาพออก จะเห็นได้ดัง Results ที่้ผ่านมา และนอกจากนี้การทำ Dlation และ Erosion นั้น ภาพที่ได้ก็ยังขึ้นอยู่กับ structuring element ทั้งชนิดของ structuring element หรือขนาดของมัน โดยหากมีขนาดใหญ่ ภาพที่ไต้ก็จะมีการขยายมากหรือมีการลดขนาดมากกว่าภาพที่ใช้ structuring element ขนาดเล็ก</p>
             </div>
             <hr>
             <div>
-              <h1 id="myconclusion">Conclusion</h1>
-              <p class="indent thai">การทำ Edge Detectionในรายงานจะมีอยู่ 3 วิธี คือ Derivative filter, Prewitt operator และ Sobel operator ซึ่งแตกต่างกันโดยการเลือกใช้ค่า mask โดยผลลัพท์จากการหาของขอบจะทำให้ใช้ในการแยกแยะหรือการตรวจหาวัตถุ เพราะจะสามารถแยกบริเวณที่มีค่าpixelต่างกันมากๆ</p>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+              <p class="indent thai">ในการทำ Erosion และ Dilation สามารถนำไปใช้ในการปรับปรุงภาพถ่ายได้ โดยจะต้องทำการศึกษาวิธีการในขั้นต่อๆไปโดยจะเป็นการใช้ทั้ง Dilation และ Erosion ทั้งคู่ในการปรับปรุงภาพ และการเลือกใช้ structuring element ทั้งชนิดและขนาดก็ส่งผลต่อภาพได้ ดังนั้นจึงควรเลือกใช้ structuring element ให้เหมาะสม เช่น หากทำ Erosion ด้วย structuring element ที่มีขนาดใหญ่เกินไปก็อาจะทำให้ภาพสูญเสียรายละเอียดมากเกินไป ภาพใหม่ที่ได้ก็อาจมีการผิดเพี้ยนไป</p>
             </div>
             <hr>
             <div>
               <h1 id="myrfuture">Future Studies</h1>
-                <p class="indent">การหา Edge Detection คือ การระบุตำแหน่งขอบของวัตถุในรูปภาพ โดยเปรียบเทียบจากค่า Intensity ของวัตถุแลพื้นด้านหลัง ซึ่งการระบุตำแหน่งของขอบภาพนั้นสามารถนำมาประยุกต์ใช้ในการคำนวณพื้นที่ หรือขนาด ของวัตถุบนรูปภาพ ดังนั้น จึงมักนำเทคนิคนี้มาประยุกต์ใช้ในงานวิศวกรรมชีวการแพทย์ ด้านการวิเคราะห์ภาพถ่ายทางการแพทย์ เช่น ภาพถ่ายจากรังสีเทคนิค เพื่อระบุพื้นที่ของภาพถ่ายตัดอวัยวะผู้ป่วยแล้วนำมาคำนวณหาปริมาตรเพื่อวินิจฉัยโรค</p>
-              <p class="indent">การหา Edge Detection จะทำได้ยากเมื่อภาพต้นฉบับที่มีคุณภาพต่ำ ดังนั้นจึงมีการพัฒนาวิธีการปรับปรุงคุณภาพของภาพ และการคำนวณหาค่าตำแหน่งขอบ โดย Edge Detection ต่อไป</p>
             </div>
             <div>
               <h1 id="myqaa">Q&amp;A</h1>
@@ -333,6 +305,13 @@
                     </ol></dd>
                   </p>
                 </dl>
+            </div>
+            <div>
+              <h1 id="myref">References</h1>
+              <ol>
+              <li>G.Brostow. 2008. <b>Morphological Operations</b>. Slides in class GV12/3072 (Image Processing). Computer Science Department
+University College London. availbled from: <a href="http://www0.cs.ucl.ac.uk/staff/G.Brostow/classes/IP2008/L3_Morphology.pdf">http://www0.cs.ucl.ac.uk/staff/G.Brostow/classes/IP2008/L3_Morphology.pdf</a></li>
+              </ol>
             </div>
             <div>
               <p>Source code is available on <a href="https://github.com/nodtem66/EGBE443-Group2/tree/master/project11">Github</a></p>
