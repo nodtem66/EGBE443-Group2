@@ -92,9 +92,9 @@
                   </li>
                   <li><a href="#mydisscussion">Discussion</a></li>              
                   <li><a href="#myconclusion">Conclusion</a></li>              
-                  <li><a href="#myfuture">Future Study</a></li>              
+                  <li><a href="#myfuture">Future Study</a></li>
+                  <li><a href="#myqaa">Q&amp;A</a></li>              
                   <li><a href="#myref">References</a></li>              
-                  <li><a href="#myqaa">Q&amp;A</a></li>
                 </ul>
             </div>
             <!-- end bs-sidebar -->
@@ -129,21 +129,28 @@
                 <li class="offset-above-2"><h4 id="method2">Structuring Elements</h4>
                   <p class="indent">ในบทนี้เราได้สร้าง structuring element เป็น 4 แบบ คือ circle, diamond, donut และ square</p>
                   <ul>
-                    <li><b>square</b> มีการสร้างเป็นสี่เหลี่ยมจัตุรัสโดยรับ input เป็นค่าความยาวหรือความกว้างของสี่เหลี่ยม</li>
-                    <li><b>diamond</b> เป็นการสร้างสี่เหลี่ยมจัตุรัสที่มีลักษณะคล้ายเพชรขึ้นมา โดยรับ input เป็นระยะห่างระหว่างจุดศูนย์กลางถึงมุม (\(r\)) โดย matrix ของ structuring element นี้จะเป็นไปตามสมการ \(x + y <= r\)</li>
-                    <li><b>circle</b> เป็นการส้รางวงกลมขึ้นมาโดยฟังก์ชั่นจะรับค่าเป็นรัศมีของวงกลม จากนั้นจะสร้างวงกลมด้วยสมการวงกลม คือ \( (x-x_2)^2+(y-y_2)^2 <= r^2 \) โดยที่ \(x_2\) และ \(y_2\) เป็นพิกัดของ origin ของวงกลม</li>
-                    <li><b>donut</b> ป็นการสร้างวงกลมที่มีรูเป็นวงกลมตรงกลาง โดยจะ input ค่าเข้าไปเป็นรัศมีของวงกลมวงใหญ่และวงเล็ก โดยใช้ฟังก์ชั่นของ circle ด้านบนในการสร้าง structuring element นี้</li>
+                    <li><b>square</b> มีการสร้างเป็นสี่เหลี่ยมจัตุรัสโดยรับ input เป็นค่าความยาวหรือความกว้างของสี่เหลี่ยม
+                    <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/createSquare.m"></script></p>  
+                    </li>
+                    <li><b>diamond</b> เป็นการสร้างสี่เหลี่ยมจัตุรัสที่มีลักษณะคล้ายเพชรขึ้นมา โดยรับ input เป็นระยะห่างระหว่างจุดศูนย์กลางถึงมุม (\(r\)) โดย matrix ของ structuring element นี้จะเป็นไปตามสมการ \(x + y <= r\)
+                    <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/createDiamond.m"></script></p></li>
+                    <li><b>circle</b> เป็นการส้รางวงกลมขึ้นมาโดยฟังก์ชั่นจะรับค่าเป็นรัศมีของวงกลม จากนั้นจะสร้างวงกลมด้วยสมการวงกลม คือ \( (x-x_2)^2+(y-y_2)^2 <= r^2 \) โดยที่ \(x_2\) และ \(y_2\) เป็นพิกัดของ origin ของวงกลม
+                    <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/createCircle.m"></script></p></li>
+                    <li><b>donut</b> ป็นการสร้างวงกลมที่มีรูเป็นวงกลมตรงกลาง โดยจะ input ค่าเข้าไปเป็นรัศมีของวงกลมวงใหญ่และวงเล็ก โดยใช้ฟังก์ชั่นของ circle ด้านบนในการสร้าง structuring element นี้
+                    <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/createDonut.m"></script></p></li>
                   </ul>
                 </li>
                 <li class="offset-above-2"><h4 id="method3">Dilation</h4>
                   <p class="indent">
-                    Dilation เป็นวิธีการขยายภาพโดยจะเป็นการเพิ่มจำนวน pixel บนภาพโดยจะเป็นไปตามสัญลักษณ์ $$ A\oplus B = \left \{  x|(B)_x\cap A\neq \oslash \right \} $$ โดยที่ B เป็น structuring element หากจะอธิบาอย่างง่ายก็คือ การดู pixel แต่ละ pixel ของภาพ หากมีค่าเป็น 0 ก็จะไม่เกิดอะไรขึ้น แต่หากจุดนั้นมีค่าเป็น 1 ก็จะนำ origin ของ structurin element ไปวางบน pixel นั้น เช่น ให้ $$ A = \begin{bmatrix}1 &0  &0  &0  &1 \\ 0 &1  &0  &0  &1 \\ 0 &0  &0  &0  &0 \\ 0 &0  &1  &0  &1 \\ 0 &0  &0  &0  &0 \end{bmatrix} $$ และให้ $$ B = \begin{bmatrix}0 &1  &0 \\ 1 &1  &1 \\ 0 &1  &0 \end{bmatrix} $$ จะได้ภาพใหม่เป็น $$ \begin{bmatrix}1 &1  &0  &1  &1 \\ 1 &1  &1  &1  &1 \\ 0 &1  &1  &0  &1 \\ 0 &1  &1  &1  &1 \\0 &0  &1  &0  &1 \end{bmatrix} $$
+                    Dilation เป็นวิธีการขยายภาพโดยจะเป็นการเพิ่มจำนวน pixel บนภาพโดยจะเป็นไปตามสัญลักษณ์ $$ A\oplus B = \left \{  x \mid (B)_x\cap A\neq \oslash \right \} $$ โดยที่ B เป็น structuring element หากจะอธิบาอย่างง่ายก็คือ การดู pixel แต่ละ pixel ของภาพ หากมีค่าเป็น 0 ก็จะไม่เกิดอะไรขึ้น แต่หากจุดนั้นมีค่าเป็น 1 ก็จะนำ origin ของ structurin element ไปวางบน pixel นั้น เช่น ให้ $$ A = \begin{bmatrix}1 &0  &0  &0  &1 \\ 0 &1  &0  &0  &1 \\ 0 &0  &0  &0  &0 \\ 0 &0  &1  &0  &1 \\ 0 &0  &0  &0  &0 \end{bmatrix} $$ และให้ $$ B = \begin{bmatrix}0 &1  &0 \\ 1 &1  &1 \\ 0 &1  &0 \end{bmatrix} $$ จะได้ภาพใหม่เป็น $$ \begin{bmatrix}1 &1  &0  &1  &1 \\ 1 &1  &1  &1  &1 \\ 0 &1  &1  &0  &1 \\ 0 &1  &1  &1  &1 \\0 &0  &1  &0  &1 \end{bmatrix} $$
                   </p>
                   <div style="text-align:center;margin:24px auto;"><iframe width="640" height="480" src="//www.youtube.com/embed/xO3ED27rMHs" frameborder="0" allowfullscreen></iframe></div>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/myDilation.m"></script></p>
                 </li>
                 <li class="offset-above-2"><h4 id="method4">Erosion</h4>
-                  <p class="indent">Erosion เป็นวิธีการย่อภาพโดยจะทำการลบ pixel ที่ขอบของภาพออก โดยจะเป็นไปตามสัญลักษณ์ $$ A\ominus B = {x|(B)_x\subseteq A} $$ โดยที่ A เป็นภาพ และ B เป็น structuring element หากจะอธิบายอย่างง่ายก็คือ การนำจุด origin ของ structuring element ไปวางที่ pixel ภาพที่สนใจ และหากทุกจุดที่เป็น 1 บน structuring element เหมือนกับบนภาพ เราจะให้ pixel นั้นบนภพมีค่าเป็น 1 แต่หากไม่ใช่ จะให้จุดนั้นมีค่าเป็น 0 เช่น หากให้ภาพ $$A = \begin{bmatrix}1 &0  &0  &0  &1 \\ 0 &1  &1  &0  &1 \\ 1 &1  &1  &1  &0 \\ 1 &1  &1  &0  &1 \\ 1 &1  &1  &1  &1 \end{bmatrix} $$ และ structuring element $$B = \begin{bmatrix}0 &1  &0 \\ 1 &1  &1 \\ 0 &1  &0 \end{bmatrix}$$ เมื่อทำการ erosion จะได้ภาพใหม่คือ $$\begin{bmatrix}0 &0  &0  &0  &0 \\ 0 &0  &0  &0  &0 \\ 0 &1  &1  &0  &0 \\ 0 &1  &0  &0  &0 \\ 0 &0  &0  &0  &0 \end{bmatrix}$$</p>
+                  <p class="indent">Erosion เป็นวิธีการย่อภาพโดยจะทำการลบ pixel ที่ขอบของภาพออก โดยจะเป็นไปตามสัญลักษณ์ $$ A \ominus B = \left\{ x \mid (B)_x\subseteq A \right\} $$ โดยที่ A เป็นภาพ และ B เป็น structuring element หากจะอธิบายอย่างง่ายก็คือ การนำจุด origin ของ structuring element ไปวางที่ pixel ภาพที่สนใจ และหากทุกจุดที่เป็น 1 บน structuring element เหมือนกับบนภาพ เราจะให้ pixel นั้นบนภพมีค่าเป็น 1 แต่หากไม่ใช่ จะให้จุดนั้นมีค่าเป็น 0 เช่น หากให้ภาพ $$A = \begin{bmatrix}1 &0  &0  &0  &1 \\ 0 &1  &1  &0  &1 \\ 1 &1  &1  &1  &0 \\ 1 &1  &1  &0  &1 \\ 1 &1  &1  &1  &1 \end{bmatrix} $$ และ structuring element $$B = \begin{bmatrix}0 &1  &0 \\ 1 &1  &1 \\ 0 &1  &0 \end{bmatrix}$$ เมื่อทำการ erosion จะได้ภาพใหม่คือ $$\begin{bmatrix}0 &0  &0  &0  &0 \\ 0 &0  &0  &0  &0 \\ 0 &1  &1  &0  &0 \\ 0 &1  &0  &0  &0 \\ 0 &0  &0  &0  &0 \end{bmatrix}$$</p>
                   <div style="text-align:center;margin:24px auto;"><iframe width="640" height="480" src="//www.youtube.com/embed/fmyE7DiaIYQ" frameborder="0" allowfullscreen></iframe></div>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/myErosion.m"></script></p>
                 </li>
                                 
             </div>
@@ -152,6 +159,8 @@
               <ol>
                 <li>
                   <h4 id="result1">JPEG (Coin.jpg)</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/Morphological_Dilate.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/Morphological_Erosion.m"></script></p>
                   <p><figure>
                     <img src="img/project11/1.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
                     <figcaption style="width:100%;text-align:center;">ภาพที่ 1 : แสดงผลของภาพที่ผ่าน  Dilation Function โดยใช้ circle mask</figcaption>
@@ -187,6 +196,8 @@
                 </li>
                 <li>
                   <h4 id="result2">DICOM</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/DICOM_Dilate.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/DICOM_Erosion.m"></script></p>  
                   <p><figure>
                     <img src="img/project11/9.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
                     <figcaption style="width:100%;text-align:center;">ภาพที่ 9 : แสดงผลของภาพ DICOM ที่ผ่าน Dilation Function โดยใช้ circle mask</figcaption>
@@ -222,6 +233,8 @@
                 </li>
                 <li>
                   <h4 id="result3">LSM</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/LSM_Dilate.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/LSM_Erosion.m"></script></p>
                   <p><figure>
                     <img src="img/project11/17.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
                     <figcaption style="width:100%;text-align:center;">ภาพที่ 17 : แสดงผลของภาพ lsm ที่ผ่าน Dilation Function โดยใช้ circle mask</figcaption>
@@ -257,9 +270,41 @@
                 </li>
                 <li>
                   <h4 id="result4">AVI video</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/createVDO_Dilate.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/createVDO_Erosion.m"></script></p>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/1101.mp4" type='video/mp4' />
+                     <source src="video/1101.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video 1 : แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Dilation ด้วยการผ่าน Structuring Element แบบต่างๆ</p>
+                  </p>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/1102.mp4" type='video/mp4' />
+                     <source src="video/1102.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video 2 : แสดงผลการประมวลผลภาพจาก AVI file แสดงผลการทำ Erosion ด้วยการผ่าน Structuring Element แบบต่างๆ</p>
+                  </p>
                 </li>
                 <li>
                   <h4 id="result5">Webcam</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/Webcam_Dilate.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project11/Webcam_Erosion.m"></script></p>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/1103.mp4" type='video/mp4' />
+                     <source src="video/1103.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video 3 : แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Dilation ด้วยการผ่าน Structuring Element แบบต่างๆ</p>
+                  </p>
+                  <p class="wide center">
+                    <video controls loop preload="auto" width="560" height="420"
+                     <source src="video/1104.mp4" type='video/mp4' />
+                     <source src="video/1104.webm" type='video/webm' />
+                    </video>
+                    <p style="width:100%;text-align:center;">Video 4 : แสดงผลการประมวลผลภาพจากกล้อง webcam แสดงผลการทำ Erosion ด้วยการผ่าน Structuring Element แบบต่างๆ</p>
+                  </p>
                 </li>
               </ol>
             </div>
@@ -277,32 +322,31 @@
             <hr>
             <div>
               <h1 id="myrfuture">Future Studies</h1>
+              <p class="indent">จากการที่ทางกลุ่มได้ทำการศึกษาเกี่ยวกับ Morphological filter ที่ใช้ใน image procrssing ครั้งนี้ สามารถนำไปประยุกต์ใช้กับภาพที่มี pixel สูงหรือต่ำเกินไป จนไม่สามารถมองเห็นภาพที่แท้จริงได้ Morphological filter จะช่วยให้ภาพนั้นๆชัดเจนเด่นชัด เห็นเป็นรูปเป็นร่างขึ้นมา เพียงแต่ในครั้งนี้จะเป็นการใช้งานเบื้องต้น จะมีการใช้งานที่ซับซ้อนและได้ผลดีในครั้งต่อไป</p>
             </div>
             <div>
               <h1 id="myqaa">Q&amp;A</h1>
                 <dl class="dl-horizontal">
                   <p>
                     <dt>Question 1:</dt>
-                    <dd>จงบอกข้อแตกต่างระหว่าง Sobel Operator กับ Prewitt Operator</dd>
+                    <dd>จงยกตัวอย่าง fundamental operation ที่เกี่ยวเนื่องกับ morphological filter</dd>
                     <dt>Answer:</dt>
-                    <dd>coefficient ของ mask ใน sobel operator จะไม่ถูกจำกัด เราจึงสามารถปรับได้ตามต้องการโดยที่ไม่เป็นการทำลายคุณสมบัติของ derivative mask</dd>
+                    <dd>union, intersection, complement และ translation</dd>
                   </p>
                   <p>
                     <dt>Question 2:</dt>
-                    <dd>Edge มีกี่ประเภท อะไรบ้าง</dd>
+                    <dd>Minkowski sum คืออะไร มีความสัมพันธ์อย่างไรกับ morphological filter</dd>
                     <dt>Answer:</dt>
-                    <dd>3 ประเภท ได้แก่ Horizontal edges, Vertical Edges, Diagonal Edges</p>
-                    </dd>
+                    <dd>Minkowski sum หรือ addition ของ 2 เซตระหว่างเซต A และ B เป็น vector addition ของ แต่ละ element ใน A กับแต่ละ element ของ B $$ A \oplus B = \left\{ \mathbf{a+b} \mid \mathbf{a} \in A, \mathbf{b} \in B  \right\} $$ ซึ่งสัมพันธ์กันกับ dilation ของเซต A โดยเซต B ซึ่ง B คือ structuring element เช่น
+                      $$ \begin{split} A &= \left\{ (1, 0), (0, 1), (0, -1) \right\} \\
+                     B &= \left\{ (0, 0), (1, 1), (1, -1) \right\} \\ 
+                     A \oplus B &= \left\{ (1, 0), (2, 1), (2, −1), (0, 1), (1, 2), (1, 0), (0, −1), (1, 0), (1, −2) \right\}  \end{split} $$</dd>
                   </p>
                   <p>
                     <dt>Question 3:</dt>
-                    <dd>นอกเหนือจาก mask แบบ Sobel Operator กับ Prewitt Operator แล้ว ยังมี mask แบบใดอีกบ้าง จงยกตัวอย่างพร้อมอธิบาย</dd>
+                    <dd>จงบอกผลลัพท์ที่แตกต่างกันระหว่างการทำ opening และ closing</dd>
                     <dt>Answer:</dt>
-                    <dd><ol>
-                      <li>Robinson Compass Masks - เป็น direction mask โดนจะใช้เพียง 1 mask และหมุน 8 ทิศทางเพื่อคำนวณหาขอบของแต่ละทิศทาง</li>
-                      <li>Krisch Compass Masks -  เป็น derivative mask โดยใช้สำหรับคำนวณหาขอบในทุกทิศทาง</li>
-                      <li>Laplacian Operator - เป็น derivative mask โดยใช้สำหรับคำนวณหาขอบโดยใช้ second order derivative mask</li>
-                    </ol></dd>
+                    <dd>opening จะเป็นการ smooth จากด้านในของ object contour แต่ closing จะเป็นการ smooth จากด้านนอกของ object contour</dd>
                   </p>
                 </dl>
             </div>
