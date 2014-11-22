@@ -1,2 +1,0 @@
-runProgram = false;
-stop(input)
