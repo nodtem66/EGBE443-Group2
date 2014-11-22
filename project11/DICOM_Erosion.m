@@ -9,7 +9,7 @@ pic = im2bw(pic,0.7);
 % mask = createCircle(5);     maskname = 'with Circle mask';
 % mask = createSquare(5);     maskname = 'with Square mask';
 % mask = createDonut(4,1);    maskname = 'with Donut mask';
-mask = createDaimon(3);     maskname = 'with Daimon mask';
+mask = createDiamond(3);     maskname = 'with Diamond mask';
 % mask = createLine(8,135);   maskname = 'with Line mask';
 
 newIm = myErosion(pic,mask);

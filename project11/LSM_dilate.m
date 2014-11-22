@@ -7,7 +7,7 @@ pic = im2bw(pic,0.16);
 % mask = createCircle(5);     maskname = 'with Circle mask';
 % mask = createSquare(5);     maskname = 'with Square mask';
 % mask = createDonut(15,7);   maskname = 'with Donut mask';
-mask = createDaimon(3);     maskname = 'with Daimon mask';
+mask = createDiamond(3);     maskname = 'with Diamond mask';
 % mask = createLine(6,135);   maskname = 'with Line mask';
 %%
 newIm = myDilation(pic,mask);  

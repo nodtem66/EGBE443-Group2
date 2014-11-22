@@ -1,4 +1,4 @@
-function mask = createDaimon(r)
+function mask = createDiamond(r)
 w = abs(linspace(-r,r,2*r+1));
 h = abs(linspace(-r,r,2*r+1));
 [X Y] = meshgrid(w,h);
