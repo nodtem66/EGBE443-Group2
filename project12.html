@@ -1,0 +1,397 @@
+<!--
+  Date: 14/9/2014
+  bootrap-inpiration-style document script by: http://jsfiddle.net/jdwire/2XXRF
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Project Report</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/blueimp-gallery.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-image-gallery.min.css">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//vjs.zencdn.net/4.9/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.9/video.js"></script>
+  </head>
+  <body>
+    
+  <header id="mynavbar" class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"> <span class="sr-only">Toggle navigation</span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+            </button> <a href="index.html" class="navbar-brand">Group 2</a>
+
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="project1.html">Bun Camera</a></li>
+                    <li><a href="project2.html">Camera Selection</a></li>
+                    <li><a href="project3.html">Photography Study</a></li>
+                    <li><a href="project4.html">Image File Reading</a></li>
+                    <li><a href="project5.html">Histogram</a></li>
+                    <li><a href="project6.html">Point Operation</a></li>
+                    <li><a href="project7.html">Linear Filter</a></li>
+                    <li><a href="project8.html">Nonlinear Filter</a></li>
+                    <li><a href="project9.html">Edge Detection : Part 1</a></li>
+                    <li><a href="project10.html">Edge Detection : Part 2</a></li>
+                    <li><a href="project11.html">Morphological Filter</a></li>
+                    <li><a href="project12.html">Opening, Closing, Skeletonization, and Color space</a></li>
+                  </ul>
+                </li>
+                <li> <a href="about.html">About</a>
+
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="bs-header" id="content">
+    <div class="container">
+         <h1>Opening, Closing, Skeletonization, and Color space</h1>
+        <p class="thai">การศึกษาการทำการตัด การเชื่อม การทำภาพโครงร่าง และแผนภูมิสีใน Image processing</p>
+    </div>
+</div>
+<div class="container bs-docs-container">
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+            <div class="bs-sidebar hidden-print" role="complementary">
+                <ul class="nav bs-sidenav">
+                  <li class="active"><a href="#myobjective">Objective</a></li>
+                  <li><a href="#mymethod">Methods</a>
+                    <ul>
+                      <li><a href="#method1">Opening &amp; Closing</a></li>
+                      <li><a href="#method2">Skeletonization</a></li>
+                      <li><a href="#method3">HSV</a></li>
+                      <li><a href="#method4">YCbCr</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#result">Results</a>
+                    <ul>
+                      <li><a href="#result1">Opening &amp; Closing</a></li>
+                      <li><a href="#result2">Skeletonization</a></li>
+                      <li><a href="#result3">HSV</a></li>
+                      <li><a href="#result4">YCbCr</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#mydisscussion">Discussion</a></li>              
+                  <li><a href="#myconclusion">Conclusion</a></li>              
+                  <li><a href="#myfuture">Future Study</a></li>
+                  <li><a href="#myqaa">Q&amp;A</a></li>              
+                  <li><a href="#myref">References</a></li>              
+                </ul>
+            </div>
+            <!-- end bs-sidebar -->
+        </div>
+        <!-- end col-md-3 -->
+        <div class="col-md-9 col-md-pull-3" id="mycontent">
+            <div>
+              <h1 id="myobjective">Objective</h1>
+              <ol class="thai">
+                <li>เพื่อศึกษาการทำงานและความแตกต่างของ Opening และ Closing</li>
+                <li>เพื่อศึกษาการทำงานของ Skeletonization</li>
+                <li>เพื่อศึกษาการทำงานและแปลงในรูปแบบต่างๆของ Color Space</li>
+                <li>เพื่อเปรียบเทียบประสิทธิภาพระหว่าง Function ที่สร้างขึ้นเองกับ Function ใน MATLAB Toolbox</li>
+                <li>เพื่อศึกษาการประยุกต์ใช้ Morphological Filter ในด้านการแพทย์</li>
+              </ol>
+            </div>
+
+            <hr>
+            <div>
+              <h1 id="mymethod">Medthods</h1>
+              <ol>
+                <li><h4 id="method1">Opening &amp; Closing</h4>
+                  <p class="indent">การทำ Opening กับ Closing จะอาศัยการทำ Dilation และ Erosion ที่ได้ศึกษามาในบทก่อนหน้านี้ โดยการทำ Opening จะเป็นการนำภาพมา Erosion แล้วจากนั้นก็จึง Dilation แต่การทำ Closing จะตรงกันข้าม คือ ทำการ Dilation ก่อนแล้วจากนั้นจึง Erosion</p>
+                  <p>$$ Opening : A\circ B = (A\ominus B)\oplus B \\Closing : A\bullet  B = (A\oplus B)\ominus B$$</p>
+                </li>
+                <li class="offset-above-2"><h4 id="method2">Skeletonization</h4>
+                  <p class="indent">ในที่นี้จะทำการ skeletonization โดยใช้ Thining operation ไปจนกระทั่งได้ออกมาเป็น skeletonization image โดยในการทำ Thining operation นี้จะอาศัยการใช้ hit and miss มาช่วย ซึ่งอธิบายโดยง่ายคือ การนำ SE มาตรวจสอบที่ทุกจุดของภาพ หากจุดที่วาง SE มีรูปร่างเหมือนกันกับ SE ก็จะให้จุดนั้นมีค่าเท่ากับ 1 แต่หากไม่ใช่ ก็จะให้มีค่าเท่ากับ 0 หรือเขียนเป็นสัญลักษณ์คือ</p>
+                  <p>$$ A\circledast B = (A\ominus X)\cap [A^C\ominus (W-X)]$$</p>
+                  <p style="margin-left: 60px">โดยที่   \(A\) = original image, \(B\) = SE, \(A^C\) = Complement ของ A, \(X\) = ส่วนที่เป็นวัตถุใน B<br>
+                  \((W-X)\) = ส่วนฉากหลังใน B, \(A\ominus B\) = Erosion ของ A และ B<br></p>
+                  <p>โดยจะมีการใช้ Structuring Element (SE) ที่มีการหมุนใน 8 ทิศทางดังภาพด้านล่างมาทำการ Thining โดยที่จุดขาวเท่ากับ 0, สีดำมีค่า 1 และ x คือไม่ต้องสนใจ(don’t care)</p>
+                  <figure style="margin: 10px auto; text-align: center;">
+                    <img src="img/project12/skel1.jpg" height="76" width="365" class="img-thumbnail offset-above-2">
+                  </figure>
+                  <p>โดยขั้นตอนการทำคือ การนำ SE \(B^1\) มา Hit and miss ตลอดทั้งภาพ จากนั้นนำมาลบด้วยภาพต้นฉบับ หรือเป็นไปตามสัญลักษณ์ 
+                  $$A\otimes B = A-(A\circledast B)$$
+                  และเมื่อได้ภาพใหม่ออกมาก็จะนำภาพที่ได้ไปทำวิธีแบบเดียวกันและใช้ SE \(B^2\) ทำแบบนี้ไปจนถึง SE \(B^8\) และกลับไปเริ่มทำขั้นตอนแรกใหม่ คือ เริ่มใช้ SE \(B^1\) และทำไปเรื่อยๆ จนกว่าภาพที่ได้จะมีลักษณะเป็น Skeletonization เราเรียกการทำแบบนี้ว่า iteration
+                  </p>
+                  <figure style="margin: 10px auto; text-align: center;">
+                    <img src="img/project12/skel2.jpg" height="542" width="576" class="img-thumbnail">
+                  </figure>
+                </li>
+                <li class="offset-above-2"><h4 id="method3">HSV</h4>
+                  <p class="indent">
+                    การแปลงค่าสีจากระบบสีแบบ RGB เป็น ระบบสีแบบ HSV RGB จะอธิบายค่าของสีมาในรูปแบบ term ของค่าปริมาณสีแดง, สีเขียว, สีน้ำเงิน HSV จะอธิบายค่าของสีมาในรูปแบบ term ของ Hue, Saturation และ Value
+                    สำหรับรูปแบบอธิบายสี HSV จะมีความสำคัญเมื่อต้องการการระบุสีด้วยคำอธิบาย เช่น เป็นสีที่สว่างมากกว่า เป็นสีที่เข้มมากกว่า เป็นต้น ซึ่งเป็นที่ต้องการมากกว่าแบบ RGB ในงานอุตสาหกรรมที่ต้องการใช้ Image Processing เพื่อการเลียนแบบประสาทสัมผัสของมนุษย์ เนื่องจาก แบบ HSV จะมีรูปแบบการอธิบายสีคล้ายๆ กับวิธีการรับภาพของดวงตาของมนุษย์ 
+                    สี RGB จะกำหนดค่าของสีในแง่ของการรวมกันของ 3 สีหลักตามรูปแบบของแสง
+                    สี HSV จะกำหนดค่าของสีในแง่ของการอธิบายเปรียบเทียบกับสิ่งที่คุ้นเคย เช่น สี, ความสว่าง, ความเข้ม
+                  </p>
+                  <p class="indent">การแปลงค่าโดยจะมีกระบวนการเพื่อหาค่า H S และ V แปลงจาก RGB ที่อยู่ในช่วง [0,255] ดังสมการดังนี้ <a href="#myref">[1]</a></p>
+                  <p>$$ S_{HSV}=\left\{ 
+                  \begin{array}{l l}
+                  \frac{C_{rng}}{C_{high}} & \quad \text{for \(C_{high}>0\)}\\
+                  0 & \quad \text{otherwise}
+                  \end{array} \right. $$</p>
+                  <p>$$ V_{HSV}= \frac{C_{high}}{C_{max}} \\ C_{high}=max(R,G,B) \\ C_{low}=min(R,G,B) \\ C_{rng}=C_{high}-C_{low} $$</p>
+                  <p class="indent">ส่วนการหาค่า H จะต้องทำการ normalize เพื่อหาค่าออกมา</p>
+                  <p>$$ {R}'=\frac{ C_{high}-R}{ C_{rng}},
+{G}'=\frac{ C_{high}-G}{ C_{rng}},
+{B}'=\frac{ C_{high}-B}{ C_{rng}} $$</p>
+                  <p>$$ {H}'= \left\{ 
+                  \begin{array}{2 2}
+                    ({B}'-{G}') & \quad \text{\(R=C_high\)}\\
+                    ({H}'-{H}'+2) & \quad \text{\(G=C_{high}\)}\\
+                    ({H}'-{H}'+4) & \quad \text{\(B=C_{high}\)}
+                    
+                  \end{array} \right. $$</p>\
+                  <p> $$
+                    H_{HSV}=\frac{1}{6}\cdot \left\{ 
+                    \begin{array}{l l}
+                      ({H}'+6) & \quad \text{for \(H' <  0\)}\\
+                      {H}' & \quad \text{otherwise}
+                    \end{array} \right. $$
+                  </p>
+                </li>
+                <li class="offset-above-2"><h4 id="method4">YCbCr</h4>
+                  <p class="indent">
+                    YCbCr เป็น color space ใช้เป็นส่วนหนึ่งของ color image pipeline ในระบบ video และ ภาพ digital YCbCr ไม่ได้เป็น absolute color space แต่เป็นทางหนึ่งในการ encoding ข้อมูลของ RGB โดยการส่งข้อมูลจะแยกกันระหว่างการส่ง luma signal และ chrominance signal
+โดยค่า Y เป็น luma component ซึ่งแสดงความสว่างในภาพ(black and white) ส่วนค่า Cb และ Cr แสดงค่าของสีน้ำเงินที่ถูกตัดความสว่างออกไป และค่าของสีแดงที่ถูกตัดความสว่างออกไปของการแสดงสีใน video signal ซึ่ง 2 ค่านี้เป็น chrominance signal
+สมการที่ใช้ convert จาก analog RGB data เป็น digital YCbCr (8 bits ต่อ sample)  โดยใช้มาตรฐาน  ITU-R BT.601
+                  </p>
+                  <p>$$\begin{split}Y' &= 16 + (65.481 R' + 128.553 G' + 24.966 B') \\
+                    C_B &= 128 + (-37.797 R' - 74.203 G' + 112.0 B')\\
+                    C_R &= 128 + (112.0 R' - 93.786 G' - 18.214 B')
+                    \end{split}$$</p>
+                  <p class="indent">โดยมีขั้นตอนการทำคือ นำค่าชนิด double ของ R G และ B ของภาพมาทำการคำนวณตามสูตรด้านบน โดยจะต้องทำการหารค่าที่ได้มาด้วย 255 ก่อนการบวก 16 และ 128 ตามลำดับ จากนั้นก่อนการแสดงภาพต้องแปลงค่าของ Y Cb และ Cr ให้เป็น unsigned 8-bit integer</p>
+                </li>
+                                
+            </div>
+            <div>
+              <h1 id="myresult">Results</h1>
+              <ol>
+                <li>
+                  <h4 id="result1">Opening &amp; Closing</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/myOpening.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/myClosing.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/Script_Open_Close.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/oc1.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc2.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc3.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc4.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                  </p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/DICOM_openclose.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/oc5.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc6.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc7.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc8.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                  </p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/LSM_openclose.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/oc9.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc10.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc11.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/oc12.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                  </p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/createVDO_Openclose.m"></script></p>
+                </li>
+                <li>
+                  <h4 id="result2">Skeletonization</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/mySkeleton.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/LSM_skeleton.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/skel3.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                  </p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/Script_Skeletonization.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/skel4.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                  </p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/DICOM_skeleton.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/skel5.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;"></figcaption>
+                    </figure>
+                  </p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/createVDO_skeleton.m"></script></p>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/Webcam_Skeleton.m"></script></p>
+                </li>
+                <li>
+                  <h4 id="result3">HSV</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/HSV/myrgb2hsv.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/hsv1.jpg" height="314" width="848" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพต้นฉบับ JPEG (ซ้าย) ผลลัพท์จากการแปลง RGB เป็น HSV (กลาง) เปรียบเทียบกับ ผลลัพท์จาก MATLAB (ขวา)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/hsv2.jpg" height="292" width="857" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพต้นฉบับ LSM (ซ้าย) ผลลัพท์จากการแปลง RGB เป็น HSV (กลาง) เปรียบเทียบกับ ผลลัพท์จาก MATLAB (ขวา)</figcaption>
+                    </figure>
+                  </p>
+                </li>
+                <li>
+                  <h4 id="result4">YCbCr</h4>
+                  <p><script src="http://gist-it.appspot.com/https://github.com/nodtem66/EGBE443-Group2/blob/master/project12/YCbCr/myYCbCr.m"></script></p>
+                  <p>
+                    <figure>
+                      <img src="img/project12/y1.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพผลลัพท์จากการแปลง RGB เป็น YCbCr ของรูป LSM (ซ้าย) เปรียบเทียบกับ ผลลัพท์จาก MATLAB (ขวา)</figcaption>
+                    </figure>
+                    <figure>
+                      <img src="img/project12/y2.jpg" height="652" width="1366" class="img-thumbnail offset-above-2">
+                      <figcaption style="width:100%;text-align:center;">ภาพผลลัพท์จากการแปลง RGB เป็น YCbCr ของรูป JPEG (ซ้าย) เปรียบเทียบกับ ผลลัพท์จาก MATLAB (ขวา)</figcaption>
+                    </figure>
+                  </p>
+                </li>
+              </ol>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myconclusion" class="offset-below-1">Conclusion</h1>
+              <p class="indent">ภาพทีไ่ด้จากการทำ Opening operation จะได้ภาพที่ถูกทำให้แยกออกจากกัน หากว่าภาพที่ใช้ มีวัตถุสองอันที่เชื่อมต่อกันอยู่ การทำ Operation นี้จะช่วยแยกวัตถุสองชิ้นออกจากกันได้ ส่วนภาพที่ได้จากการทำ Closing operation นั้นจะตรงกันข้ามกับ Opening คือ ภาพที่ได้จะถูกทำให้เชื่อมต่อกัน เช่น หากมีภาพที่วัตถุสองชิ้นแยกจากกันอยู่ หากทำ Closing operation จะทำให้วัตถุสองชิ้นนั้นเชื่อมต่อกัน และสามารถนำไปประยุกต์ใช้ในงานต่างๆได้</p>
+              <p class="indent">การทำ Skeletonization ที่ได้ เกิดจากการทำ Thining operation ไปจนได้ภาพที่ต้องการ โดยได้นำ function ที่ใช้ เปรียบเทียบกับ function ของ MATLAB ก็มีความเหมือนกัน</p>
+              <p class="indent">การทำ HSV จะอธิบายค่าของสีมาในรูปแบบ term ของ Hue, Saturation และ Value แทนที่แบบ RGB ที่จะอธิบายค่าของสีมาในรูปแบบ term ของค่าปริมาณสีแดง, สีเขียว, สีน้ำเงิน</p>
+              <p class="indent">สำหรับรูปแบบอธิบายสี HSV จะมีความสำคัญเมื่อต้องการการระบุสีด้วยคำอธิบาย เช่น เป็นสีที่สว่างมากกว่า เป็นสีที่เข้มมากกว่า เป็นต้น ซึ่งเป็นที่ต้องการมากกว่าแบบ RGB ในงานอุตสาหกรรมที่ต้องการใช้ Image Processing เพื่อการเลียนแบบประสาทสัมผัสของมนุษย์ เนื่องจาก แบบ HSV จะมีรูปแบบการอธิบายสีคล้ายๆ กับวิธีการรับภาพของดวงตาของมนุษย์ เช่น สี RGB จะกำหนดค่าของสีในแง่ของการรวมกันของ 3 สีหลักตามรูปแบบของแสง แต่สี HSV จะกำหนดค่าของสีในแง่ของการอธิบายเปรียบเทียบกับสิ่งที่คุ้นเคย เช่น สี, ความสว่าง, ความเข้ม</p>
+              <p class="indent">การทำ YCbCr ที่ได้ เกิดจากการหาสัญญาณความส่วางและสัญญาณความตางสี ซึ่งต่างกับ RGB ตรงที่ RGB จะแสดงสัญญาณสีแดง สีเขียวและสีน้ำาเงิน โดยการแปลง YCbCr นั้นมีหลายมาตรฐานด้วยกัน ซึ่งเลือกใช้ มาตรฐาน  ITU-R BT.601 โดยได้นำ function ที่ใช้ เปรียบเทียบกับ function ของ MATLAB ซึ่งผลที่ได้นั้นเหมือนกัน</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="mydisscussion" class="offset-below-1">Discussion</h1>
+              <p class="indent">ในการนำ Opening and closing operation ไปประยุกต์ใช้นั้น จะต้องคำนึงถึงด้วยว่า เราต้องการภาพใหม่ให้ได้เชื่อมต่อกันหรือแยกออกจากจึงจะสามารถเลือกใช้ operation ให้เหมาะสม และนอกจากนี้ยังต้องเลือกใช้ SE ที่มีรูปร่างและขนาดให้เหมาะสมอีกด้วย</p>
+              <p class="indent">ส่วน Function skeletonization ที่เขียนขึ้นมาเองนั้น ยังมีการประมวลผลที่ช้ามากเมื่อเปรียบเทียบกับ MATLAB function ทำให้ค่อนข้างยากที่จะนำไปใช้ในการทำภาพแบบ realtime จึงยังต้องมีการปรับปรุงโค้ดให้มีการทำงานที่รวดเร็วมากขึ้น</p>
+              <p class="indent">การแปลงค่าสีจากระบบสีแบบ RGB เป็น ระบบสีแบบ HSV สามารถแปลงได้โดยการคำนวณจากสมการทางคณิตศาสตร์ โดยการใช้ code ที่เขียนขึ้นยังมีการประมวลผลที่ค่อนข้างช้า เพราะมีการวนซ้ำในสมการที่มีขนาดใหญ่ ทำให้การประมวลผลใช้เวลานานกว่า MATLAB function</p>
+              <p class="indent">การแปลงภาพให้อยู่ในระบบ YCbCr นั้น ต้องคำนึงถึงชนิดตัวแปร มาตรฐานที่ใช้ และช่วงของค่า Y Cb Cr ด้วย เนื่องจากหากผิดพลาดในอันใดอันหนึ่งแล้ว ผลลัพท์ที่ได้จะมีความผิดเพี้ยนไป</p>
+            </div>
+            <hr>
+            <div>
+              <h1 id="myrfuture">Future Studies</h1>
+              <p class="indent">การพัฒนา algorithm ให้เหมาะกับการใช้เหมาะสมกับงานด้าน biomedical โดยพัฒนาให้สามารถทำงานได้เร็วขึ้น นอกจากนี้การแปลงค่า color space ให้มีความคุ้นเคยกับการมองเห็น เช่นในห้องผ่าตัด ควรมีการใช้ image processing ในการmonitoring เวลาผ่าตัด เป็นต้น รวมทั้งนำ sketonization  มาประยุกต์ใช้ในอนาคตเพื่อหาโครงสร้างของภาพและการกำจัด noise ออกจากภาพ</p>
+            </div>
+            <div>
+              <h1 id="myqaa">Q&amp;A</h1>
+                <dl class="dl-horizontal">
+                  <p>
+                    <dt>Question 1:</dt>
+                    <dd>การทำ skeletonization ของภาพทำไปเพื่อจุดประสงค์ใด</dd>
+                    <dt>Answer:</dt>
+                    <dd>เพื่อหาองค์ปรกอบและโครงสร้างของภาพ ซึ่งสามารถใช้บอกขอบเขตของภาพได้</dd>
+                  </p>
+                  <p>
+                    <dt>Question 2:</dt>
+                    <dd>การเปลี่ยนแปลง color space จาก RGB ไป HSV ในทางอุตสาหกรรมการผลิต เหตุผลในการเปลี่ยนแปลงค่าสีคืออะไร</dd>
+                    <dt>Answer:</dt>
+                    <dd>เพื่อการเลียนแบบประสาทสัมผัสของมนุษย์ เนื่องจาก HSV จะมีรูปแบบการอธิบายสีคล้ายๆ กับวิธีการรับภาพของดวงตาของมนุษย์</dd>
+                  </p>
+                </dl>
+            </div>
+            <div>
+              <h1 id="myref">References</h1>
+              <ol>
+              <li>[1] Gonzalez, R.C. and Woods, R.E. [2002]. Digital Image Processing, 2nd ed., Prentice Hall, Upper Saddle River, NJ.</li>
+              <li>[2] Hanselman, D. and Littlefield, B.R. [2001]. Mastering MATLAB 6, Prentice Hall, Upper Saddle River, NJ.</li>
+              <li>[3] Image Processing Toolbox, User Guide, Version 4. [2003], The MathWorks, Inc., Natick, MA.</li>
+              <li>[4] Using MATLAB, Versoin 6.5 [2002], The MathWorks, Inc., Natick, MA.</li>
+              <li>[5] “ระบบสี(Color model)” [online]. Available: http://archive.lib.cmu.ac.th/full/T/2551/enco1051tj_ch2.pdf</li>
+              </ol>
+            </div>
+            <div>
+              <p>Source code is available on <a href="https://github.com/nodtem66/EGBE443-Group2/tree/master/project12">Github</a></p>
+            </div>
+        </div>
+        <!-- end col-md-9 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container -->
+<footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" style="">
+        <h1>Members</h1>
+        <dl><dd>Mr. Thanawin Trakoolwilaiwan 5413085</dd>
+          <dd>Mr. Jongsook Sanguantrakul 5413337</dd>
+          <dd>Mr. Jirawat Iamsamang 5413341</dd>
+          <dd>Mr. Chaiyakorn Thongchanasin 5413346</dd>
+          <dd>Miss Tanyaporn Pungrasmi 5413355</dd>
+          <dd>Miss Pavinee Jaturapisanukul 5413365</dd>
+          <dd>Mr. Rattapong Lordthong 5413367</dd>
+          </dl>
+          <p>Department of Biomedical Engineering</p>
+          <p>Faculty of Engineering, Mahidol University</p>
+      </div>
+    </div>
+  </div>
+</footer>
+  <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.blueimp-gallery.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+    <script src="js/scripts.js?122"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/notosansthai.css" rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,700' rel='stylesheet' type='text/css'>
+  </body>
+</html>
