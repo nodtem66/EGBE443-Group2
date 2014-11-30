@@ -4,7 +4,11 @@ if radius1>radius2
     r2 = radius2;
 else
     r1 = radius2;
+<<<<<<< HEAD
     r2 = radius1;
+=======
+    r2 = raduis1;
+>>>>>>> 7d39bbeda2ac56d4221ac9f9e38a5baf59761e6e
 end
 m1 = createCircle(r1);
 m2 = createCircle(r2);
